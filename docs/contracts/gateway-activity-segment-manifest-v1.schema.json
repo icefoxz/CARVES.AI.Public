@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Gateway Activity Segment Manifest v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "store_directory",
+    "segment_directory",
+    "generated_at_utc",
+    "segment_count",
+    "record_count",
+    "byte_count",
+    "first_timestamp_utc",
+    "last_timestamp_utc",
+    "segments"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "carves-gateway-activity-segment-manifest.v1"
+    },
+    "store_directory": {
+      "type": "string"
+    },
+    "segment_directory": {
+      "type": "string"
+    },
+    "generated_at_utc": {
+      "type": "string"
+    },
+    "segment_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "record_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "byte_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "first_timestamp_utc": {
+      "type": "string"
+    },
+    "last_timestamp_utc": {
+      "type": "string"
+    },
+    "segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "file_name",
+          "path",
+          "byte_count",
+          "record_count",
+          "first_timestamp_utc",
+          "last_timestamp_utc",
+          "sha256"
+        ],
+        "properties": {
+          "file_name": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "byte_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "record_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "first_timestamp_utc": {
+            "type": "string"
+          },
+          "last_timestamp_utc": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

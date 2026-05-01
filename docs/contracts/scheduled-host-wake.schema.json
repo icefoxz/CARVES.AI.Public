@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/scheduled-host-wake.schema.json",
+  "title": "CARVES Runtime Scheduled Host Wake",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "wake_id",
+    "wake_class",
+    "surface_status",
+    "triggered_at",
+    "host_instance_ref",
+    "repo_id",
+    "wake_budget",
+    "lifecycle_mapping",
+    "decision",
+    "invariants"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "wake_id": { "type": "string" },
+    "wake_class": { "const": "scheduled_host_wake" },
+    "surface_status": { "const": "specification_over_existing_lifecycle" },
+    "triggered_at": { "type": "string", "format": "date-time" },
+    "host_instance_ref": { "type": ["string", "null"] },
+    "repo_id": { "type": "string" },
+    "dry_run": { "type": "boolean" },
+    "wake_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_scheduler_decisions",
+        "max_runtime_iterations",
+        "allow_background_loop",
+        "idle_is_success"
+      ],
+      "properties": {
+        "max_scheduler_decisions": { "const": 1 },
+        "max_runtime_iterations": { "const": 1 },
+        "allow_background_loop": { "const": false },
+        "idle_is_success": { "const": true }
+      }
+    },
+    "lifecycle_mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "wake_entrypoint",
+        "dispatch_entrypoint",
+        "result_entrypoint",
+        "review_entrypoint",
+        "writeback_entrypoint"
+      ],
+      "properties": {
+        "wake_entrypoint": { "const": "run-next" },
+        "dispatch_entrypoint": { "const": "task run <task-id>" },
+        "result_entrypoint": { "const": "task ingest-result <task-id>" },
+        "review_entrypoint": { "const": "review-task / approve-review" },
+        "writeback_entrypoint": { "const": "sync-state / governed writeback" }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scheduler_decision_count",
+        "outcome",
+        "selected_task_ids",
+        "idle_reason",
+        "next_required_boundary"
+      ],
+      "properties": {
+        "scheduler_decision_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "idle",
+            "dispatched",
+            "review_wait",
+            "approval_wait",
+            "failed",
+            "stopped"
+          ]
+        },
+        "selected_task_ids": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^T-" }
+        },
+        "idle_reason": { "type": ["string", "null"] },
+        "result_envelope_refs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "next_required_boundary": {
+          "type": "string",
+          "enum": [
+            "none",
+            "host_dispatch",
+            "result_ingestion",
+            "review",
+            "operator_approval",
+            "sync_state",
+            "replan"
+          ]
+        }
+      }
+    },
+    "invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "no_second_scheduler",
+        "no_background_loop",
+        "no_worker_owned_queue",
+        "no_completion_from_wake",
+        "no_result_writeback_without_review"
+      ],
+      "properties": {
+        "no_second_scheduler": { "const": true },
+        "no_background_loop": { "const": true },
+        "no_worker_owned_queue": { "const": true },
+        "no_completion_from_wake": { "const": true },
+        "no_result_writeback_without_review": { "const": true }
+      }
+    }
+  }
+}

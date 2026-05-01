@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "carves.runtime/contracts/review.schema.json",
+  "title": "CARVES Runtime Planner Review Artifact Contract",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "task_id",
+    "captured_at",
+    "review",
+    "resulting_status",
+    "transition_reason",
+    "planner_comment",
+    "patch_summary",
+    "validation_passed",
+    "validation_evidence",
+    "safety_outcome",
+    "safety_issues",
+    "decision_status",
+    "reality_projection"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "task_id": { "type": "string" },
+    "captured_at": { "type": "string", "format": "date-time" },
+    "review": { "type": "object" },
+    "resulting_status": { "type": "string" },
+    "transition_reason": { "type": "string" },
+    "planner_comment": { "type": "string" },
+    "patch_summary": { "type": "string" },
+    "result_commit": { "type": ["string", "null"] },
+    "validation_passed": { "type": "boolean" },
+    "validation_evidence": { "type": "array", "items": { "type": "string" } },
+    "safety_outcome": { "type": "string" },
+    "safety_issues": { "type": "array", "items": { "type": "string" } },
+    "decision_status": {
+      "type": "string",
+      "enum": ["pending_review", "approved", "provisional_accepted", "rejected", "reopened", "needs_attention"]
+    },
+    "decision_reason": { "type": ["string", "null"] },
+    "decision_at": { "type": ["string", "null"], "format": "date-time" },
+    "decision_debt": {
+      "type": ["object", "null"],
+      "required": ["summary", "follow_up_actions", "requires_follow_up_review", "recorded_at"],
+      "properties": {
+        "summary": { "type": "string" },
+        "follow_up_actions": { "type": "array", "items": { "type": "string" } },
+        "requires_follow_up_review": { "type": "boolean" },
+        "recorded_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "reality_projection": {
+      "type": "object",
+      "required": ["solidity_class", "promotion_result", "planned_scope", "verified_outcome"],
+      "properties": {
+        "solidity_class": { "type": "string" },
+        "promotion_result": { "type": "string" },
+        "planned_scope": { "type": "string" },
+        "verified_outcome": { "type": "string" },
+        "proof_target": {
+          "type": ["object", "null"],
+          "required": ["kind", "description"],
+          "properties": {
+            "kind": { "type": "string" },
+            "description": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "writeback": {
+      "type": "object",
+      "required": ["applied", "files", "summary"],
+      "properties": {
+        "applied": { "type": "boolean" },
+        "applied_at": { "type": ["string", "null"], "format": "date-time" },
+        "source_path": { "type": ["string", "null"] },
+        "result_commit": { "type": ["string", "null"] },
+        "files": { "type": "array", "items": { "type": "string" } },
+        "summary": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

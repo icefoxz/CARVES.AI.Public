@@ -1,0 +1,54 @@
+{
+  "schema_version": "test-evidence.v0",
+  "task_id": "official-v1-task-001-bounded-edit",
+  "task_version": "0.1.0-local",
+  "challenge_id": "local-mvp-task-001",
+  "required_commands": [
+    "node tests/bounded-fixture.test.js"
+  ],
+  "executed_commands": [
+    {
+      "command_id": "cmd_001",
+      "command": "node tests/bounded-fixture.test.js",
+      "required": true,
+      "started_at": "2026-04-16T00:00:00Z",
+      "completed_at": "2026-04-16T00:00:05Z",
+      "exit_code": 0,
+      "status": "passed",
+      "duration_ms": 5000,
+      "stdout_log_sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "stderr_log_sha256": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "result_artifact_sha256": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "summary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "errors": 0
+      }
+    }
+  ],
+  "missing_required_commands": [],
+  "summary": {
+    "required_command_count": 1,
+    "executed_required_command_count": 1,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0
+  },
+  "failure_summary": [],
+  "log_hashes": [
+    "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+  ],
+  "result_artifact_hashes": [
+    "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+  ],
+  "agent_claimed_tests_passed": true,
+  "privacy": {
+    "summary_only": true,
+    "full_logs_included": false,
+    "source_included": false,
+    "raw_diff_included": false
+  }
+}

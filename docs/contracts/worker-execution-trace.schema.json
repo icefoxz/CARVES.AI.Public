@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/worker-execution-trace.schema.json",
+  "title": "CARVES Runtime Worker Execution Trace Record",
+  "type": "object",
+  "required": [
+    "command",
+    "exitCode",
+    "standardOutput",
+    "standardError",
+    "skipped",
+    "workingDirectory",
+    "category",
+    "capturedAt"
+  ],
+  "properties": {
+    "command": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "exitCode": { "type": "integer" },
+    "standardOutput": { "type": "string" },
+    "standardError": { "type": "string" },
+    "skipped": { "type": "boolean" },
+    "workingDirectory": { "type": "string" },
+    "category": { "type": "string" },
+    "capturedAt": { "type": "string", "format": "date-time" }
+  }
+}

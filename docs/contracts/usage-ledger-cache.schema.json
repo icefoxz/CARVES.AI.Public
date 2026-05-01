@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/usage-ledger-cache.schema.json",
+  "title": "UsageLedgerCache",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "projectionClass",
+    "recordedAt",
+    "entries"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "usage-ledger-cache.v1" },
+    "projectionClass": { "const": "local_runtime_projection" },
+    "recordedAt": { "type": "string", "format": "date-time" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "usageEventId",
+          "projectionKind",
+          "fundingSource",
+          "laneId",
+          "routingProfileId",
+          "providerId",
+          "model",
+          "estimatedCostUsd",
+          "baselineCostUsd",
+          "billableCreditsProjected",
+          "fallbackUsed",
+          "reserveDisposition",
+          "settleDisposition",
+          "localReceiptRef",
+          "recordedAt"
+        ],
+        "properties": {
+          "usageEventId": { "type": "string" },
+          "projectionKind": {
+            "type": "string",
+            "enum": [
+              "estimated_usage_projection",
+              "reserve_receipt_projection",
+              "settle_receipt_projection",
+              "refund_receipt_projection"
+            ]
+          },
+          "fundingSource": {
+            "type": "string",
+            "enum": [
+              "byok",
+              "hosted_credits",
+              "unknown"
+            ]
+          },
+          "laneId": { "type": "string" },
+          "routingProfileId": { "type": ["string", "null"] },
+          "providerId": { "type": ["string", "null"] },
+          "model": { "type": ["string", "null"] },
+          "estimatedCostUsd": { "type": "number", "minimum": 0 },
+          "baselineCostUsd": { "type": "number", "minimum": 0 },
+          "billableCreditsProjected": { "type": ["number", "null"], "minimum": 0 },
+          "fallbackUsed": { "type": "boolean" },
+          "reserveDisposition": {
+            "type": "string",
+            "enum": [
+              "not_applicable",
+              "reserved",
+              "reservation_failed",
+              "estimated_only"
+            ]
+          },
+          "settleDisposition": {
+            "type": "string",
+            "enum": [
+              "not_applicable",
+              "pending",
+              "settled",
+              "refunded",
+              "estimated_only"
+            ]
+          },
+          "repoId": { "type": ["string", "null"] },
+          "taskId": { "type": ["string", "null"] },
+          "runId": { "type": ["string", "null"] },
+          "localReceiptRef": { "type": "string" },
+          "recordedAt": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+}

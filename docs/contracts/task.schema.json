@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/task.schema.json",
+  "title": "TaskExecutionEnvelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "taskId",
+    "objective",
+    "scope",
+    "files",
+    "acceptance",
+    "budget",
+    "validation",
+    "stopConditions",
+    "rollback"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "taskId": {
+      "type": "string",
+      "pattern": "^T-"
+    },
+    "cardId": { "type": ["string", "null"] },
+    "objective": { "type": "string" },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "in",
+        "out"
+      ],
+      "properties": {
+        "in": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "out": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relevant",
+        "allowed",
+        "forbidden"
+      ],
+      "properties": {
+        "relevant": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "allowed": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "forbidden": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "acceptance": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "acceptanceContract": {
+      "type": ["object", "null"]
+    },
+    "executionRun": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "runId",
+        "status",
+        "triggerReason",
+        "goal",
+        "currentStepIndex",
+        "steps"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "execution-run.v1" },
+        "runId": {
+          "type": "string",
+          "pattern": "^RUN-"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "running", "completed", "stopped", "failed", "abandoned"]
+        },
+        "triggerReason": {
+          "type": "string",
+          "enum": ["initial", "retry", "replan", "resume"]
+        },
+        "goal": { "type": "string" },
+        "currentStepIndex": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["stepId", "title", "kind", "status"],
+            "properties": {
+              "stepId": { "type": "string" },
+              "title": { "type": "string" },
+              "kind": {
+                "type": "string",
+                "enum": ["inspect", "implement", "verify", "writeback", "cleanup", "replan"]
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending", "inprogress", "completed", "skipped", "failed", "blocked"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "size",
+        "confidenceLevel",
+        "maxFiles",
+        "maxLinesChanged",
+        "maxRetries",
+        "maxFailureDensity",
+        "maxDurationMinutes",
+        "requiresReviewBoundary",
+        "changeKinds",
+        "summary",
+        "rationale"
+      ],
+      "properties": {
+        "schemaVersion": { "const": "1.0" },
+        "size": {
+          "type": "string",
+          "enum": ["small", "medium", "large"]
+        },
+        "confidenceLevel": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "maxFiles": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxLinesChanged": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxRetries": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxFailureDensity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "maxDurationMinutes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "requiresReviewBoundary": {
+          "type": "boolean"
+        },
+        "changeKinds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "sourcecode",
+              "tests",
+              "documentation",
+              "configuration",
+              "controlplanestate",
+              "contracts"
+            ]
+          }
+        },
+        "summary": { "type": "string" },
+        "rationale": { "type": "string" }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commands",
+        "checks",
+        "expectedEvidence"
+      ],
+      "properties": {
+        "commands": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "checks": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "expectedEvidence": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "stopConditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "pending",
+          "stalled",
+          "lost_tracking",
+          "blocked",
+          "retry_required"
+        ]
+      },
+      "minItems": 1
+    },
+    "rollback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy"
+      ],
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": ["none", "discard", "manual_review", "retry_from_clean_state"]
+        },
+        "notes": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

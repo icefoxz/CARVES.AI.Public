@@ -1,0 +1,593 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.ai/schemas/shield-evidence-v0.schema.json",
+  "title": "CARVES Shield Evidence v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "generated_at_utc",
+    "mode_hint",
+    "repository",
+    "privacy",
+    "dimensions",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "shield-evidence.v0"
+    },
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generated_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "mode_hint": {
+      "enum": [
+        "lite",
+        "standard",
+        "both"
+      ]
+    },
+    "sample_window_days": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "repository": {
+      "$ref": "#/$defs/repository"
+    },
+    "privacy": {
+      "$ref": "#/$defs/privacy"
+    },
+    "dimensions": {
+      "$ref": "#/$defs/dimensions"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    }
+  },
+  "$defs": {
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "host",
+        "visibility"
+      ],
+      "properties": {
+        "host": {
+          "type": "string",
+          "minLength": 1
+        },
+        "visibility": {
+          "enum": [
+            "public",
+            "private",
+            "internal",
+            "unknown"
+          ]
+        },
+        "default_branch": {
+          "type": "string"
+        },
+        "repo_id_hash": {
+          "type": "string"
+        },
+        "commit_sha": {
+          "type": "string"
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_included",
+        "raw_diff_included",
+        "prompt_included",
+        "secrets_included",
+        "redaction_applied",
+        "upload_intent"
+      ],
+      "properties": {
+        "source_included": {
+          "type": "boolean",
+          "const": false
+        },
+        "raw_diff_included": {
+          "type": "boolean",
+          "const": false
+        },
+        "prompt_included": {
+          "type": "boolean",
+          "const": false
+        },
+        "secrets_included": {
+          "type": "boolean",
+          "const": false
+        },
+        "credential_included": {
+          "type": "boolean",
+          "const": false,
+          "description": "Optional explicit alias checked by the evaluator. It must remain false when present."
+        },
+        "credentials_included": {
+          "type": "boolean",
+          "const": false,
+          "description": "Optional explicit alias checked by the evaluator. It must remain false when present."
+        },
+        "model_response_included": {
+          "type": "boolean",
+          "const": false,
+          "description": "Optional explicit privacy field checked by the evaluator. It must remain false when present."
+        },
+        "model_responses_included": {
+          "type": "boolean",
+          "const": false,
+          "description": "Optional explicit privacy field checked by the evaluator. It must remain false when present."
+        },
+        "private_payload_included": {
+          "type": "boolean",
+          "const": false,
+          "description": "Optional explicit privacy field checked by the evaluator. It must remain false when present."
+        },
+        "private_file_payloads_included": {
+          "type": "boolean",
+          "const": false,
+          "description": "Optional explicit privacy field checked by the evaluator. It must remain false when present."
+        },
+        "redaction_applied": {
+          "type": "boolean"
+        },
+        "upload_intent": {
+          "enum": [
+            "local_only",
+            "api_evidence_summary"
+          ]
+        }
+      }
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "guard",
+        "handoff",
+        "audit"
+      ],
+      "properties": {
+        "guard": {
+          "$ref": "#/$defs/guard"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff"
+        },
+        "audit": {
+          "$ref": "#/$defs/audit"
+        }
+      }
+    },
+    "guard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "policy": {
+          "$ref": "#/$defs/guard_policy"
+        },
+        "ci": {
+          "$ref": "#/$defs/guard_ci"
+        },
+        "decisions": {
+          "$ref": "#/$defs/guard_decisions"
+        },
+        "proofs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/proof_ref"
+          }
+        }
+      }
+    },
+    "guard_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "present": {
+          "type": "boolean"
+        },
+        "path": {
+          "type": "string"
+        },
+        "schema_valid": {
+          "type": "boolean"
+        },
+        "schema_version": {
+          "type": "integer"
+        },
+        "policy_id": {
+          "type": "string"
+        },
+        "effective_protected_path_prefixes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "protected_path_action": {
+          "$ref": "#/$defs/action"
+        },
+        "outside_allowed_action": {
+          "$ref": "#/$defs/action"
+        },
+        "fail_closed": {
+          "type": "boolean"
+        },
+        "review_is_passing": {
+          "type": "boolean"
+        },
+        "emit_evidence": {
+          "type": "boolean"
+        },
+        "change_budget_present": {
+          "type": "boolean"
+        },
+        "dependency_policy_present": {
+          "type": "boolean"
+        },
+        "source_test_rule_present": {
+          "type": "boolean"
+        },
+        "mixed_feature_refactor_rule_present": {
+          "type": "boolean"
+        }
+      }
+    },
+    "guard_ci": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "detected": {
+          "type": "boolean"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "workflow_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "guard_check_command_detected": {
+          "type": "boolean"
+        },
+        "fails_on_review_or_block": {
+          "type": "boolean"
+        }
+      }
+    },
+    "guard_decisions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "present": {
+          "type": "boolean"
+        },
+        "window_days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "allow_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "block_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolved_review_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolved_block_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "packets": {
+          "$ref": "#/$defs/handoff_packets"
+        },
+        "latest_packet": {
+          "$ref": "#/$defs/latest_packet"
+        },
+        "continuity": {
+          "$ref": "#/$defs/handoff_continuity"
+        }
+      }
+    },
+    "handoff_packets": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "present": {
+          "type": "boolean"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "window_days": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "latest_packet": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_valid": {
+          "type": "boolean"
+        },
+        "age_days": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "repo_orientation_fresh": {
+          "type": "boolean"
+        },
+        "target_repo_matches": {
+          "type": "boolean"
+        },
+        "current_objective_present": {
+          "type": "boolean"
+        },
+        "remaining_work_present": {
+          "type": "boolean"
+        },
+        "must_not_repeat_present": {
+          "type": "boolean"
+        },
+        "completed_facts_with_evidence_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "decision_refs_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "confidence": {
+          "type": "string"
+        }
+      }
+    },
+    "handoff_continuity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "session_switch_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "session_switches_with_packet": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stale_packet_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "log": {
+          "$ref": "#/$defs/audit_log"
+        },
+        "records": {
+          "$ref": "#/$defs/audit_records"
+        },
+        "coverage": {
+          "$ref": "#/$defs/audit_coverage"
+        },
+        "reports": {
+          "$ref": "#/$defs/audit_reports"
+        }
+      }
+    },
+    "audit_log": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "present": {
+          "type": "boolean"
+        },
+        "readable": {
+          "type": "boolean"
+        },
+        "schema_supported": {
+          "type": "boolean"
+        },
+        "append_only_claimed": {
+          "type": "boolean",
+          "description": "True only when the producer has explicit append-only evidence distinct from basic log readability or integrity parsing. Local Audit discovery must use false when no such proof is available."
+        },
+        "integrity_check_passed": {
+          "type": "boolean",
+          "description": "True when the supplied records were readable and schema-compatible enough for this evidence pass. This is not an append-only proof by itself."
+        }
+      }
+    },
+    "audit_records": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "record_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "malformed_record_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "future_schema_record_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "earliest_recorded_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "latest_recorded_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "records_with_rule_id_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "records_with_evidence_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "audit_coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "block_decision_count": {
+          "type": "integer",
+          "description": "Number of block decisions observed in the sampled Audit inputs.",
+          "minimum": 0
+        },
+        "block_explain_covered_count": {
+          "type": "integer",
+          "description": "Number of block decisions backed by explicit explain coverage evidence. Do not mirror block_decision_count unless explain coverage was actually observed.",
+          "minimum": 0
+        },
+        "review_decision_count": {
+          "type": "integer",
+          "description": "Number of review decisions observed in the sampled Audit inputs.",
+          "minimum": 0
+        },
+        "review_explain_covered_count": {
+          "type": "integer",
+          "description": "Number of review decisions backed by explicit explain coverage evidence. Do not mirror review_decision_count unless explain coverage was actually observed.",
+          "minimum": 0
+        }
+      }
+    },
+    "audit_reports": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "summary_generated_in_window": {
+          "type": "boolean",
+          "description": "True only when a summary report artifact or equivalent explicit report evidence was generated inside the evidence window."
+        },
+        "change_report_generated_in_window": {
+          "type": "boolean",
+          "description": "True only when a change report artifact or equivalent explicit report evidence was generated inside the evidence window."
+        },
+        "failure_pattern_distribution_present": {
+          "type": "boolean",
+          "description": "True only when failure-pattern distribution evidence was explicitly produced. Missing evidence should be false or omitted, not inferred from raw event counts."
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "producer",
+        "generated_by",
+        "source"
+      ],
+      "properties": {
+        "producer": {
+          "type": "string"
+        },
+        "producer_version": {
+          "type": "string"
+        },
+        "generated_by": {
+          "enum": [
+            "local",
+            "ci",
+            "api",
+            "manual"
+          ]
+        },
+        "source": {
+          "type": "string"
+        },
+        "evidence_hash": {
+          "type": "string"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "proof_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "ref"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "ref": {
+          "type": "string"
+        }
+      }
+    },
+    "action": {
+      "enum": [
+        "allow",
+        "review",
+        "block"
+      ]
+    }
+  }
+}

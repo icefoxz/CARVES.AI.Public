@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/execution-budget.schema.json",
+  "title": "ExecutionBudget",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "size",
+    "confidenceLevel",
+    "maxFiles",
+    "maxLinesChanged",
+    "maxRetries",
+    "maxFailureDensity",
+    "maxDurationMinutes",
+    "requiresReviewBoundary",
+    "changeKinds",
+    "summary",
+    "rationale"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "size": {
+      "type": "string",
+      "enum": ["small", "medium", "large"]
+    },
+    "confidenceLevel": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "maxFiles": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "maxLinesChanged": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "maxRetries": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "maxFailureDensity": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "maxDurationMinutes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "requiresReviewBoundary": {
+      "type": "boolean"
+    },
+    "changeKinds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "sourcecode",
+          "tests",
+          "documentation",
+          "configuration",
+          "controlplanestate",
+          "contracts"
+        ]
+      }
+    },
+    "summary": { "type": "string" },
+    "rationale": { "type": "string" }
+  }
+}

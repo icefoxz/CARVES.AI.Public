@@ -1,0 +1,692 @@
+{
+  "fixture_set": "carves.governance_gate_regression.v0",
+  "fixture_status": "blocking_fixture_contract",
+  "runtime_authority": false,
+  "terminology": {
+    "v0_0_name": "blocking_fixture_contract",
+    "active_policy_name": "blocking_ci_minimum",
+    "rule": "Do not call fixtures blocking CI until they are executable and have passed."
+  },
+  "fixture_maturity": {
+    "v0_0_policy_bundle": {
+      "required": [
+        "fixture_names",
+        "expected_output_subsets",
+        "blocking_fixture_list"
+      ],
+      "meaning": "test contract exists but does not yet prove runtime behavior"
+    },
+    "active_policy": {
+      "required": [
+        "full_input_snapshot_for_each_blocking_fixture",
+        "approved_evaluator_or_validation_method",
+        "recorded_fixture_run_result",
+        "blocking_fixtures_pass"
+      ],
+      "meaning": "policy has proof and may be activated"
+    }
+  },
+  "fixture_shape": {
+    "name": "string",
+    "input_snapshot": {
+      "request": {},
+      "truth_snapshot": {},
+      "worktree_snapshot": {},
+      "path_snapshot": {},
+      "authorization": {},
+      "scope_domain": {},
+      "evidence": []
+    },
+    "expected_output_subset": {}
+  },
+  "validation_method": {
+    "method_status": "approved_for_activation_prep",
+    "evaluator_kind": "manual_policy_contract_evaluation",
+    "runtime_authority": false,
+    "does_not_require": [
+      "sdk_worker",
+      "api_worker",
+      "source_code_changes",
+      "tests_fixtures_changes",
+      "default_governance_entry_changes"
+    ],
+    "input_requirements": [
+      "full_input_snapshot_for_each_blocking_fixture",
+      "expected_output_subset_for_each_blocking_fixture",
+      "policy_version_match",
+      "profile_version_match",
+      "fixture_set_version_match"
+    ],
+    "evaluation_steps": [
+      "For each fixture, classify planned_paths using the runtime profile path classifier.",
+      "Apply state_consistency_checks when truth_snapshot and projection state are present.",
+      "Collect reason_codes from path classes, request posture, authorization posture, host posture, task status, and scope_domain.",
+      "Apply execution policy resolution_order from lowest rank number to highest.",
+      "Compare the actual decision output against expected_output_subset using subset matching.",
+      "Fail the fixture when a required expected field is missing, softened, or contradicted.",
+      "Record the result separately; this contract definition is not itself a pass result."
+    ],
+    "pass_criteria": [
+      "every_blocking_fixture_has_input_snapshot",
+      "every_expected_output_subset_matches_policy_decision",
+      "no_fixture_claims_policy_active",
+      "no_fixture_uses_artifact_as_truth",
+      "no_fixture_legalizes_current_mixed_diff",
+      "no_fixture_requires_sdk_or_api_worker"
+    ],
+    "recorded_result_status": "pass",
+    "recorded_result_required_before_activation": true,
+    "result_authority": "activation_prep_evidence_ref",
+    "recorded_result": {
+      "run_id": "fixture-contract-manual-run-20260419-phase4",
+      "status": "pass",
+      "recorded_at_utc": "2026-04-19T07:54:40Z",
+      "validator": "manual_policy_contract_evaluation",
+      "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-004",
+      "summary": "All 9 blocking_fixture_contract entries have full input_snapshot data and expected_output_subset data; fixture status remains blocking_fixture_contract, not blocking_ci_minimum.",
+      "checked_counts": {
+        "blocking_fixture_contract_count": 9,
+        "with_input_snapshot": 9,
+        "with_expected_output_subset": 9
+      },
+      "non_authorizing_limits": [
+        "does_not_activate_policy",
+        "does_not_change_default_governance",
+        "does_not_authorize_submit",
+        "does_not_legalize_current_mixed_diff",
+        "does_not_modify_AGENTS_md",
+        "does_not_modify_initialization_report"
+      ]
+    }
+  },
+  "blocking_fixture_contract": [
+    {
+      "name": "readme_typo_direct_lightweight",
+      "input_snapshot": {
+        "request": {
+          "kind": "direct_user_instruction",
+          "summary": "Fix a typo in README.md without changing product contract, runtime behavior, or governance policy.",
+          "requested_action": "file_edit",
+          "submit_requested": false,
+          "completion_requested": false
+        },
+        "truth_snapshot": {
+          "active_card": null,
+          "task_status": "none",
+          "policy_status": "proposed_or_active_policy_under_test",
+          "host_status": "not_required_for_direct_lightweight_decision",
+          "state_projection_status": "not_applicable"
+        },
+        "worktree_snapshot": {
+          "worktree_clean_or_owned": true,
+          "planned_paths_known": true,
+          "preexisting_unowned_diff": false
+        },
+        "path_snapshot": {
+          "planned_paths": [
+            "README.md"
+          ],
+          "path_classes": [
+            "ordinary_docs"
+          ],
+          "high_risk_reason_codes": []
+        },
+        "authorization": {
+          "human_instruction_explicit": true,
+          "governed_card_present": false,
+          "bootstrap_authorization": false,
+          "activation_authorization": false
+        },
+        "scope_domain": {
+          "declared": "docs",
+          "allowed_paths": [
+            "README.md",
+            "docs/**"
+          ],
+          "scope_domain_mismatch": false
+        },
+        "evidence": [
+          "planned_paths_observed",
+          "path_classifier_no_high_risk_match",
+          "request_is_narrow_non_contract_docs_change"
+        ]
+      },
+      "expected_output_subset": {
+        "execution_level": "direct_lightweight",
+        "eligibility": "allowed",
+        "permissions": {
+          "submit_allowed": false,
+          "truth_write_allowed": false
+        }
+      }
+    },
+    {
+      "name": "policy_file_change_requires_governance",
+      "input_snapshot": {
+        "request": {
+          "kind": "direct_user_instruction",
+          "summary": "Modify the CARVES Stable Work policy profile file.",
+          "requested_action": "file_edit",
+          "submit_requested": false,
+          "completion_requested": false
+        },
+        "truth_snapshot": {
+          "active_card": null,
+          "task_status": "none",
+          "policy_status": "proposed_or_active_policy_under_test",
+          "host_status": "unverified",
+          "state_projection_status": "not_applicable"
+        },
+        "worktree_snapshot": {
+          "worktree_clean_or_owned": true,
+          "planned_paths_known": true,
+          "preexisting_unowned_diff": false
+        },
+        "path_snapshot": {
+          "planned_paths": [
+            "docs/product/policy/CARVES_RUNTIME_POLICY_PROFILE_V0.json"
+          ],
+          "path_classes": [
+            "policy_surface"
+          ],
+          "high_risk_reason_codes": [
+            "POLICY_SURFACE_TOUCHED"
+          ]
+        },
+        "authorization": {
+          "human_instruction_explicit": true,
+          "governed_card_present": false,
+          "policy_change_route_authorized": false,
+          "activation_authorization": false
+        },
+        "scope_domain": {
+          "declared": "policy",
+          "scope_domain_mismatch": false
+        },
+        "evidence": [
+          "runtime_profile_path_matches_policy_surface",
+          "policy_surface_changes_require_governance"
+        ]
+      },
+      "expected_output_subset": {
+        "intake_route": "policy_change",
+        "execution_level": "governed_card_required",
+        "eligibility": "blocked",
+        "reason_codes": [
+          "POLICY_SURFACE_TOUCHED"
+        ]
+      }
+    },
+    {
+      "name": "unauthorized_policy_diff_routes_recovery",
+      "input_snapshot": {
+        "request": {
+          "kind": "observed_diff_without_authorization",
+          "summary": "Policy surface diff exists without explicit bootstrap, policy_change, or governed activation authorization.",
+          "requested_action": "classify_existing_diff",
+          "submit_requested": false,
+          "completion_requested": false
+        },
+        "truth_snapshot": {
+          "active_card": null,
+          "task_status": "none",
+          "policy_status": "proposed_or_active_policy_under_test",
+          "host_status": "unverified",
+          "state_projection_status": "not_applicable"
+        },
+        "worktree_snapshot": {
+          "worktree_clean_or_owned": false,
+          "planned_paths_known": true,
+          "preexisting_unowned_diff": true
+        },
+        "path_snapshot": {
+          "planned_paths": [
+            "docs/product/policy/CARVES_EXECUTION_INTAKE_POLICY_V0.json"
+          ],
+          "path_classes": [
+            "policy_surface"
+          ],
+          "high_risk_reason_codes": [
+            "POLICY_SURFACE_TOUCHED",
+            "UNAUTHORIZED_POLICY_SURFACE_DIFF"
+          ]
+        },
+        "authorization": {
+          "human_instruction_explicit": false,
+          "bootstrap_authorization": false,
+          "policy_change_route_authorized": false,
+          "activation_authorization": false
+        },
+        "scope_domain": {
+          "declared": "unknown",
+          "scope_domain_mismatch": true
+        },
+        "evidence": [
+          "policy_surface_diff_observed",
+          "no_authorization_evidence_ref",
+          "recovery_precedes_policy_change"
+        ]
+      },
+      "expected_output_subset": {
+        "intake_route": "recovery",
+        "execution_level": "governed_card_required",
+        "eligibility": "blocked",
+        "reason_codes": [
+          "UNAUTHORIZED_POLICY_SURFACE_DIFF"
+        ]
+      }
+    },
+    {
+      "name": "starter_pack_runtime_change_blocked",
+      "input_snapshot": {
+        "request": {
+          "kind": "direct_user_instruction",
+          "summary": "Change a starter-pack runtime file such as package.json.",
+          "requested_action": "file_edit",
+          "submit_requested": false,
+          "completion_requested": false
+        },
+        "truth_snapshot": {
+          "active_card": null,
+          "task_status": "none",
+          "policy_status": "proposed_or_active_policy_under_test",
+          "host_status": "unverified",
+          "state_projection_status": "not_applicable"
+        },
+        "worktree_snapshot": {
+          "worktree_clean_or_owned": true,
+          "planned_paths_known": true,
+          "preexisting_unowned_diff": false
+        },
+        "path_snapshot": {
+          "planned_paths": [
+            "docs/matrix/starter-packs/official-agent-dev-safety-v1-local-mvp/package.json"
+          ],
+          "path_classes": [
+            "product_contract"
+          ],
+          "high_risk_reason_codes": [
+            "CONTRACT_SURFACE_TOUCHED"
+          ]
+        },
+        "authorization": {
+          "human_instruction_explicit": true,
+          "governed_card_present": false,
+          "contract_change_authorized": false
+        },
+        "scope_domain": {
+          "declared": "subproject:node-starter-pack",
+          "requires_governed_card": true,
+          "scope_domain_mismatch": false
+        },
+        "evidence": [
+          "starter_pack_path_matches_product_contract",
+          "subproject_requires_governed_contract_change"
+        ]
+      },
+      "expected_output_subset": {
+        "intake_route": "contract_change",
+        "execution_level": "governed_card_required",
+        "eligibility": "blocked",
+        "reason_codes": [
+          "CONTRACT_SURFACE_TOUCHED"
+        ]
+      }
+    },
+    {
+      "name": "node_starter_pack_mixed_diff_recovery",
+      "input_snapshot": {
+        "request": {
+          "kind": "observed_mixed_lifecycle_diff",
+          "summary": "Node starter-pack migration diff touches product contract, fixture truth, public CLI, release artifact, completed task truth, and markdown projection state.",
+          "requested_action": "classify_existing_diff",
+          "submit_requested": true,
+          "completion_requested": true
+        },
+        "truth_snapshot": {
+          "active_card": "CARD-938_to_CARD-944_completed_lineage",
+          "task_status": "completed",
+          "policy_status": "proposed_or_active_policy_under_test",
+          "host_status": "unverified",
+          "state_projection_status": "conflict",
+          "machine_truth": [
+            ".ai/tasks/nodes/*.json"
+          ],
+          "projection": [
+            ".ai/STATE.md",
+            ".ai/TASK_QUEUE.md"
+          ]
+        },
+        "worktree_snapshot": {
+          "worktree_clean_or_owned": false,
+          "planned_paths_known": true,
+          "preexisting_unowned_diff": true
+        },
+        "path_snapshot": {
+          "planned_paths": [
+            "docs/matrix/starter-packs/official-agent-dev-safety-v1-local-mvp/**",
+            "tests/fixtures/agent-trial-v1/**",
+            "src/CARVES.Runtime.Cli/**",
+            "src/CARVES.Matrix.Core/MatrixTrial*",
+            "artifacts/release/**",
+            ".ai/STATE.md",
+            ".ai/TASK_QUEUE.md"
+          ],
+          "path_classes": [
+            "product_contract",
+            "fixture_truth",
+            "public_cli",
+            "scorer_behavior",
+            "derived_artifact",
+            "governed_mirror"
+          ],
+          "high_risk_reason_codes": [
+            "CONTRACT_SURFACE_TOUCHED",
+            "FIXTURE_TRUTH_TOUCHED",
+            "PUBLIC_CLI_TOUCHED",
+            "SCORER_BEHAVIOR_TOUCHED",
+            "DERIVED_ARTIFACT_TOUCHED",
+            "STALE_PROJECTION",
+            "COMPLETED_TASK_SCOPE_REUSE",
+            "MIXED_LIFECYCLE_DIFF"
+          ]
+        },
+        "authorization": {
+          "human_instruction_explicit": true,
+          "governed_card_present": false,
+          "contract_change_authorized": false,
+          "recovery_authorized": false,
+          "submit_authorized": false,
+          "activation_authorization": false
+        },
+        "scope_domain": {
+          "declared": "subproject:node-starter-pack",
+          "requires_governed_card": true,
+          "scope_domain_mismatch": true
+        },
+        "evidence": [
+          "mixed_lifecycle_paths_observed",
+          "completed_task_reuse_detected",
+          "state_projection_conflict_detected",
+          "release_artifact_is_derived_not_truth"
+        ]
+      },
+      "expected_output_subset": {
+        "intake_route": "recovery",
+        "secondary_routes": [
+          "contract_change"
+        ],
+        "execution_level": "none",
+        "eligibility": "blocked",
+        "permissions": {
+          "file_write_allowed": false,
+          "truth_write_allowed": false,
+          "submit_allowed": false,
+          "completion_allowed": false
+        },
+        "reason_codes": [
+          "CONTRACT_SURFACE_TOUCHED",
+          "FIXTURE_TRUTH_TOUCHED",
+          "PUBLIC_CLI_TOUCHED",
+          "DERIVED_ARTIFACT_TOUCHED",
+          "STALE_PROJECTION",
+          "COMPLETED_TASK_SCOPE_REUSE"
+        ]
+      }
+    },
+    {
+      "name": "submit_everything_requires_scoped_confirmation",
+      "input_snapshot": {
+        "request": {
+          "kind": "direct_user_instruction",
+          "summary": "Submit everything currently in the worktree.",
+          "requested_action": "submit",
+          "submit_requested": true,
+          "completion_requested": false
+        },
+        "truth_snapshot": {
+          "active_card": null,
+          "task_status": "unknown",
+          "policy_status": "proposed_or_active_policy_under_test",
+          "host_status": "unverified",
+          "state_projection_status": "unknown"
+        },
+        "worktree_snapshot": {
+          "worktree_clean_or_owned": false,
+          "planned_paths_known": false,
+          "preexisting_unowned_diff": true
+        },
+        "path_snapshot": {
+          "planned_paths": [
+            "**"
+          ],
+          "path_classes": [
+            "unknown"
+          ],
+          "high_risk_reason_codes": [
+            "UNSCOPED_SUBMIT_REQUEST"
+          ]
+        },
+        "authorization": {
+          "human_instruction_explicit": true,
+          "submit_scope_explicit": false,
+          "governed_card_present": false,
+          "activation_authorization": false
+        },
+        "scope_domain": {
+          "declared": "unknown",
+          "scope_domain_mismatch": true
+        },
+        "evidence": [
+          "submit_request_unscoped",
+          "actual_diff_inventory_required_before_submit"
+        ]
+      },
+      "expected_output_subset": {
+        "eligibility": "needs_confirmation",
+        "permissions": {
+          "submit_allowed": false
+        },
+        "reason_codes": [
+          "UNSCOPED_SUBMIT_REQUEST"
+        ]
+      }
+    },
+    {
+      "name": "prototype_cannot_complete",
+      "input_snapshot": {
+        "request": {
+          "kind": "direct_user_instruction",
+          "summary": "Build a prototype and mark the task complete.",
+          "requested_action": "prototype",
+          "submit_requested": false,
+          "completion_requested": true
+        },
+        "truth_snapshot": {
+          "active_card": null,
+          "task_status": "pending_or_unknown",
+          "policy_status": "proposed_or_active_policy_under_test",
+          "host_status": "unverified",
+          "state_projection_status": "not_applicable"
+        },
+        "worktree_snapshot": {
+          "worktree_clean_or_owned": true,
+          "planned_paths_known": true,
+          "preexisting_unowned_diff": false
+        },
+        "path_snapshot": {
+          "planned_paths": [
+            "prototype/**"
+          ],
+          "path_classes": [
+            "prototype"
+          ],
+          "high_risk_reason_codes": [
+            "PROTOTYPE_NON_COMPLETION"
+          ]
+        },
+        "authorization": {
+          "human_instruction_explicit": true,
+          "prototype_authorized": true,
+          "completion_authorized": false,
+          "submit_authorized": false
+        },
+        "scope_domain": {
+          "declared": "prototype",
+          "scope_domain_mismatch": false
+        },
+        "evidence": [
+          "prototype_mode_requested",
+          "prototype_is_not_completion"
+        ]
+      },
+      "expected_output_subset": {
+        "execution_level": "lightweight_task",
+        "permissions": {
+          "completion_allowed": false,
+          "submit_allowed": false
+        },
+        "reason_codes": [
+          "PROTOTYPE_NON_COMPLETION"
+        ]
+      }
+    },
+    {
+      "name": "host_unverified_blocks_governed_completion",
+      "input_snapshot": {
+        "request": {
+          "kind": "governed_completion_attempt",
+          "summary": "Complete governed work while Host route is unavailable or unverified.",
+          "requested_action": "truth_writeback_and_completion",
+          "submit_requested": true,
+          "completion_requested": true
+        },
+        "truth_snapshot": {
+          "active_card": "present",
+          "task_status": "pending_or_in_review",
+          "policy_status": "proposed_or_active_policy_under_test",
+          "host_status": "unverified",
+          "state_projection_status": "not_applicable"
+        },
+        "worktree_snapshot": {
+          "worktree_clean_or_owned": true,
+          "planned_paths_known": true,
+          "preexisting_unowned_diff": false
+        },
+        "path_snapshot": {
+          "planned_paths": [
+            "docs/product/**"
+          ],
+          "path_classes": [
+            "governed_docs"
+          ],
+          "high_risk_reason_codes": [
+            "HOST_ROUTE_UNVERIFIED"
+          ]
+        },
+        "authorization": {
+          "human_instruction_explicit": true,
+          "governed_card_present": true,
+          "host_route_verified": false,
+          "truth_write_authorized": false,
+          "submit_authorized": false,
+          "completion_authorized": false
+        },
+        "scope_domain": {
+          "declared": "governed_policy_work",
+          "scope_domain_mismatch": false
+        },
+        "evidence": [
+          "host_route_unverified",
+          "truth_writeback_requires_governed_host_route"
+        ]
+      },
+      "expected_output_subset": {
+        "permissions": {
+          "truth_write_allowed": false,
+          "submit_allowed": false,
+          "artifact_write_allowed": false,
+          "completion_allowed": false
+        },
+        "reason_codes": [
+          "HOST_ROUTE_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "name": "projection_overreach_fails_check",
+      "input_snapshot": {
+        "request": {
+          "kind": "projection_validation",
+          "summary": "Validate an agent rules candidate that grants permission not present in the machine policy.",
+          "requested_action": "projection_check",
+          "submit_requested": false,
+          "completion_requested": false
+        },
+        "truth_snapshot": {
+          "active_card": null,
+          "task_status": "none",
+          "policy_status": "proposed_or_active_policy_under_test",
+          "host_status": "not_required_for_projection_contract_check",
+          "state_projection_status": "not_applicable",
+          "projection_truth_role": "projection_candidate_not_truth"
+        },
+        "worktree_snapshot": {
+          "worktree_clean_or_owned": true,
+          "planned_paths_known": true,
+          "preexisting_unowned_diff": false
+        },
+        "path_snapshot": {
+          "planned_paths": [
+            "docs/product/CARVES_STABLE_WORK_V0_AGENT_RULES_CANDIDATE.md"
+          ],
+          "path_classes": [
+            "policy_projection"
+          ],
+          "high_risk_reason_codes": [
+            "PROJECTION_OVERREACH"
+          ]
+        },
+        "authorization": {
+          "human_instruction_explicit": true,
+          "projection_validator_present": true,
+          "projection_grants_extra_permissions": true,
+          "activation_authorization": false
+        },
+        "scope_domain": {
+          "declared": "policy_projection",
+          "scope_domain_mismatch": false
+        },
+        "evidence": [
+          "projection_candidate_claims_more_than_policy",
+          "projection_is_not_truth"
+        ]
+      },
+      "expected_output_subset": {
+        "eligibility": "blocked",
+        "reason_codes": [
+          "PROJECTION_OVERREACH"
+        ]
+      }
+    }
+  ],
+  "golden_user_output_expectations": [
+    {
+      "name": "bundle_landed_not_active",
+      "must_say": [
+        "policy bundle is proposed",
+        "policy is not active",
+        "default governance has not changed",
+        "activation remains a separate governed event"
+      ]
+    },
+    {
+      "name": "mixed_diff_not_legalized",
+      "must_say": [
+        "current mixed diff remains recovery-only",
+        "release artifact is not truth",
+        "completed card cannot accept new scope"
+      ]
+    }
+  ]
+}

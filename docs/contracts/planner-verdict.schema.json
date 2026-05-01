@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/planner-verdict.schema.json",
+  "title": "CARVES Runtime PlannerVerdict Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractId",
+    "outcomeClass",
+    "summary",
+    "resultingTaskStatus",
+    "plannerOnly",
+    "requiresReviewBoundary",
+    "requiresHumanReview",
+    "requestsReplan",
+    "indicatesFailure",
+    "indicatesQuarantine"
+  ],
+  "properties": {
+    "contractId": {
+      "type": "string",
+      "enum": ["continue", "review", "human_review", "replan", "failure", "quarantined", "complete"]
+    },
+    "outcomeClass": {
+      "type": "string",
+      "enum": ["Continue", "Review", "HumanReview", "Replan", "Failure", "Quarantine", "Complete"]
+    },
+    "legacyVerdict": {
+      "type": ["string", "null"],
+      "enum": ["Continue", "PauseForReview", "HumanDecisionRequired", "SplitTask", "Blocked", "Complete", null]
+    },
+    "summary": { "type": "string" },
+    "resultingTaskStatus": {
+      "type": "string",
+      "enum": ["Pending", "Review", "Blocked", "Completed"]
+    },
+    "plannerOnly": { "type": "boolean", "const": true },
+    "requiresReviewBoundary": { "type": "boolean" },
+    "requiresHumanReview": { "type": "boolean" },
+    "requestsReplan": { "type": "boolean" },
+    "indicatesFailure": { "type": "boolean" },
+    "indicatesQuarantine": { "type": "boolean" }
+  }
+}

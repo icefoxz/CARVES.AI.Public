@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CARVES Actor Sessions Snapshot",
+  "type": "object",
+  "required": ["entries"],
+  "properties": {
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["actor_session_id", "kind", "actor_identity", "repo_id", "state", "last_reason", "started_at", "last_seen_at", "updated_at"],
+        "properties": {
+          "actor_session_id": { "type": "string" },
+          "kind": { "type": "string" },
+          "actor_identity": { "type": "string" },
+          "repo_id": { "type": "string" },
+          "runtime_session_id": { "type": ["string", "null"] },
+          "process_id": { "type": ["integer", "null"], "minimum": 1 },
+          "state": { "type": "string" },
+          "last_operation_class": { "type": ["string", "null"] },
+          "last_operation": { "type": ["string", "null"] },
+          "current_task_id": { "type": ["string", "null"] },
+          "current_run_id": { "type": ["string", "null"] },
+          "last_permission_request_id": { "type": ["string", "null"] },
+          "current_ownership_scope": { "type": ["string", "null"] },
+          "current_ownership_target_id": { "type": ["string", "null"] },
+          "last_reason": { "type": "string" },
+          "started_at": { "type": "string", "format": "date-time" },
+          "last_seen_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+}

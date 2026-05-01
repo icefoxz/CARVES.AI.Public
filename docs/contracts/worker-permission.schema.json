@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Worker Permission Artifact",
+  "type": "object",
+  "required": ["schema_version", "captured_at", "task_id", "run_id", "requests"],
+  "properties": {
+    "schema_version": { "type": "integer" },
+    "captured_at": { "type": "string", "format": "date-time" },
+    "task_id": { "type": "string" },
+    "run_id": { "type": "string" },
+    "requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["permission_request_id", "task_id", "backend_id", "provider_id", "kind", "risk_level", "summary", "state", "requested_at"],
+        "properties": {
+          "permission_request_id": { "type": "string" },
+          "task_id": { "type": "string" },
+          "backend_id": { "type": "string" },
+          "provider_id": { "type": "string" },
+          "adapter_id": { "type": "string" },
+          "profile_id": { "type": "string" },
+          "kind": { "type": "string" },
+          "risk_level": { "type": "string" },
+          "scope_summary": { "type": "string" },
+          "resource_path": { "type": ["string", "null"] },
+          "summary": { "type": "string" },
+          "raw_prompt": { "type": ["string", "null"] },
+          "raw_payload": { "type": ["string", "null"] },
+          "recommended_decision": { "type": "string" },
+          "recommended_reason_code": { "type": "string" },
+          "recommended_reason": { "type": "string" },
+          "recommended_consequence_summary": { "type": "string" },
+          "state": { "type": "string" },
+          "final_decision": { "type": ["string", "null"] },
+          "decision_actor_kind": { "type": ["string", "null"] },
+          "decision_identity": { "type": ["string", "null"] },
+          "decision_reason": { "type": ["string", "null"] },
+          "consequence_summary": { "type": ["string", "null"] },
+          "requested_at": { "type": "string", "format": "date-time" },
+          "resolved_at": { "type": ["string", "null"], "format": "date-time" }
+        }
+      }
+    }
+  }
+}

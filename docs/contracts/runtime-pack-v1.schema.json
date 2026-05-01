@@ -1,0 +1,518 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/runtime-pack-v1.schema.json",
+  "title": "CARVES Runtime Pack v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packId",
+    "packVersion",
+    "name",
+    "publisher",
+    "license",
+    "compatibility",
+    "capabilityKinds",
+    "requestedPermissions",
+    "recipes"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "carves.pack.v1"
+    },
+    "packId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+([._-][a-z0-9]+)*$",
+      "minLength": 3
+    },
+    "packVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "publisher": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "trustLevel"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trustLevel": {
+          "type": "string",
+          "enum": [
+            "first_party",
+            "verified",
+            "community",
+            "internal"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expression"
+      ],
+      "properties": {
+        "expression": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "carvesRuntime"
+      ],
+      "properties": {
+        "carvesRuntime": {
+          "type": "string",
+          "minLength": 1
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "frameworkHints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "repoSignals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "capabilityKinds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "project_understanding_recipe",
+          "verification_recipe",
+          "review_rubric"
+        ]
+      }
+    },
+    "requestedPermissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "readPaths",
+        "network",
+        "env",
+        "secrets",
+        "truthWrite"
+      ],
+      "properties": {
+        "readPaths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "network": {
+          "const": false
+        },
+        "env": {
+          "const": false
+        },
+        "secrets": {
+          "const": false
+        },
+        "truthWrite": {
+          "const": false
+        }
+      }
+    },
+    "recipes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projectUnderstandingRecipes",
+        "verificationRecipes",
+        "reviewRubrics"
+      ],
+      "properties": {
+        "projectUnderstandingRecipes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/projectUnderstandingRecipe"
+          }
+        },
+        "verificationRecipes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/verificationRecipe"
+          }
+        },
+        "reviewRubrics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reviewRubric"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "capabilityKinds": {
+            "contains": {
+              "const": "project_understanding_recipe"
+            }
+          }
+        },
+        "required": [
+          "capabilityKinds"
+        ]
+      },
+      "then": {
+        "properties": {
+          "recipes": {
+            "properties": {
+              "projectUnderstandingRecipes": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "recipes": {
+            "properties": {
+              "projectUnderstandingRecipes": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "capabilityKinds": {
+            "contains": {
+              "const": "verification_recipe"
+            }
+          }
+        },
+        "required": [
+          "capabilityKinds"
+        ]
+      },
+      "then": {
+        "properties": {
+          "recipes": {
+            "properties": {
+              "verificationRecipes": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "recipes": {
+            "properties": {
+              "verificationRecipes": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "capabilityKinds": {
+            "contains": {
+              "const": "review_rubric"
+            }
+          }
+        },
+        "required": [
+          "capabilityKinds"
+        ]
+      },
+      "then": {
+        "properties": {
+          "recipes": {
+            "properties": {
+              "reviewRubrics": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "recipes": {
+            "properties": {
+              "reviewRubrics": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+([._-][a-z0-9]+)*$",
+      "minLength": 3
+    },
+    "projectUnderstandingRecipe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repoSignals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "frameworkHints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "includeGlobs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "excludeGlobs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "priorityRules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/priorityRule"
+          }
+        }
+      }
+    },
+    "priorityRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "glob",
+        "weight"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "glob": {
+          "type": "string",
+          "minLength": 1
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "verificationRecipe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description",
+        "commands"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/verificationCommand"
+          }
+        }
+      }
+    },
+    "verificationCommand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "executable",
+        "args",
+        "cwd",
+        "required"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "known_tool_command",
+            "package_manager_script",
+            "repo_script",
+            "shell_command"
+          ]
+        },
+        "executable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cwd": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "reviewRubric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description",
+        "checklistItems"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "checklistItems": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/checklistItem"
+          }
+        }
+      }
+    },
+    "checklistItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "severity",
+        "text"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "info",
+            "review",
+            "warn",
+            "block"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

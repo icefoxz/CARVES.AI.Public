@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "carves.runtime/contracts/acceptance-contract.schema.json",
+  "title": "CARVES Runtime Acceptance Contract",
+  "type": "object",
+  "required": [
+    "contract_id",
+    "title",
+    "status",
+    "owner",
+    "created_at_utc",
+    "intent",
+    "checks",
+    "constraints",
+    "human_review",
+    "traceability"
+  ],
+  "properties": {
+    "contract_id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "compiled",
+        "red",
+        "partial_green",
+        "green",
+        "human_review",
+        "accepted",
+        "provisional_accepted",
+        "rejected",
+        "reopened"
+      ]
+    },
+    "owner": { "type": "string", "minLength": 1 },
+    "created_at_utc": { "type": "string", "format": "date-time" },
+    "intent": {
+      "type": "object",
+      "required": ["goal", "business_value"],
+      "properties": {
+        "goal": { "type": "string" },
+        "business_value": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "acceptance_examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["given", "when", "then"],
+        "properties": {
+          "given": { "type": "string" },
+          "when": { "type": "string" },
+          "then": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "checks": {
+      "type": "object",
+      "properties": {
+        "unit_tests": { "type": "array", "items": { "type": "string" } },
+        "integration_tests": { "type": "array", "items": { "type": "string" } },
+        "regression_tests": { "type": "array", "items": { "type": "string" } },
+        "policy_checks": { "type": "array", "items": { "type": "string" } },
+        "additional_checks": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "must_not": { "type": "array", "items": { "type": "string" } },
+        "architecture": { "type": "array", "items": { "type": "string" } },
+        "scope_limit": {
+          "type": ["object", "null"],
+          "properties": {
+            "max_files_changed": { "type": ["integer", "null"], "minimum": 1 },
+            "max_lines_changed": { "type": ["integer", "null"], "minimum": 1 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "non_goals": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidence_required": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": { "type": "string", "minLength": 1 },
+          "description": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "human_review": {
+      "type": "object",
+      "required": ["required", "provisional_allowed", "decisions"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "provisional_allowed": { "type": "boolean" },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["accept", "provisional_accept", "reject", "reopen"]
+          },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "traceability": {
+      "type": "object",
+      "required": ["derived_task_ids", "related_artifacts"],
+      "properties": {
+        "source_card_id": { "type": ["string", "null"] },
+        "source_task_id": { "type": ["string", "null"] },
+        "derived_task_ids": { "type": "array", "items": { "type": "string" } },
+        "related_artifacts": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

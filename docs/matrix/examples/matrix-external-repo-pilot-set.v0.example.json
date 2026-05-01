@@ -1,0 +1,270 @@
+{
+  "schema_version": "matrix-external-repo-pilot-set.v0",
+  "pilot_set_id": "matrix-external-repo-pilot-set-v0",
+  "created_at_utc": "2026-04-15T00:00:00Z",
+  "local_only": true,
+  "summary_only": true,
+  "pilot_count": 5,
+  "covered_shapes": [
+    "node_single_package",
+    "dotnet_small_project",
+    "python_package",
+    "monorepo_nested_project",
+    "dirty_worktree"
+  ],
+  "required_summary_artifacts": [
+    "pilot-setup-summary.json",
+    "guard-check-summary.json",
+    "handoff-summary.json",
+    "audit-evidence-summary.json",
+    "shield-evaluate-summary.json",
+    "matrix-pilot-summary.json"
+  ],
+  "privacy": {
+    "source_included": false,
+    "raw_diff_included": false,
+    "prompt_included": false,
+    "model_response_included": false,
+    "secrets_included": false,
+    "credentials_included": false,
+    "customer_payload_included": false,
+    "hosted_upload_required": false
+  },
+  "public_claims": {
+    "certification": false,
+    "hosted_verification": false,
+    "public_leaderboard": false,
+    "model_safety_benchmark": false,
+    "semantic_correctness": false,
+    "operating_system_sandbox": false,
+    "automatic_rollback": false
+  },
+  "pilots": [
+    {
+      "pilot_id": "node_single_package",
+      "shape": "small_node_package",
+      "setup": {
+        "summary": "One package directory with package.json, src/, and tests/ fixtures.",
+        "fixture_files_summary": [
+          "package manifest summary",
+          "one source module path summary",
+          "one test module path summary"
+        ]
+      },
+      "expected_matrix_behavior": [
+        "Guard records a small diff summary.",
+        "Handoff records a continuation packet summary.",
+        "Audit emits shield-evidence.v0.",
+        "Shield evaluates local evidence.",
+        "Matrix records summary artifacts only."
+      ],
+      "known_limitations": [
+        "Does not run npm install.",
+        "Does not require registry credentials.",
+        "Does not prove JavaScript semantic correctness."
+      ],
+      "artifact_policy": {
+        "summary_only": true,
+        "allowed_artifacts": [
+          "pilot-setup-summary.json",
+          "guard-check-summary.json",
+          "handoff-summary.json",
+          "audit-evidence-summary.json",
+          "shield-evaluate-summary.json",
+          "matrix-pilot-summary.json"
+        ],
+        "forbidden_artifacts": [
+          "source_code",
+          "raw_git_diff",
+          "prompt",
+          "model_response",
+          "secret",
+          "credential",
+          "hosted_upload",
+          "certification_claim"
+        ]
+      }
+    },
+    {
+      "pilot_id": "dotnet_small_project",
+      "shape": "small_dotnet_project",
+      "setup": {
+        "summary": "One solution or project with a library file and a test file.",
+        "fixture_files_summary": [
+          "project file path summary",
+          "library file path summary",
+          "test file path summary"
+        ]
+      },
+      "expected_matrix_behavior": [
+        "Matrix behaves like the current project-mode proof while the target remains an external repo.",
+        "Guard, Handoff, Audit, and Shield keep separate ownership.",
+        "Matrix records only artifact metadata and local summary outputs."
+      ],
+      "known_limitations": [
+        "Does not publish packages.",
+        "Does not prove NuGet.org readiness.",
+        "Does not replace dotnet test."
+      ],
+      "artifact_policy": {
+        "summary_only": true,
+        "allowed_artifacts": [
+          "pilot-setup-summary.json",
+          "guard-check-summary.json",
+          "handoff-summary.json",
+          "audit-evidence-summary.json",
+          "shield-evaluate-summary.json",
+          "matrix-pilot-summary.json"
+        ],
+        "forbidden_artifacts": [
+          "source_code",
+          "raw_git_diff",
+          "prompt",
+          "model_response",
+          "secret",
+          "credential",
+          "hosted_upload",
+          "certification_claim"
+        ]
+      }
+    },
+    {
+      "pilot_id": "python_package",
+      "shape": "python_package",
+      "setup": {
+        "summary": "One pyproject.toml, package module, and test module.",
+        "fixture_files_summary": [
+          "pyproject path summary",
+          "package module path summary",
+          "test module path summary"
+        ]
+      },
+      "expected_matrix_behavior": [
+        "Matrix records summary evidence without source upload.",
+        "Audit emits shield-evidence.v0 from local governance artifacts.",
+        "Shield evaluates the summary evidence as a local self-check."
+      ],
+      "known_limitations": [
+        "Does not install from PyPI.",
+        "Does not create a virtual environment proof.",
+        "Does not prove Python package correctness."
+      ],
+      "artifact_policy": {
+        "summary_only": true,
+        "allowed_artifacts": [
+          "pilot-setup-summary.json",
+          "guard-check-summary.json",
+          "handoff-summary.json",
+          "audit-evidence-summary.json",
+          "shield-evaluate-summary.json",
+          "matrix-pilot-summary.json"
+        ],
+        "forbidden_artifacts": [
+          "source_code",
+          "raw_git_diff",
+          "prompt",
+          "model_response",
+          "secret",
+          "credential",
+          "hosted_upload",
+          "certification_claim"
+        ]
+      }
+    },
+    {
+      "pilot_id": "monorepo_nested_project",
+      "shape": "monorepo_like_nested_project",
+      "setup": {
+        "summary": "Multiple nested package roots with Matrix pointed at the selected target root.",
+        "fixture_files_summary": [
+          "root manifest path summary",
+          "nested package path summary",
+          "selected target path summary"
+        ]
+      },
+      "expected_matrix_behavior": [
+        "Matrix keeps artifact paths scoped to the selected target.",
+        "Guard summarizes the selected target change.",
+        "Matrix records nested-project limitations in the pilot summary."
+      ],
+      "known_limitations": [
+        "Does not discover every workspace automatically.",
+        "Does not claim whole-monorepo coverage.",
+        "Does not replace repo-specific build orchestration."
+      ],
+      "artifact_policy": {
+        "summary_only": true,
+        "allowed_artifacts": [
+          "pilot-setup-summary.json",
+          "guard-check-summary.json",
+          "handoff-summary.json",
+          "audit-evidence-summary.json",
+          "shield-evaluate-summary.json",
+          "matrix-pilot-summary.json"
+        ],
+        "forbidden_artifacts": [
+          "source_code",
+          "raw_git_diff",
+          "prompt",
+          "model_response",
+          "secret",
+          "credential",
+          "hosted_upload",
+          "certification_claim"
+        ]
+      }
+    },
+    {
+      "pilot_id": "dirty_worktree",
+      "shape": "dirty_worktree",
+      "setup": {
+        "summary": "Baseline commit plus uncommitted local edits intentionally left unstaged.",
+        "fixture_files_summary": [
+          "baseline commit summary",
+          "uncommitted path count summary",
+          "dirty status category summary"
+        ]
+      },
+      "expected_matrix_behavior": [
+        "Guard summarizes the working tree change.",
+        "Audit and Shield preserve local-only evidence.",
+        "Matrix does not require a clean checkout for this pilot shape."
+      ],
+      "known_limitations": [
+        "Does not certify the dirty change.",
+        "Does not upload raw diffs.",
+        "Does not replace human review before commit."
+      ],
+      "artifact_policy": {
+        "summary_only": true,
+        "allowed_artifacts": [
+          "pilot-setup-summary.json",
+          "guard-check-summary.json",
+          "handoff-summary.json",
+          "audit-evidence-summary.json",
+          "shield-evaluate-summary.json",
+          "matrix-pilot-summary.json"
+        ],
+        "forbidden_artifacts": [
+          "source_code",
+          "raw_git_diff",
+          "prompt",
+          "model_response",
+          "secret",
+          "credential",
+          "hosted_upload",
+          "certification_claim"
+        ]
+      }
+    }
+  ],
+  "non_claims": [
+    "not certification",
+    "not hosted verification",
+    "not public leaderboard",
+    "not model safety benchmark",
+    "not semantic source correctness proof",
+    "not operating-system sandbox proof",
+    "not automatic rollback"
+  ]
+}

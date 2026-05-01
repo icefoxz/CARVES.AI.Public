@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Repo Runtime Gateway Health",
+  "type": "object",
+  "required": ["mode", "state", "reachable", "reason", "observed_at"],
+  "properties": {
+    "mode": { "type": "string" },
+    "state": { "type": "string" },
+    "reachable": { "type": "boolean" },
+    "reason": { "type": "string" },
+    "observed_at": { "type": "string", "format": "date-time" }
+  }
+}

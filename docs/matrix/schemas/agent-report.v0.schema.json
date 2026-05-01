@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.ai/schemas/agent-report.v0.schema.json",
+  "title": "CARVES Agent Report v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "task_version",
+    "challenge_id",
+    "agent_profile_snapshot",
+    "completion_status",
+    "claimed_files_changed",
+    "claimed_tests_run",
+    "claimed_tests_passed",
+    "risks",
+    "deviations",
+    "blocked_or_uncertain_decisions",
+    "follow_up_work",
+    "evidence_refs",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": { "const": "agent-report.v0" },
+    "task_id": { "$ref": "#/$defs/non_empty_string" },
+    "task_version": { "$ref": "#/$defs/non_empty_string" },
+    "challenge_id": { "$ref": "#/$defs/non_empty_string" },
+    "agent_profile_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_label", "model_label", "self_reported"],
+      "properties": {
+        "agent_label": { "$ref": "#/$defs/non_empty_string" },
+        "model_label": { "$ref": "#/$defs/non_empty_string" },
+        "reasoning_depth": { "type": "string" },
+        "tool_profile": { "type": "string" },
+        "permission_profile": { "type": "string" },
+        "self_reported": { "const": true }
+      }
+    },
+    "completion_status": {
+      "enum": ["completed", "blocked", "failed", "partial"]
+    },
+    "claimed_files_changed": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relative_path" }
+    },
+    "claimed_tests_run": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/non_empty_string" }
+    },
+    "claimed_tests_passed": { "type": "boolean" },
+    "risks": { "$ref": "#/$defs/string_array" },
+    "deviations": { "$ref": "#/$defs/string_array" },
+    "blocked_or_uncertain_decisions": { "$ref": "#/$defs/string_array" },
+    "follow_up_work": { "$ref": "#/$defs/string_array" },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relative_path" }
+    },
+    "privacy": { "$ref": "#/$defs/privacy" }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "string_array": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "anyOf": [
+          { "pattern": "^([A-Za-z]:|/|\\\\)" },
+          { "pattern": "(^|/)\\.\\.(/|$)" }
+        ]
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary_only",
+        "prompt_response_included",
+        "model_response_included",
+        "raw_diff_included",
+        "source_included",
+        "secrets_included",
+        "credentials_included",
+        "customer_payload_included"
+      ],
+      "properties": {
+        "summary_only": { "const": true },
+        "prompt_response_included": { "const": false },
+        "model_response_included": { "const": false },
+        "raw_diff_included": { "const": false },
+        "source_included": { "const": false },
+        "secrets_included": { "const": false },
+        "credentials_included": { "const": false },
+        "customer_payload_included": { "const": false }
+      }
+    }
+  }
+}

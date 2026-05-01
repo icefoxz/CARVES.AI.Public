@@ -1,0 +1,150 @@
+{
+  "model_id": "shield-lite-scoring.v0",
+  "evidence_schema": "shield-evidence.v0",
+  "standard_rubric": "shield-standard-gha-rubric.v0",
+  "mode": "lite",
+  "self_check": true,
+  "certification": false,
+  "score": {
+    "minimum": 0,
+    "maximum": 100,
+    "formula": "round(guard.weight * guard.level / 9) + round(handoff.weight * handoff.level / 9) + round(audit.weight * audit.level / 9)",
+    "rounding": "midpoint_away_from_zero_per_dimension",
+    "standard_max_numeric_level": 9
+  },
+  "inputs": [
+    "shield-evidence.v0",
+    "standard G/H/A level projection"
+  ],
+  "dimension_weights": {
+    "guard": 40,
+    "handoff": 30,
+    "audit": 30
+  },
+  "dimension_level_source": {
+    "guard": "Standard Guard level from shield-standard-gha-rubric.v0",
+    "handoff": "Standard Handoff level from shield-standard-gha-rubric.v0",
+    "audit": "Standard Audit level from shield-standard-gha-rubric.v0"
+  },
+  "critical_cap": {
+    "trigger": "any Standard dimension level is C",
+    "band": "critical",
+    "color": "red",
+    "max_score": 39,
+    "dimension_points_for_critical_dimension": 0,
+    "critical_gates_must_be_reported": true,
+    "critical_risks_rank_first": true
+  },
+  "bands": [
+    {
+      "id": "critical",
+      "color": "red",
+      "label": "Critical",
+      "condition": "any critical gate failed"
+    },
+    {
+      "id": "no_evidence",
+      "color": "gray",
+      "label": "No Evidence",
+      "minimum": 0,
+      "maximum": 0
+    },
+    {
+      "id": "basic",
+      "color": "white",
+      "label": "Basic",
+      "minimum": 1,
+      "maximum": 49
+    },
+    {
+      "id": "disciplined",
+      "color": "yellow",
+      "label": "Disciplined",
+      "minimum": 50,
+      "maximum": 79
+    },
+    {
+      "id": "strong",
+      "color": "green",
+      "label": "Strong",
+      "minimum": 80,
+      "maximum": 100
+    }
+  ],
+  "output_contract": {
+    "required_fields": [
+      "model_id",
+      "score",
+      "band",
+      "self_check",
+      "dimension_contributions",
+      "critical_gates",
+      "top_risks",
+      "next_steps"
+    ],
+    "optional_fields": [
+      "sample_window_days",
+      "evidence_hash"
+    ],
+    "dimension_contribution_fields": [
+      "standard_level",
+      "weight",
+      "points"
+    ]
+  },
+  "top_risk_order": [
+    "critical_gate_failures",
+    "disabled_or_zero_evidence_dimensions",
+    "missing_guard_ci_or_fail_closed_posture",
+    "missing_handoff_freshness_or_target_match",
+    "missing_audit_explain_coverage_or_readable_log",
+    "lowest_dimension_contribution"
+  ],
+  "next_step_style": [
+    "mechanical",
+    "achievable",
+    "not_automatic_remediation"
+  ],
+  "privacy": {
+    "default_upload_required": false,
+    "allowed_default_output": [
+      "score",
+      "band",
+      "self_check_label",
+      "sample_window",
+      "dimension_contributions",
+      "critical_gate_ids",
+      "top_risks",
+      "next_steps",
+      "evidence_hash"
+    ],
+    "disallowed_default_output": [
+      "source_code",
+      "raw_git_diff",
+      "prompts",
+      "model_responses",
+      "secrets",
+      "credentials",
+      "private_file_payloads"
+    ]
+  },
+  "relationship_to_standard": [
+    "Lite may use one 0-100 score.",
+    "Standard must keep G/H/A separate.",
+    "Lite should expose the G/H/A source levels when available.",
+    "Lite must not hide a weak or missing dimension.",
+    "Lite must not claim verified certification in v0."
+  ],
+  "non_goals": [
+    "evaluator implementation",
+    "hosted API behavior",
+    "badge rendering",
+    "public leaderboard",
+    "project directory",
+    "project certification",
+    "Standard replacement",
+    "source code inspection",
+    "source upload",
+    "operating-system sandbox proof"
+  ]
+}

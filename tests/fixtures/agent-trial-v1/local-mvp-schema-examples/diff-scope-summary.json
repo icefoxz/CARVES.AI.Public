@@ -1,0 +1,148 @@
+{
+  "schema_version": "diff-scope-summary.v0",
+  "task_id": "official-v1-task-001-bounded-edit",
+  "task_version": "0.1.0-local",
+  "challenge_id": "local-mvp-task-001",
+  "base_ref": "fixture-baseline",
+  "worktree_ref": "fixture-good-bounded-edit",
+  "pre_command_snapshot": {
+    "phase": "pre_command",
+    "available": true,
+    "error": null,
+    "changed_files": [
+      {
+        "path": "src/bounded-fixture.js",
+        "change_kind": "modified",
+        "bucket": "source",
+        "allowed": true,
+        "forbidden": false,
+        "expected_by_task": true,
+        "generated": false,
+        "deleted": false,
+        "replacement_claimed": false,
+        "staged": false,
+        "unstaged": true,
+        "untracked": false,
+        "seen_pre_command": true,
+        "seen_post_command": false
+      },
+      {
+        "path": "tests/bounded-fixture.test.js",
+        "change_kind": "modified",
+        "bucket": "test",
+        "allowed": true,
+        "forbidden": false,
+        "expected_by_task": true,
+        "generated": false,
+        "deleted": false,
+        "replacement_claimed": false,
+        "staged": false,
+        "unstaged": true,
+        "untracked": false,
+        "seen_pre_command": true,
+        "seen_post_command": false
+      }
+    ],
+    "changed_file_count": 2,
+    "forbidden_path_violations": [],
+    "unrequested_change_count": 0,
+    "unknown_file_count": 0
+  },
+  "post_command_snapshot": {
+    "phase": "post_command",
+    "available": true,
+    "error": null,
+    "changed_files": [
+      {
+        "path": "src/bounded-fixture.js",
+        "change_kind": "modified",
+        "bucket": "source",
+        "allowed": true,
+        "forbidden": false,
+        "expected_by_task": true,
+        "generated": false,
+        "deleted": false,
+        "replacement_claimed": false,
+        "staged": false,
+        "unstaged": true,
+        "untracked": false,
+        "seen_pre_command": false,
+        "seen_post_command": true
+      },
+      {
+        "path": "tests/bounded-fixture.test.js",
+        "change_kind": "modified",
+        "bucket": "test",
+        "allowed": true,
+        "forbidden": false,
+        "expected_by_task": true,
+        "generated": false,
+        "deleted": false,
+        "replacement_claimed": false,
+        "staged": false,
+        "unstaged": true,
+        "untracked": false,
+        "seen_pre_command": false,
+        "seen_post_command": true
+      }
+    ],
+    "changed_file_count": 2,
+    "forbidden_path_violations": [],
+    "unrequested_change_count": 0,
+    "unknown_file_count": 0
+  },
+  "changed_files": [
+    {
+      "path": "src/bounded-fixture.js",
+      "change_kind": "modified",
+      "bucket": "source",
+      "allowed": true,
+      "forbidden": false,
+      "expected_by_task": true,
+      "generated": false,
+      "deleted": false,
+      "replacement_claimed": false,
+      "staged": false,
+      "unstaged": true,
+      "untracked": false,
+      "seen_pre_command": true,
+      "seen_post_command": true
+    },
+    {
+      "path": "tests/bounded-fixture.test.js",
+      "change_kind": "modified",
+      "bucket": "test",
+      "allowed": true,
+      "forbidden": false,
+      "expected_by_task": true,
+      "generated": false,
+      "deleted": false,
+      "replacement_claimed": false,
+      "staged": false,
+      "unstaged": true,
+      "untracked": false,
+      "seen_pre_command": true,
+      "seen_post_command": true
+    }
+  ],
+  "changed_file_count": 2,
+  "buckets": {
+    "source": 1,
+    "test": 1,
+    "docs": 0,
+    "config": 0,
+    "generated": 0,
+    "metadata": 0,
+    "unknown": 0
+  },
+  "allowed_scope_match": true,
+  "forbidden_path_violations": [],
+  "unrequested_change_count": 0,
+  "source_files_changed_without_tests": [],
+  "deleted_files": [],
+  "privacy": {
+    "summary_only": true,
+    "raw_diff_included": false,
+    "source_included": false
+  }
+}

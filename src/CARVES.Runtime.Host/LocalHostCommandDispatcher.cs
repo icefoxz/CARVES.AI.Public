@@ -1,0 +1,72 @@
+using Carves.Runtime.Application.ControlPlane;
+
+namespace Carves.Runtime.Host;
+
+internal static partial class LocalHostCommandDispatcher
+{
+    public static OperatorCommandResult Dispatch(RuntimeServices services, string command, IReadOnlyList<string> arguments)
+    {
+        return command switch
+        {
+            "plan" => RunPlanCommand(services, arguments),
+            "plan-card" => RunPlanCardCommand(services, arguments),
+            "status" => RunStatusCommand(services, arguments),
+            "audit" => RunAuditCommand(services, arguments),
+            "verify" => RunVerifyCommand(services, arguments),
+            "reconcile" => RunReconcileCommand(services, arguments),
+            "repair" => services.OperatorSurfaceService.RuntimeRepair(),
+            "rebuild" => services.OperatorSurfaceService.RuntimeRebuild(),
+            "reset" => RunResetCommand(services, arguments),
+            "compact-history" => services.OperatorSurfaceService.CompactHistory(),
+            "cleanup" => RunCleanupCommand(services, arguments),
+            "show-opportunities" => services.OperatorSurfaceService.ShowOpportunities(),
+            "session" => RunSessionCommand(services, arguments),
+            "planner" => RunPlannerCommand(services, arguments),
+            "repo" => RunRepoCommand(services, arguments),
+            "runtime" => RunRuntimeCommand(services, arguments),
+            "pack" => RunPackCommand(services, arguments),
+            "provider" => RunProviderCommand(services, arguments),
+            "policy" => RunPolicyCommand(services, arguments),
+            "report" => RunReportCommand(services, arguments),
+            "failures" => RunFailuresCommand(services, arguments),
+            "governance" => RunGovernanceCommand(services, arguments),
+            "worker" => RunWorkerCommand(services, arguments),
+            "qualification" => RunQualificationCommand(services, arguments),
+            "validation" => RunValidationCommand(services, arguments),
+            "actor" => RunActorCommand(services, arguments),
+            "api" => RunApiCommand(services, arguments),
+            "dashboard" => RunDashboardCommand(services, arguments),
+            "workbench" => RunWorkbenchCommand(services, arguments),
+            "attach" => RunAttachCommand(services, arguments),
+            "create-card-draft" => RunCreateCardDraftCommand(services, arguments),
+            "update-card" => RunUpdateCardCommand(services, arguments),
+            "list-cards" => RunListCardsCommand(services, arguments),
+            "inspect-card" => RunInspectCardCommand(services, arguments),
+            "approve-card" => RunSetCardStatusAliasCommand(services, arguments, Carves.Runtime.Domain.Planning.CardLifecycleState.Approved, "approve-card"),
+            "reject-card" => RunSetCardStatusAliasCommand(services, arguments, Carves.Runtime.Domain.Planning.CardLifecycleState.Rejected, "reject-card"),
+            "archive-card" => RunSetCardStatusAliasCommand(services, arguments, Carves.Runtime.Domain.Planning.CardLifecycleState.Archived, "archive-card"),
+            "supersede-card-tasks" => RunSupersedeCardTasksCommand(services, arguments),
+            "create-taskgraph-draft" => RunCreateTaskGraphDraftCommand(services, arguments),
+            "approve-taskgraph-draft" => RunApproveTaskGraphDraftCommand(services, arguments),
+            "approve-suggested-task" => RunApproveSuggestedTaskCommand(services, arguments),
+            "approve-task" => RunApproveTaskCommand(services, arguments),
+            "review-task" => RunReviewTaskCommand(services, arguments),
+            "approve-review" => RunApproveReviewCommand(services, arguments),
+            "reject-review" => RunRejectReviewCommand(services, arguments),
+            "reopen-review" => RunReopenReviewCommand(services, arguments),
+            "intent" => RunIntentCommand(services, arguments),
+            "protocol" => RunProtocolCommand(services, arguments),
+            "prompt" => RunPromptCommand(services, arguments),
+            "inspect" => RunInspectCommand(services, arguments),
+            "pilot" => RunPilotCommand(services, arguments),
+            "context" => RunContextCommand(services, arguments),
+            "evidence" => RunEvidenceCommand(services, arguments),
+            "memory" => RunMemoryCommand(services, arguments),
+            "card" => RunCardCommand(services, arguments),
+            "task" => RunTaskCommand(services, arguments),
+            "discuss" => RunDiscussCommand(services, arguments),
+            "sync-state" => services.OperatorSurfaceService.SyncState(),
+            _ => OperatorCommandResult.Failure($"Host cannot route command '{command}'."),
+        };
+    }
+}

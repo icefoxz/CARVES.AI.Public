@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.ai/schemas/test-evidence.v0.schema.json",
+  "title": "CARVES Test Evidence v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "task_version",
+    "challenge_id",
+    "required_commands",
+    "executed_commands",
+    "missing_required_commands",
+    "summary",
+    "failure_summary",
+    "log_hashes",
+    "result_artifact_hashes",
+    "agent_claimed_tests_passed",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": { "const": "test-evidence.v0" },
+    "task_id": { "$ref": "#/$defs/non_empty_string" },
+    "task_version": { "$ref": "#/$defs/non_empty_string" },
+    "challenge_id": { "$ref": "#/$defs/non_empty_string" },
+    "required_commands": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/non_empty_string" }
+    },
+    "executed_commands": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/executed_command" }
+    },
+    "missing_required_commands": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/non_empty_string" }
+    },
+    "summary": { "$ref": "#/$defs/test_summary" },
+    "failure_summary": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "log_hashes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/hash" }
+    },
+    "result_artifact_hashes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/hash" }
+    },
+    "agent_claimed_tests_passed": { "type": "boolean" },
+    "privacy": { "$ref": "#/$defs/privacy" }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^(sha256:)?[0-9a-f]{64}$"
+    },
+    "executed_command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "command",
+        "required",
+        "started_at",
+        "completed_at",
+        "exit_code",
+        "status",
+        "duration_ms",
+        "stdout_log_sha256",
+        "stderr_log_sha256",
+        "result_artifact_sha256",
+        "summary"
+      ],
+      "properties": {
+        "command_id": { "$ref": "#/$defs/non_empty_string" },
+        "command": { "$ref": "#/$defs/non_empty_string" },
+        "required": { "type": "boolean" },
+        "started_at": { "type": "string" },
+        "completed_at": { "type": "string" },
+        "exit_code": { "type": "integer" },
+        "status": { "enum": ["passed", "failed", "skipped", "not_run", "timed_out", "unknown"] },
+        "duration_ms": { "type": "integer", "minimum": 0 },
+        "stdout_log_sha256": { "$ref": "#/$defs/hash" },
+        "stderr_log_sha256": { "$ref": "#/$defs/hash" },
+        "result_artifact_sha256": { "$ref": "#/$defs/hash" },
+        "summary": { "$ref": "#/$defs/test_counts" }
+      }
+    },
+    "test_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_command_count",
+        "executed_required_command_count",
+        "passed",
+        "failed",
+        "skipped",
+        "errors"
+      ],
+      "properties": {
+        "required_command_count": { "type": "integer", "minimum": 0 },
+        "executed_required_command_count": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 },
+        "skipped": { "type": "integer", "minimum": 0 },
+        "errors": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "test_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "failed", "skipped", "errors"],
+      "properties": {
+        "required_command_count": { "type": "integer", "minimum": 0 },
+        "executed_required_command_count": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 },
+        "skipped": { "type": "integer", "minimum": 0 },
+        "errors": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary_only", "full_logs_included", "source_included", "raw_diff_included"],
+      "properties": {
+        "summary_only": { "const": true },
+        "full_logs_included": { "const": false },
+        "source_included": { "const": false },
+        "raw_diff_included": { "const": false }
+      }
+    }
+  }
+}

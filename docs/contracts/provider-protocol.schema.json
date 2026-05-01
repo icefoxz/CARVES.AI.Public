@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Provider Protocol Contract",
+  "type": "object",
+  "properties": {
+    "protocol_id": { "type": "string" },
+    "protocol_family": { "type": "string" },
+    "request_family": { "type": "string" },
+    "supports_streaming": { "type": "boolean" },
+    "supports_tool_calls": { "type": "boolean" },
+    "supports_json_mode": { "type": "boolean" },
+    "supports_system_prompt": { "type": "boolean" },
+    "supports_file_upload": { "type": "boolean" }
+  },
+  "required": ["protocol_id", "protocol_family", "request_family"]
+}

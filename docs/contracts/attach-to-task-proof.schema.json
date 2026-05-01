@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AttachToTaskProof",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "proof_id",
+    "task_id",
+    "repo_root",
+    "runtime_manifest_present",
+    "attach_handshake_present",
+    "task_status",
+    "dispatch_state",
+    "suggested_task_ids",
+    "execution_memory_ids",
+    "evidence_paths",
+    "notes",
+    "captured_at_utc"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "attach-to-task-proof.v1" },
+    "proof_id": { "type": "string" },
+    "task_id": { "type": "string" },
+    "card_id": { "type": ["string", "null"] },
+    "repo_root": { "type": "string" },
+    "repo_id": { "type": ["string", "null"] },
+    "host_session_id": { "type": ["string", "null"] },
+    "runtime_manifest_present": { "type": "boolean" },
+    "attach_handshake_present": { "type": "boolean" },
+    "card_lifecycle_state": { "type": ["string", "null"] },
+    "task_status": { "type": "string" },
+    "dispatch_state": { "type": "string" },
+    "execution_run_id": { "type": ["string", "null"] },
+    "execution_run_status": { "type": ["string", "null"] },
+    "result_status": { "type": ["string", "null"] },
+    "review_verdict": { "type": ["string", "null"] },
+    "replan_entry_id": { "type": ["string", "null"] },
+    "suggested_task_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "execution_memory_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidence_paths": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "captured_at_utc": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

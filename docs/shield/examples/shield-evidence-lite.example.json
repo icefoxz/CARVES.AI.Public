@@ -1,0 +1,78 @@
+{
+  "schema_version": "shield-evidence.v0",
+  "evidence_id": "shev_lite_example_20260414",
+  "generated_at_utc": "2026-04-14T10:45:00Z",
+  "mode_hint": "lite",
+  "sample_window_days": 7,
+  "repository": {
+    "host": "github",
+    "visibility": "public",
+    "default_branch": "main",
+    "repo_id_hash": "sha256:example-lite-repo",
+    "commit_sha": "0123456789abcdef"
+  },
+  "privacy": {
+    "source_included": false,
+    "raw_diff_included": false,
+    "prompt_included": false,
+    "secrets_included": false,
+    "redaction_applied": true,
+    "upload_intent": "local_only"
+  },
+  "dimensions": {
+    "guard": {
+      "enabled": true,
+      "policy": {
+        "present": true,
+        "path": ".ai/guard-policy.json",
+        "schema_valid": true,
+        "schema_version": 1,
+        "policy_id": "starter-guard-policy",
+        "effective_protected_path_prefixes": [
+          ".git/",
+          ".env",
+          "secrets/"
+        ],
+        "protected_path_action": "block",
+        "outside_allowed_action": "review",
+        "fail_closed": true,
+        "review_is_passing": false,
+        "emit_evidence": true,
+        "change_budget_present": true,
+        "dependency_policy_present": false,
+        "source_test_rule_present": true,
+        "mixed_feature_refactor_rule_present": false
+      },
+      "ci": {
+        "detected": false,
+        "provider": "none",
+        "workflow_paths": [],
+        "guard_check_command_detected": false,
+        "fails_on_review_or_block": false
+      },
+      "decisions": {
+        "present": false,
+        "window_days": 7,
+        "allow_count": 0,
+        "review_count": 0,
+        "block_count": 0,
+        "unresolved_review_count": 0,
+        "unresolved_block_count": 0
+      }
+    },
+    "handoff": {
+      "enabled": false
+    },
+    "audit": {
+      "enabled": false
+    }
+  },
+  "provenance": {
+    "producer": "carves-cli",
+    "producer_version": "0.2.0-beta.1",
+    "generated_by": "local",
+    "source": "working_tree_scan",
+    "evidence_hash": "sha256:example-lite-evidence",
+    "warnings": []
+  }
+}

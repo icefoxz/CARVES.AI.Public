@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Platform Governance",
+  "type": "object",
+  "required": ["version", "updated_at", "platform_policy", "repo_policies", "provider_policies", "worker_policies", "review_policies"],
+  "properties": {
+    "version": { "type": "integer" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "platform_policy": { "type": "object" },
+    "repo_policies": { "type": "array" },
+    "provider_policies": { "type": "array" },
+    "worker_policies": { "type": "array" },
+    "review_policies": { "type": "array" }
+  }
+}

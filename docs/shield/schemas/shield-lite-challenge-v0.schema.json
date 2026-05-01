@@ -1,0 +1,355 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.ai/schemas/shield-lite-challenge-v0.schema.json",
+  "title": "CARVES Shield Lite Challenge v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "challenge_suite_id",
+    "created_at_utc",
+    "mode",
+    "local_only",
+    "certification",
+    "scoring_model",
+    "evidence_schema",
+    "cases",
+    "non_claims"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "shield-lite-challenge.v0"
+    },
+    "challenge_suite_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "mode": {
+      "const": "local_challenge"
+    },
+    "local_only": {
+      "const": true
+    },
+    "certification": {
+      "const": false
+    },
+    "scoring_model": {
+      "const": "shield-lite-scoring.v0"
+    },
+    "evidence_schema": {
+      "const": "shield-evidence.v0"
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "$ref": "#/$defs/challenge_case"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "challenge_kind"
+            ],
+            "properties": {
+              "challenge_kind": {
+                "const": "protected_path_violation"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "challenge_kind"
+            ],
+            "properties": {
+              "challenge_kind": {
+                "const": "deletion_without_credible_replacement"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "challenge_kind"
+            ],
+            "properties": {
+              "challenge_kind": {
+                "const": "fake_audit_evidence"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "challenge_kind"
+            ],
+            "properties": {
+              "challenge_kind": {
+                "const": "stale_handoff_packet"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "challenge_kind"
+            ],
+            "properties": {
+              "challenge_kind": {
+                "const": "privacy_leakage_flag"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "challenge_kind"
+            ],
+            "properties": {
+              "challenge_kind": {
+                "const": "missing_ci_evidence"
+              }
+            }
+          }
+        },
+        {
+          "contains": {
+            "type": "object",
+            "required": [
+              "challenge_kind"
+            ],
+            "properties": {
+              "challenge_kind": {
+                "const": "oversized_patch"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "non_claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "challenge_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "challenge_kind",
+        "title",
+        "intent",
+        "fixture",
+        "expected_local_decision_posture",
+        "allowed_outputs",
+        "privacy"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "challenge_kind": {
+          "enum": [
+            "protected_path_violation",
+            "deletion_without_credible_replacement",
+            "fake_audit_evidence",
+            "stale_handoff_packet",
+            "privacy_leakage_flag",
+            "missing_ci_evidence",
+            "oversized_patch"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fixture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "summary",
+            "mutations"
+          ],
+          "properties": {
+            "summary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "mutations": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "artifact",
+                  "operation",
+                  "description"
+                ],
+                "properties": {
+                  "artifact": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "operation": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "expected_local_decision_posture": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "decision",
+            "shield_lite_band_ceiling",
+            "reason_codes",
+            "evidence_refs"
+          ],
+          "properties": {
+            "decision": {
+              "enum": [
+                "allow",
+                "review",
+                "block",
+                "reject"
+              ]
+            },
+            "shield_lite_band_ceiling": {
+              "enum": [
+                "critical",
+                "no_evidence",
+                "basic",
+                "disciplined",
+                "strong"
+              ]
+            },
+            "reason_codes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "evidence_refs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "allowed_outputs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "local_result",
+            "certification",
+            "shareable_artifacts",
+            "forbidden_outputs"
+          ],
+          "properties": {
+            "local_result": {
+              "const": true
+            },
+            "certification": {
+              "const": false
+            },
+            "shareable_artifacts": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "enum": [
+                  "challenge_result_json",
+                  "shield_evaluation_json",
+                  "shield_badge_json",
+                  "shield_badge_svg",
+                  "redacted_evidence_summary",
+                  "matrix_artifact_manifest",
+                  "human_summary"
+                ]
+              }
+            },
+            "forbidden_outputs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "privacy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_included",
+            "raw_diff_included",
+            "prompt_included",
+            "model_response_included",
+            "secrets_included",
+            "credentials_included"
+          ],
+          "properties": {
+            "source_included": {
+              "const": false
+            },
+            "raw_diff_included": {
+              "const": false
+            },
+            "prompt_included": {
+              "const": false
+            },
+            "model_response_included": {
+              "const": false
+            },
+            "secrets_included": {
+              "const": false
+            },
+            "credentials_included": {
+              "const": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/runtime-routing-profile.schema.json",
+  "title": "RuntimeRoutingProfile",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "profile_id",
+    "version",
+    "created_at",
+    "rules"
+  ],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "profile_id": { "type": "string" },
+    "version": { "type": "string" },
+    "source_qualification_id": { "type": ["string", "null"] },
+    "summary": { "type": ["string", "null"] },
+    "created_at": { "type": "string", "format": "date-time" },
+    "activated_at": { "type": ["string", "null"], "format": "date-time" },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "rule_id",
+          "preferred_route"
+        ],
+        "properties": {
+          "rule_id": { "type": "string" },
+          "routing_intent": { "type": ["string", "null"] },
+          "module_id": { "type": ["string", "null"] },
+          "summary": { "type": ["string", "null"] },
+          "preferred_route": { "$ref": "#/$defs/route" },
+          "fallback_routes": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/route" }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "route": {
+      "type": "object",
+      "required": ["provider_id"],
+      "properties": {
+        "provider_id": { "type": "string" },
+        "backend_id": { "type": ["string", "null"] },
+        "routing_profile_id": { "type": ["string", "null"] },
+        "model": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,67 @@
+##################################################
+# OS / editor noise
+##################################################
+.DS_Store
+Thumbs.db
+Desktop.ini
+*~
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+*.swp
+*.swo
+
+##################################################
+# .NET build output
+##################################################
+**/bin/
+**/obj/
+TestResults/
+artifacts/
+*.nupkg
+*.snupkg
+
+##################################################
+# Node / package caches
+##################################################
+node_modules/
+.npm/
+.yarn/
+.pnpm-store/
+coverage/
+
+##################################################
+# Local runtime state
+##################################################
+.carves-platform/
+.codex/
+.codex-temp/
+.tmp/
+tmp/
+logs/
+carves-trials/
+.dist/
+
+##################################################
+# CARVES control-plane state
+##################################################
+**/.ai/
+!.ai/
+.ai/*
+!.ai/PROJECT_BOUNDARY.md
+
+##################################################
+# Secrets / local env
+##################################################
+.env
+.env.*
+!.env.example
+!.env.sample
+*.local
+*.secret
+*.secrets
+*.key
+*.pem
+*.pfx

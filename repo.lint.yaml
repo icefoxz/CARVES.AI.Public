@@ -1,0 +1,23 @@
+rules:
+  no_large_files:
+    max_size_mb: 20
+
+  forbid_paths:
+    - Library
+    - node_modules
+    - _scratch
+    - workspace
+    - sandbox
+
+  enforce_structure:
+    required_dirs:
+      - src
+      - docs
+      - tests
+
+  protected_files:
+    - README.md
+    - AGENTS.md
+    - .ai/PROJECT_BOUNDARY.md
+    - .ai/STATE.md
+    - .ai/TASK_QUEUE.md

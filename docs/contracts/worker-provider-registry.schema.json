@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CARVES Worker Provider Registry",
+  "type": "object",
+  "required": ["version", "updated_at", "items"],
+  "properties": {
+    "version": { "type": "integer" },
+    "updated_at": { "type": "string" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["provider_id", "worker_backends"],
+        "properties": {
+          "provider_id": { "type": "string" },
+          "worker_backends": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["backend_id", "provider_id", "routing_identity", "health"],
+              "properties": {
+                "backend_id": { "type": "string" },
+                "provider_id": { "type": "string" },
+                "routing_identity": { "type": "string" },
+                "routing_profiles": { "type": "array", "items": { "type": "string" } },
+                "compatible_trust_profiles": { "type": "array", "items": { "type": "string" } },
+                "health": {
+                  "type": "object",
+                  "required": ["state", "summary", "checked_at"],
+                  "properties": {
+                    "state": { "type": "string" },
+                    "summary": { "type": "string" },
+                    "checked_at": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

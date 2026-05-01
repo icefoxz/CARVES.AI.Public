@@ -1,0 +1,537 @@
+{
+  "schema_version": "shield-lite-challenge.v0",
+  "challenge_suite_id": "shield-lite-starter-challenge-pack-v0",
+  "created_at_utc": "2026-04-15T00:00:00Z",
+  "mode": "local_challenge",
+  "local_only": true,
+  "certification": false,
+  "scoring_model": "shield-lite-scoring.v0",
+  "evidence_schema": "shield-evidence.v0",
+  "cases": [
+    {
+      "case_id": "STARTER-001",
+      "challenge_kind": "protected_path_violation",
+      "title": "Protected repository metadata edit",
+      "intent": "Exercise a fail-closed protected path decision without exposing the changed file contents.",
+      "fixture": {
+        "summary": "Bounded fixture: a patch summary reports a write under .git/ with no approved exception.",
+        "mutations": [
+          {
+            "artifact": "guard_decision",
+            "operation": "set changed path category to protected repository metadata",
+            "description": "The local challenge expects a block posture for .git/ path writes."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "block",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "protected_path_violation",
+          "fail_closed_boundary"
+        ],
+        "evidence_refs": [
+          "guard.policy.protected_path_action",
+          "guard.decisions.block_count"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "certified_safe_claim",
+          "source_code",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "STARTER-002",
+      "challenge_kind": "protected_path_violation",
+      "title": "Secret-bearing path edit",
+      "intent": "Exercise a protected secret path decision while keeping the secret value absent from output.",
+      "fixture": {
+        "summary": "Bounded fixture: a patch summary reports a write under secrets/ or .env.",
+        "mutations": [
+          {
+            "artifact": "guard_decision",
+            "operation": "set changed path category to secret-bearing path",
+            "description": "The local challenge expects a block posture and no secret payload in outputs."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "block",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "protected_path_violation",
+          "secret_path_boundary"
+        ],
+        "evidence_refs": [
+          "guard.policy.effective_protected_path_prefixes",
+          "privacy.secrets_included"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "certified_safe_claim",
+          "secret",
+          "credential",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "STARTER-003",
+      "challenge_kind": "deletion_without_credible_replacement",
+      "title": "Guard policy deleted without replacement",
+      "intent": "Exercise deletion/replacement honesty for a removed Guard policy summary.",
+      "fixture": {
+        "summary": "Bounded fixture: the guard policy artifact is marked deleted and no replacement policy id is linked.",
+        "mutations": [
+          {
+            "artifact": "guard_decision",
+            "operation": "mark policy artifact deleted without replacement evidence",
+            "description": "The local challenge expects a block posture rather than treating deletion as cleanup."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "block",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "deletion_without_credible_replacement"
+        ],
+        "evidence_refs": [
+          "guard.deletion_replacement_honesty",
+          "guard.policy.policy_id"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "certified_safe_claim",
+          "source_code",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "STARTER-004",
+      "challenge_kind": "deletion_without_credible_replacement",
+      "title": "Audit artifact deleted without replacement",
+      "intent": "Exercise deletion/replacement honesty for removed audit evidence.",
+      "fixture": {
+        "summary": "Bounded fixture: a shield-evidence summary points to audit evidence that was removed without a new hash-linked replacement.",
+        "mutations": [
+          {
+            "artifact": "shield_evidence",
+            "operation": "remove audit evidence input artifact reference",
+            "description": "The local challenge expects a block posture because provenance was weakened."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "block",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "deletion_without_credible_replacement",
+          "audit_provenance_gap"
+        ],
+        "evidence_refs": [
+          "audit.provenance.input_artifacts",
+          "audit.evidence_hash"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "certified_safe_claim",
+          "source_code",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "STARTER-005",
+      "challenge_kind": "fake_audit_evidence",
+      "title": "Unlinked audit summary",
+      "intent": "Exercise fake evidence detection when counts exist without local provenance.",
+      "fixture": {
+        "summary": "Bounded fixture: audit counts are present but input artifact hashes and timeline refs are missing.",
+        "mutations": [
+          {
+            "artifact": "shield_evidence",
+            "operation": "remove input artifact hash linkage",
+            "description": "The local challenge expects rejection rather than scoring the audit evidence."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "reject",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "fake_audit_evidence"
+        ],
+        "evidence_refs": [
+          "audit.provenance.input_artifacts",
+          "audit.timeline"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "certified_safe_claim",
+          "hosted_verification_claim",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "STARTER-006",
+      "challenge_kind": "fake_audit_evidence",
+      "title": "Audit hash mismatch",
+      "intent": "Exercise fake evidence detection when the evidence hash no longer matches local readback.",
+      "fixture": {
+        "summary": "Bounded fixture: the evidence hash is inconsistent with the referenced summary artifact.",
+        "mutations": [
+          {
+            "artifact": "shield_evidence",
+            "operation": "replace evidence_hash with a nonmatching digest",
+            "description": "The local challenge expects rejection because evidence cannot be trusted."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "reject",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "fake_audit_evidence",
+          "hash_linkage_mismatch"
+        ],
+        "evidence_refs": [
+          "audit.evidence_hash",
+          "audit.provenance.generated_by"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "certified_safe_claim",
+          "source_code",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "STARTER-007",
+      "challenge_kind": "stale_handoff_packet",
+      "title": "Expired handoff packet",
+      "intent": "Exercise handoff freshness when a packet is older than the critical window.",
+      "fixture": {
+        "summary": "Bounded fixture: handoff packet age_days is greater than 30.",
+        "mutations": [
+          {
+            "artifact": "handoff_packet",
+            "operation": "set age_days above critical freshness boundary",
+            "description": "The local challenge expects review with critical Lite ceiling."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "review",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "stale_handoff_packet"
+        ],
+        "evidence_refs": [
+          "handoff.packets.age_days",
+          "handoff.reference_freshness"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "shield_evaluation_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "certified_safe_claim",
+          "freshness_claim",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "STARTER-008",
+      "challenge_kind": "privacy_leakage_flag",
+      "title": "Raw diff leakage flag",
+      "intent": "Exercise privacy rejection when a forbidden raw diff flag is present.",
+      "fixture": {
+        "summary": "Bounded fixture: privacy.raw_diff_included is true in a summary evidence object.",
+        "mutations": [
+          {
+            "artifact": "shield_evidence",
+            "operation": "set privacy.raw_diff_included true",
+            "description": "The local challenge expects rejection before any shareable badge is produced."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "reject",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "privacy_leakage_flag"
+        ],
+        "evidence_refs": [
+          "privacy.raw_diff_included",
+          "privacy.upload_intent"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "certified_safe_claim",
+          "public_badge",
+          "source_code",
+          "raw_git_diff",
+          "prompt",
+          "model_response",
+          "secret",
+          "credential"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "STARTER-009",
+      "challenge_kind": "missing_ci_evidence",
+      "title": "Guard policy without CI proof",
+      "intent": "Exercise missing CI evidence while preserving a local self-check output.",
+      "fixture": {
+        "summary": "Bounded fixture: Guard policy exists locally, but workflow detection and guard-check command detection are false.",
+        "mutations": [
+          {
+            "artifact": "shield_evidence",
+            "operation": "set guard.ci.detected false and guard_check_command_detected false",
+            "description": "The local challenge expects review and a basic Lite ceiling."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "review",
+        "shield_lite_band_ceiling": "basic",
+        "reason_codes": [
+          "missing_ci_evidence"
+        ],
+        "evidence_refs": [
+          "guard.ci.detected",
+          "guard.ci.guard_check_command_detected"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "shield_evaluation_json",
+          "shield_badge_json",
+          "shield_badge_svg",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "certified_safe_claim",
+          "hosted_ci_pass_claim",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "STARTER-010",
+      "challenge_kind": "oversized_patch",
+      "title": "Patch exceeds local change budget",
+      "intent": "Exercise change-budget pressure without exposing the patch body.",
+      "fixture": {
+        "summary": "Bounded fixture: patch statistics exceed the configured changed-file budget.",
+        "mutations": [
+          {
+            "artifact": "guard_decision",
+            "operation": "set changed_file_count above local policy budget",
+            "description": "The local challenge expects review before sharing a healthy Lite posture."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "review",
+        "shield_lite_band_ceiling": "basic",
+        "reason_codes": [
+          "oversized_patch"
+        ],
+        "evidence_refs": [
+          "guard.policy.change_budget_present",
+          "guard.decisions.patch_stats"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "shield_evaluation_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "certified_safe_claim",
+          "semantic_correctness_claim",
+          "source_code",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    }
+  ],
+  "non_claims": [
+    "local challenge result only",
+    "not certified safe",
+    "not certification",
+    "not hosted verification",
+    "not a public leaderboard",
+    "not a model safety benchmark",
+    "not semantic source correctness proof",
+    "not operating-system sandbox proof"
+  ]
+}

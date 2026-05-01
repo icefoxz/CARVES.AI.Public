@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>carves-matrix</AssemblyName>
+    <RootNamespace>Carves.Matrix.Cli</RootNamespace>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>carves-matrix</ToolCommandName>
+    <PackageId>CARVES.Matrix.Cli</PackageId>
+    <Version>0.2.0-alpha.1</Version>
+    <Authors>CARVES.AI</Authors>
+    <Description>CARVES Matrix CLI for local composition proof lanes across Guard, Handoff, Audit, and Shield.</Description>
+    <PackageTags>carves;matrix;guard;handoff;audit;shield;cli;dotnet-tool</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/CARVES-AI/CARVES.Runtime</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CARVES-AI/CARVES.Runtime</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CARVES.Matrix.Core\Carves.Matrix.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\matrix\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

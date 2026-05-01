@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/worker-dispatch-projection.schema.json",
+  "title": "CARVES Runtime Worker Dispatch Projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "projection_id",
+    "projection_class",
+    "generated_at",
+    "source",
+    "lifecycle_mapping",
+    "entries",
+    "invariants"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "projection_id": { "type": "string" },
+    "projection_class": { "const": "host_scheduler_dispatch_projection" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_truth_root",
+        "scheduler_decision_ref",
+        "host_instance_ref",
+        "rebuildable"
+      ],
+      "properties": {
+        "task_truth_root": { "const": ".ai/tasks/" },
+        "scheduler_decision_ref": { "type": ["string", "null"] },
+        "host_instance_ref": { "type": ["string", "null"] },
+        "rebuildable": { "const": true }
+      }
+    },
+    "lifecycle_mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dispatch_entrypoint",
+        "result_entrypoint",
+        "review_entrypoint",
+        "writeback_entrypoint"
+      ],
+      "properties": {
+        "dispatch_entrypoint": { "const": "task run <task-id>" },
+        "result_entrypoint": { "const": "task ingest-result <task-id>" },
+        "review_entrypoint": { "const": "review-task / approve-review" },
+        "writeback_entrypoint": { "const": "sync-state / governed writeback" }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/dispatch_entry" }
+    },
+    "invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projection_only",
+        "no_task_approval_authority",
+        "no_completion_authority",
+        "no_writeback_authority",
+        "no_second_task_queue",
+        "no_second_execution_truth_root"
+      ],
+      "properties": {
+        "projection_only": { "const": true },
+        "no_task_approval_authority": { "const": true },
+        "no_completion_authority": { "const": true },
+        "no_writeback_authority": { "const": true },
+        "no_second_task_queue": { "const": true },
+        "no_second_execution_truth_root": { "const": true }
+      }
+    }
+  },
+  "$defs": {
+    "dispatch_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_id",
+        "card_id",
+        "task_status",
+        "dispatch_state",
+        "scheduler_reason",
+        "dependencies_ready",
+        "human_approval_satisfied",
+        "lease_projection",
+        "next_host_action",
+        "truth_authority"
+      ],
+      "properties": {
+        "task_id": { "type": "string", "pattern": "^T-" },
+        "card_id": { "type": ["string", "null"], "pattern": "^CARD-" },
+        "task_status": { "type": "string" },
+        "dispatch_state": {
+          "type": "string",
+          "enum": [
+            "dispatchable",
+            "blocked",
+            "dependency_wait",
+            "approval_wait",
+            "review_wait",
+            "already_running",
+            "not_dispatchable",
+            "worker_unavailable"
+          ]
+        },
+        "scheduler_reason": { "type": "string" },
+        "dependencies_ready": { "type": "boolean" },
+        "human_approval_satisfied": { "type": "boolean" },
+        "scope": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "blocked_by": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "lease_projection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["eligible", "active_lease_id", "expiry_at"],
+          "properties": {
+            "eligible": { "type": "boolean" },
+            "active_lease_id": { "type": ["string", "null"] },
+            "expiry_at": { "type": ["string", "null"], "format": "date-time" }
+          }
+        },
+        "next_host_action": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "command_hint"],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "none",
+                "task_run",
+                "task_ingest_result",
+                "review_required",
+                "operator_approval_required",
+                "observe"
+              ]
+            },
+            "command_hint": { "type": ["string", "null"] }
+          }
+        },
+        "truth_authority": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["approval", "completion", "writeback"],
+          "properties": {
+            "approval": { "const": "none" },
+            "completion": { "const": "none" },
+            "writeback": { "const": "none" }
+          }
+        }
+      }
+    }
+  }
+}

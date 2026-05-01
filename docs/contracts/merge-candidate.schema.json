@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "carves.runtime/contracts/merge-candidate.schema.json",
+  "title": "CARVES Runtime Merge Candidate Artifact Contract",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "task_id",
+    "captured_at",
+    "review_reason",
+    "planner_comment",
+    "result_commit",
+    "patch_summary",
+    "validation_passed",
+    "safety_outcome"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "task_id": { "type": "string" },
+    "captured_at": { "type": "string", "format": "date-time" },
+    "review_reason": { "type": "string" },
+    "planner_comment": { "type": "string" },
+    "result_commit": { "type": "string" },
+    "patch_summary": { "type": "string" },
+    "validation_passed": { "type": "boolean" },
+    "safety_outcome": { "type": "string" },
+    "writeback": {
+      "type": "object",
+      "required": ["applied", "files", "summary"],
+      "properties": {
+        "applied": { "type": "boolean" },
+        "applied_at": { "type": ["string", "null"], "format": "date-time" },
+        "source_path": { "type": ["string", "null"] },
+        "result_commit": { "type": ["string", "null"] },
+        "files": { "type": "array", "items": { "type": "string" } },
+        "summary": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

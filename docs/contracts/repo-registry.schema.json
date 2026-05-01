@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Repo Registry",
+  "type": "object",
+  "required": ["version", "updated_at", "items"],
+  "properties": {
+    "version": { "type": "integer" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["schema_version", "repo_id", "repo_path", "stage", "runtime_enabled", "provider_profile", "policy_profile"],
+        "properties": {
+          "schema_version": { "type": "integer" },
+          "repo_id": { "type": "string" },
+          "repo_path": { "type": "string" },
+          "stage": { "type": "string" },
+          "runtime_enabled": { "type": "boolean" },
+          "provider_profile": { "type": "string" },
+          "policy_profile": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "carves-trial-pack.v0",
+  "suite_id": "official-agent-dev-safety",
+  "pack_id": "official-agent-dev-safety-v1-local-mvp",
+  "pack_version": "0.1.0-local",
+  "publisher": "CARVES",
+  "license": "Apache-2.0",
+  "task_pack_version": "local-mvp-task-001",
+  "prompt_family": "official-v1-local-mvp",
+  "instruction_pack_id": "official-v1-local-mvp-instructions",
+  "instruction_pack_version": "0.1.0-local",
+  "expected_instruction_pack_sha256": "sha256:f78c11d1fa34b67ba62b8c64bd707ee99df8156a3ce3a5c8b638f9b0b6a0fe46",
+  "network_required": false,
+  "secret_required": false,
+  "source_upload_required": false,
+  "raw_diff_upload_required": false,
+  "prompt_response_upload_required": false,
+  "model_response_upload_required": false
+}

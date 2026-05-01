@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Provider Quotas",
+  "type": "object",
+  "required": ["schema_version", "entries"],
+  "properties": {
+    "schema_version": { "type": "integer" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["profile_id", "used_this_hour", "limit_per_hour", "window_started_at"],
+        "properties": {
+          "profile_id": { "type": "string" },
+          "used_this_hour": { "type": "integer" },
+          "limit_per_hour": { "type": "integer" },
+          "window_started_at": { "type": "string", "format": "date-time" },
+          "remaining": { "type": "integer" },
+          "exhausted": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

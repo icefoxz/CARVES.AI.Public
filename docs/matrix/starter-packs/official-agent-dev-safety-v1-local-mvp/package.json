@@ -1,0 +1,9 @@
+{
+  "name": "carves-agent-trial-task-001",
+  "version": "0.1.0-local",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "node tests/bounded-fixture.test.js"
+  }
+}

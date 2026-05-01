@@ -1,0 +1,89 @@
+using Carves.Runtime.Application.AI;
+using Carves.Runtime.Application.Artifacts;
+using Carves.Runtime.Application.CodeGraph;
+using Carves.Runtime.Application.Configuration;
+using Carves.Runtime.Application.ControlPlane;
+using Carves.Runtime.Application.Failures;
+using Carves.Runtime.Application.Git;
+using Carves.Runtime.Application.Interaction;
+using Carves.Runtime.Application.Orchestration;
+using Carves.Runtime.Application.Persistence;
+using Carves.Runtime.Application.Platform;
+using Carves.Runtime.Application.Planning;
+using Carves.Runtime.Application.Refactoring;
+using Carves.Runtime.Application.Safety;
+using Carves.Runtime.Application.TaskGraph;
+using Carves.Runtime.Application.Workers;
+
+namespace Carves.Runtime.Host;
+
+public sealed record RuntimeServices(
+    ControlPlanePaths Paths,
+    SystemConfig SystemConfig,
+    AiProviderConfig AiProviderConfig,
+    IControlPlaneConfigRepository ConfigRepository,
+    WorkerOperationalPolicy WorkerOperationalPolicy,
+    TaskGraphService TaskGraphService,
+    PlannerService PlannerService,
+    ICodeGraphQueryService CodeGraphQueryService,
+    InteractionLayerService InteractionLayerService,
+    IntentDiscoveryService IntentDiscoveryService,
+    PlanningDraftService PlanningDraftService,
+    FormalPlanningPacketService FormalPlanningPacketService,
+    ManagedWorkspaceLeaseService ManagedWorkspaceLeaseService,
+    ConversationProtocolService ConversationProtocolService,
+    PromptProtocolService PromptProtocolService,
+    PromptKernelService PromptKernelService,
+    ProjectUnderstandingProjectionService ProjectUnderstandingProjectionService,
+    IGitClient GitClient,
+    IAiClient AiClient,
+    PlannerAdapterRegistry PlannerAdapterRegistry,
+    WorkerAdapterRegistry WorkerAdapterRegistry,
+    ApprovalPolicyEngine ApprovalPolicyEngine,
+    WorkerPermissionOrchestrationService WorkerPermissionOrchestrationService,
+    WorkerSelectionPolicyService WorkerSelectionPolicyService,
+    WorkerRequestFactory WorkerRequestFactory,
+    WorkerService WorkerService,
+    SafetyService SafetyService,
+    DevLoopService DevLoopService,
+    IMarkdownSyncService MarkdownSyncService,
+    IRuntimeArtifactRepository ArtifactRepository,
+    FailureReportService FailureReportService,
+    FailureContextService FailureContextService,
+    FailureSummaryService FailureSummaryService,
+    PlannerTriggerService PlannerTriggerService,
+    DispatchProjectionService DispatchProjectionService,
+    ExecutionRunService ExecutionRunService,
+    ResultIngestionService ResultIngestionService,
+    ICodeGraphBuilder CodeGraphBuilder,
+    IRefactoringService RefactoringService,
+    OperatorSurfaceService OperatorSurfaceService,
+    HostRegistryService HostRegistryService,
+    RepoRegistryService RepoRegistryService,
+    RepoRuntimeService RepoRuntimeService,
+    RuntimeInstanceManager RuntimeInstanceManager,
+    ProviderRegistryService ProviderRegistryService,
+    ProviderRoutingService ProviderRoutingService,
+    RuntimeRoutingProfileService RuntimeRoutingProfileService,
+    CurrentModelQualificationService CurrentModelQualificationService,
+    PlatformGovernanceService PlatformGovernanceService,
+    PlatformSchedulerService PlatformSchedulerService,
+    ActorSessionService ActorSessionService,
+    RuntimeSessionGatewayService RuntimeSessionGatewayService,
+    SessionOwnershipService SessionOwnershipService,
+    ConcurrentActorArbitrationService ConcurrentActorArbitrationService,
+    OperatorOsEventStreamService OperatorOsEventStreamService,
+    PlatformVocabularyLintService PlatformVocabularyLintService,
+    OperatorApiService OperatorApiService,
+    PlatformDashboardService PlatformDashboardService,
+    WorkbenchSurfaceService WorkbenchSurfaceService,
+    WorkerBroker WorkerBroker,
+    WorkerOperationalPolicyService WorkerOperationalPolicyService,
+    RuntimePolicyBundleService RuntimePolicyBundleService,
+    ProviderHealthMonitorService ProviderHealthMonitorService,
+    RuntimeConsistencyCheckService RuntimeConsistencyCheckService,
+    DelegatedWorkerLifecycleReconciliationService DelegatedWorkerLifecycleReconciliationService,
+    OperationalSummaryService OperationalSummaryService,
+    GovernanceReportingService GovernanceReportingService,
+    DelegationReportingService DelegationReportingService,
+    WorktreeResourceCleanupService WorktreeResourceCleanupService);

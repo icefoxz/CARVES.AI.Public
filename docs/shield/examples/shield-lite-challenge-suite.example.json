@@ -1,0 +1,379 @@
+{
+  "schema_version": "shield-lite-challenge.v0",
+  "challenge_suite_id": "shield-lite-local-challenge-v0-example",
+  "created_at_utc": "2026-04-15T00:00:00Z",
+  "mode": "local_challenge",
+  "local_only": true,
+  "certification": false,
+  "scoring_model": "shield-lite-scoring.v0",
+  "evidence_schema": "shield-evidence.v0",
+  "cases": [
+    {
+      "case_id": "SLC-001",
+      "challenge_kind": "protected_path_violation",
+      "title": "Protected path edit is blocked",
+      "intent": "Confirm Guard evidence treats protected paths as fail-closed local governance boundaries.",
+      "fixture": {
+        "summary": "A patch attempts to edit .git/config and .env without an approved exception.",
+        "mutations": [
+          {
+            "artifact": "guard_decision",
+            "operation": "set protected path change under .git/ and .env",
+            "description": "The local guard decision should be block, not review or allow."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "block",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "protected_path_violation"
+        ],
+        "evidence_refs": [
+          "guard.policy.protected_path_action",
+          "guard.decisions.block_count"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "public_leaderboard_claim",
+          "source_code",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "SLC-002",
+      "challenge_kind": "deletion_without_credible_replacement",
+      "title": "Deletion without replacement stays blocked",
+      "intent": "Confirm deletion or replacement honesty is visible when a governance artifact is removed without credible replacement evidence.",
+      "fixture": {
+        "summary": "A patch deletes guard policy or audit evidence and does not provide a replacement artifact with matching scope.",
+        "mutations": [
+          {
+            "artifact": "guard_decision",
+            "operation": "delete policy-backed artifact without replacement",
+            "description": "The local result should not treat deletion as a clean governance improvement."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "block",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "deletion_without_credible_replacement"
+        ],
+        "evidence_refs": [
+          "guard.deletion_replacement_honesty",
+          "audit.input_artifacts"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "semantic_correctness_claim",
+          "source_code",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "SLC-003",
+      "challenge_kind": "fake_audit_evidence",
+      "title": "Fake audit evidence is rejected",
+      "intent": "Confirm Shield Lite does not reward audit evidence that cannot be linked to local provenance.",
+      "fixture": {
+        "summary": "Audit summary counts are present, but input artifact hashes or provenance records are missing or inconsistent.",
+        "mutations": [
+          {
+            "artifact": "shield_evidence",
+            "operation": "remove input artifact hash linkage",
+            "description": "The challenge result should reject the evidence instead of increasing the audit score."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "reject",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "fake_audit_evidence"
+        ],
+        "evidence_refs": [
+          "audit.provenance.input_artifacts",
+          "audit.timeline"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "hosted_verification_claim",
+          "source_code",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "SLC-004",
+      "challenge_kind": "stale_handoff_packet",
+      "title": "Stale handoff packet degrades posture",
+      "intent": "Confirm handoff evidence older than the freshness window cannot be treated as current.",
+      "fixture": {
+        "summary": "The handoff packet exists, but age_days is beyond the critical freshness boundary.",
+        "mutations": [
+          {
+            "artifact": "handoff_packet",
+            "operation": "set age_days greater than 30",
+            "description": "The local result should call for a fresh packet before sharing a healthy posture."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "review",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "stale_handoff_packet"
+        ],
+        "evidence_refs": [
+          "handoff.packets.age_days",
+          "handoff.reference_freshness"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "shield_evaluation_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "freshness_claim",
+          "source_code",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "SLC-005",
+      "challenge_kind": "privacy_leakage_flag",
+      "title": "Privacy leakage flag prevents sharing",
+      "intent": "Confirm Lite challenge output refuses evidence that declares source, raw diff, prompt, model response, secret, or credential payloads.",
+      "fixture": {
+        "summary": "The evidence privacy block sets raw_diff_included or a related forbidden payload flag to true.",
+        "mutations": [
+          {
+            "artifact": "shield_evidence",
+            "operation": "set privacy.raw_diff_included true",
+            "description": "The local result should reject the evidence before producing shareable challenge output."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "reject",
+        "shield_lite_band_ceiling": "critical",
+        "reason_codes": [
+          "privacy_leakage_flag"
+        ],
+        "evidence_refs": [
+          "privacy.raw_diff_included",
+          "privacy.upload_intent"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "public_badge",
+          "source_code",
+          "raw_git_diff",
+          "prompt",
+          "model_response",
+          "secret",
+          "credential"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "SLC-006",
+      "challenge_kind": "missing_ci_evidence",
+      "title": "Missing CI evidence stays visible",
+      "intent": "Confirm a local Lite score cannot imply Guard is running in pull request CI when CI evidence is absent.",
+      "fixture": {
+        "summary": "Guard policy exists locally, but CI workflow detection is false and no guard check command is found.",
+        "mutations": [
+          {
+            "artifact": "shield_evidence",
+            "operation": "set guard.ci.detected false",
+            "description": "The local result should require CI setup before claiming strong workflow coverage."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "review",
+        "shield_lite_band_ceiling": "basic",
+        "reason_codes": [
+          "missing_ci_evidence"
+        ],
+        "evidence_refs": [
+          "guard.ci.detected",
+          "guard.ci.guard_check_command_detected"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "shield_evaluation_json",
+          "shield_badge_json",
+          "shield_badge_svg",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "hosted_ci_pass_claim",
+          "source_code",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    },
+    {
+      "case_id": "SLC-007",
+      "challenge_kind": "oversized_patch",
+      "title": "Oversized patch is reviewed",
+      "intent": "Confirm challenge output preserves change-budget pressure instead of treating a large patch as automatically acceptable.",
+      "fixture": {
+        "summary": "Patch statistics exceed the local change budget or file-count threshold.",
+        "mutations": [
+          {
+            "artifact": "guard_decision",
+            "operation": "set changed_file_count above policy budget",
+            "description": "The local result should require review or smaller changes before a healthy Lite posture is shared."
+          }
+        ]
+      },
+      "expected_local_decision_posture": {
+        "decision": "review",
+        "shield_lite_band_ceiling": "basic",
+        "reason_codes": [
+          "oversized_patch"
+        ],
+        "evidence_refs": [
+          "guard.policy.change_budget_present",
+          "guard.decisions.patch_stats"
+        ]
+      },
+      "allowed_outputs": {
+        "local_result": true,
+        "certification": false,
+        "shareable_artifacts": [
+          "challenge_result_json",
+          "shield_evaluation_json",
+          "redacted_evidence_summary",
+          "human_summary"
+        ],
+        "forbidden_outputs": [
+          "certification",
+          "semantic_correctness_claim",
+          "source_code",
+          "raw_git_diff"
+        ]
+      },
+      "privacy": {
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false
+      }
+    }
+  ],
+  "non_claims": [
+    "local challenge result only",
+    "not certification",
+    "not hosted verification",
+    "not a public leaderboard",
+    "not a model safety benchmark",
+    "not semantic source correctness proof",
+    "not operating-system sandbox proof"
+  ]
+}

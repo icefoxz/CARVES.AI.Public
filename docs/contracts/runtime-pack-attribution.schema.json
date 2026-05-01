@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/runtime-pack-attribution.schema.json",
+  "title": "CARVES Runtime Pack Attribution",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packId",
+    "packVersion",
+    "channel",
+    "executionProfiles",
+    "attributedAtUtc"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "packId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "channel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifactRef": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "executionProfiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policyPreset",
+        "gatePreset",
+        "validatorProfile",
+        "environmentProfile"
+      ],
+      "properties": {
+        "policyPreset": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gatePreset": {
+          "type": "string",
+          "minLength": 1
+        },
+        "validatorProfile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "routingProfile": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "environmentProfile": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assignmentMode"
+      ],
+      "properties": {
+        "assignmentMode": {
+          "type": "string",
+          "enum": [
+            "local_pin",
+            "overlay_assignment",
+            "channel_resolution",
+            "offline_bundle"
+          ]
+        },
+        "assignmentRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "attributedAtUtc": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "carves-trial-challenge.v0",
+  "challenge_id": "local-mvp-task-001",
+  "challenge_source": "pack_local_dry_run",
+  "suite_id": "official-agent-dev-safety",
+  "pack_id": "official-agent-dev-safety-v1-local-mvp",
+  "pack_version": "0.1.0-local",
+  "task_pack_version": "local-mvp-task-001",
+  "task_id": "official-v1-task-001-bounded-edit",
+  "task_version": "0.1.0-local",
+  "prompt_id": "official-v1-local-mvp-bounded-edit",
+  "prompt_version": "0.1.0-local",
+  "expected_task_contract_sha256": "sha256:80adb1bf83e61dd59d2a32a23af45ce4b8b80d7d8a6f0ee2e046a5d6d6387ca3",
+  "instruction_pack_id": "official-v1-local-mvp-instructions",
+  "instruction_pack_version": "0.1.0-local",
+  "expected_instruction_pack_sha256": "sha256:be9126caae5130cb6c69320351e4ec3d1e8abe2df795a108065f6081d39eea26",
+  "issued_at": "2026-04-16T00:00:00Z",
+  "expires_at": null,
+  "previous_receipt_sha256": null,
+  "leaderboard_eligible": false
+}

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CARVES Context Pack",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "packId",
+    "audience",
+    "goal",
+    "task",
+    "constraints",
+    "localTaskGraph",
+    "relevantModules",
+    "codeHints",
+    "budget",
+    "trimmed",
+    "promptInput"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "string" },
+    "packId": { "type": "string" },
+    "audience": { "type": "string", "enum": ["Worker", "Planner"] },
+    "artifactPath": { "type": ["string", "null"] },
+    "taskId": { "type": ["string", "null"] },
+    "goal": { "type": "string" },
+    "task": { "type": "string" },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "acceptanceContract": {
+      "type": ["object", "null"]
+    },
+    "localTaskGraph": {
+      "type": "object",
+      "required": ["currentTaskId", "currentTaskTitle", "dependencies", "blockers"]
+    },
+    "relevantModules": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "codeHints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "lastFailureSummary": {
+      "type": ["object", "null"]
+    },
+    "lastRunSummary": {
+      "type": ["object", "null"]
+    },
+    "expandableReferences": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "budget": {
+      "type": "object",
+      "required": [
+        "policyVersion",
+        "model",
+        "modelLimitTokens",
+        "maxContextTokens",
+        "reservedHeadroomTokens",
+        "coreBudgetTokens",
+        "relevantBudgetTokens",
+        "usedTokens",
+        "trimmedTokens"
+      ]
+    },
+    "trimmed": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "promptInput": { "type": "string" }
+  }
+}

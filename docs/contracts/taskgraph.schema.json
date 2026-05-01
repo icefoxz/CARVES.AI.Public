@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "carves.runtime/contracts/taskgraph.schema.json",
+  "title": "CARVES Runtime TaskGraph Contract",
+  "type": "object",
+  "required": ["version", "tasks", "cards"],
+  "properties": {
+    "version": { "const": 1 },
+    "updated_at": { "type": ["string", "null"], "format": "date-time" },
+    "cards": { "type": "array", "items": { "type": "string" } },
+    "tasks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/task_summary" }
+    }
+  },
+  "$defs": {
+    "task_summary": {
+      "type": "object",
+      "required": ["task_id", "title", "status", "priority", "dependencies", "node_file"],
+      "properties": {
+        "task_id": { "type": "string" },
+        "title": { "type": "string" },
+        "status": { "type": "string" },
+        "priority": { "type": "string" },
+        "card_id": { "type": ["string", "null"] },
+        "dependencies": { "type": "array", "items": { "type": "string" } },
+        "node_file": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "task_node": {
+      "type": "object",
+      "required": ["task_id", "title", "status", "priority", "scope", "acceptance", "constraints", "validation"],
+      "properties": {
+        "schema_version": { "type": ["integer", "null"], "enum": [1, null] },
+        "task_id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string" },
+        "task_type": { "type": "string" },
+        "priority": { "type": "string" },
+        "source": { "type": "string" },
+        "card_id": { "type": ["string", "null"] },
+        "base_commit": { "type": ["string", "null"] },
+        "result_commit": { "type": ["string", "null"] },
+        "dependencies": { "type": "array", "items": { "type": "string" } },
+        "scope": { "type": "array", "items": { "type": "string" } },
+        "acceptance": { "type": "array", "items": { "type": "string" } },
+        "constraints": { "type": "array", "items": { "type": "string" } },
+        "acceptance_contract": { "$ref": "acceptance-contract.schema.json" },
+        "validation": {
+          "type": "object",
+          "required": ["commands", "checks", "expected_evidence"],
+          "properties": {
+            "commands": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            },
+            "checks": { "type": "array", "items": { "type": "string" } },
+            "expected_evidence": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

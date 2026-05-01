@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Runtime Methodology Compliance",
+  "type": "object",
+  "required": ["applies", "acknowledged", "reference_path", "coverage_status", "summary", "recommended_action"],
+  "properties": {
+    "applies": {
+      "type": "boolean"
+    },
+    "acknowledged": {
+      "type": "boolean"
+    },
+    "reference_path": {
+      "type": "string"
+    },
+    "coverage_status": {
+      "type": "string",
+      "enum": ["not_applicable", "new_delta", "covered_completed_lineage", "deferred_lineage_resume", "missing_acknowledgment"]
+    },
+    "related_card_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string"
+    },
+    "recommended_action": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

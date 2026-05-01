@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/hosted-action-receipt.schema.json",
+  "title": "HostedActionReceipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "projectionClass",
+    "recordedAt",
+    "receipts"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "hosted-action-receipt.v1" },
+    "projectionClass": { "const": "runtime_owned_hosted_action_projection" },
+    "recordedAt": { "type": "string", "format": "date-time" },
+    "receipts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "receiptId",
+          "ingressClass",
+          "brokerMode",
+          "approvalDisposition",
+          "proofDisposition",
+          "localAcceptanceDisposition",
+          "outcomeProjectionClass",
+          "localTruthIngress",
+          "operationId",
+          "localEvidenceRef",
+          "recordedAt"
+        ],
+        "properties": {
+          "receiptId": { "type": "string" },
+          "ingressClass": {
+            "type": "string",
+            "enum": [
+              "hosted_routing_request",
+              "hosted_analysis_request",
+              "hosted_governed_mutation_request"
+            ]
+          },
+          "brokerMode": { "const": "strict_broker" },
+          "approvalDisposition": {
+            "type": "string",
+            "enum": [
+              "not_required",
+              "required",
+              "approved",
+              "rejected",
+              "blocked"
+            ]
+          },
+          "proofDisposition": {
+            "type": "string",
+            "enum": [
+              "not_required",
+              "pending_runtime_proof",
+              "projected",
+              "accepted",
+              "blocked"
+            ]
+          },
+          "localAcceptanceDisposition": {
+            "type": "string",
+            "enum": [
+              "pending_local_acceptance",
+              "accepted_for_projection",
+              "rejected",
+              "blocked"
+            ]
+          },
+          "outcomeProjectionClass": {
+            "type": "string",
+            "enum": [
+              "none",
+              "hosted_route_projection",
+              "hosted_analysis_projection",
+              "hosted_execution_outcome_projection"
+            ]
+          },
+          "localTruthIngress": { "const": "runtime_control_kernel" },
+          "repoId": { "type": [ "string", "null" ] },
+          "taskId": { "type": [ "string", "null" ] },
+          "operationId": { "type": "string" },
+          "hostedOutcomeRef": { "type": [ "string", "null" ] },
+          "localEvidenceRef": { "type": "string" },
+          "recordedAt": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+}

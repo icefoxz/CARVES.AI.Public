@@ -1,0 +1,70 @@
+{
+  "schema_version": "shield-evidence.v0",
+  "evidence_id": "shev_insufficient_audit_example_20260415",
+  "generated_at_utc": "2026-04-15T00:00:00Z",
+  "mode_hint": "standard",
+  "sample_window_days": 7,
+  "repository": {
+    "host": "github",
+    "visibility": "public",
+    "default_branch": "main",
+    "commit_sha": "0123456789abcdef"
+  },
+  "privacy": {
+    "source_included": false,
+    "raw_diff_included": false,
+    "prompt_included": false,
+    "secrets_included": false,
+    "redaction_applied": true,
+    "upload_intent": "local_only"
+  },
+  "dimensions": {
+    "guard": {
+      "enabled": false
+    },
+    "handoff": {
+      "enabled": false
+    },
+    "audit": {
+      "enabled": true,
+      "log": {
+        "present": true,
+        "readable": true,
+        "schema_supported": true,
+        "append_only_claimed": false,
+        "integrity_check_passed": true
+      },
+      "records": {
+        "record_count": 2,
+        "malformed_record_count": 0,
+        "future_schema_record_count": 0,
+        "earliest_recorded_at_utc": "2026-04-14T01:00:00Z",
+        "latest_recorded_at_utc": "2026-04-14T02:00:00Z",
+        "records_with_rule_id_count": 2,
+        "records_with_evidence_count": 2
+      },
+      "coverage": {
+        "block_decision_count": 1,
+        "block_explain_covered_count": 0,
+        "review_decision_count": 1,
+        "review_explain_covered_count": 0
+      },
+      "reports": {
+        "summary_generated_in_window": false,
+        "change_report_generated_in_window": false,
+        "failure_pattern_distribution_present": false
+      }
+    }
+  },
+  "provenance": {
+    "producer": "carves-audit",
+    "producer_version": "0.1.0-alpha.1",
+    "generated_by": "local",
+    "source": "working_tree_scan",
+    "warnings": [
+      "audit_explain_coverage_not_observed",
+      "audit_report_artifacts_not_observed",
+      "audit_append_only_not_claimed"
+    ]
+  }
+}

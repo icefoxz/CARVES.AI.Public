@@ -1,0 +1,472 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.ai/schemas/matrix-proof-summary.v0.schema.json",
+  "title": "CARVES Matrix Proof Summary v0",
+  "description": "Closed public readback contract for matrix-proof-summary.json. Unknown public fields are verifier failures.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "smoke",
+    "shell",
+    "proof_mode",
+    "proof_capabilities",
+    "artifact_root",
+    "artifact_manifest",
+    "trust_chain_hardening",
+    "privacy",
+    "public_claims"
+  ],
+  "properties": {
+    "schema_version": { "const": "matrix-proof-summary.v0" },
+    "smoke": { "type": "string" },
+    "shell": { "const": "carves-matrix" },
+    "proof_mode": { "enum": ["native_minimal", "full_release"] },
+    "proof_capabilities": { "$ref": "#/$defs/proof_capabilities" },
+    "artifact_root": { "const": "." },
+    "artifact_manifest": { "$ref": "#/$defs/artifact_manifest_reference" },
+    "trust_chain_hardening": { "$ref": "#/$defs/verifier_trust_chain" },
+    "privacy": { "$ref": "#/$defs/summary_privacy" },
+    "public_claims": { "$ref": "#/$defs/public_claims" },
+    "native": { "$ref": "#/$defs/native_summary" },
+    "project": { "$ref": "#/$defs/full_release_project_summary" },
+    "packaged": { "$ref": "#/$defs/full_release_packaged_summary" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "proof_mode": { "const": "native_minimal" } },
+        "required": ["proof_mode"]
+      },
+      "then": {
+        "required": ["native"],
+        "properties": {
+          "proof_capabilities": { "$ref": "#/$defs/native_minimal_proof_capabilities" }
+        },
+        "not": {
+          "anyOf": [
+            { "required": ["project"] },
+            { "required": ["packaged"] }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "proof_mode": { "const": "full_release" } },
+        "required": ["proof_mode"]
+      },
+      "then": {
+        "required": ["project", "packaged"],
+        "properties": {
+          "proof_capabilities": { "$ref": "#/$defs/full_release_proof_capabilities" }
+        },
+        "not": { "required": ["native"] }
+      }
+    }
+  ],
+  "$defs": {
+    "artifact_manifest_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "schema_version", "sha256", "verification_posture", "issue_count"],
+      "properties": {
+        "path": { "const": "matrix-artifact-manifest.json" },
+        "schema_version": { "const": "matrix-artifact-manifest.v0" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "verification_posture": { "type": "string" },
+        "issue_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "proof_capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proof_lane", "execution_backend", "coverage", "requirements"],
+      "properties": {
+        "proof_lane": { "enum": ["native_minimal", "full_release", "native_full_release"] },
+        "execution_backend": { "enum": ["dotnet_runner_chain", "powershell_release_units", "dotnet_full_release_runner_chain"] },
+        "coverage": { "$ref": "#/$defs/proof_capability_coverage" },
+        "requirements": { "$ref": "#/$defs/proof_capability_requirements" }
+      }
+    },
+    "proof_capability_coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project_mode", "packaged_install", "full_release"],
+      "properties": {
+        "project_mode": { "type": "boolean" },
+        "packaged_install": { "type": "boolean" },
+        "full_release": { "type": "boolean" }
+      }
+    },
+    "proof_capability_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["powershell", "source_checkout", "dotnet_sdk", "git"],
+      "properties": {
+        "powershell": { "type": "boolean" },
+        "source_checkout": { "type": "boolean" },
+        "dotnet_sdk": { "type": "boolean" },
+        "git": { "type": "boolean" }
+      }
+    },
+    "native_minimal_proof_capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proof_lane", "execution_backend", "coverage", "requirements"],
+      "properties": {
+        "proof_lane": { "const": "native_minimal" },
+        "execution_backend": { "const": "dotnet_runner_chain" },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["project_mode", "packaged_install", "full_release"],
+          "properties": {
+            "project_mode": { "const": true },
+            "packaged_install": { "const": false },
+            "full_release": { "const": false }
+          }
+        },
+        "requirements": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["powershell", "source_checkout", "dotnet_sdk", "git"],
+          "properties": {
+            "powershell": { "const": false },
+            "source_checkout": { "const": false },
+            "dotnet_sdk": { "const": true },
+            "git": { "const": true }
+          }
+        }
+      }
+    },
+    "full_release_proof_capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proof_lane", "execution_backend", "coverage", "requirements"],
+      "properties": {
+        "proof_lane": { "enum": ["full_release", "native_full_release"] },
+        "execution_backend": { "enum": ["powershell_release_units", "dotnet_full_release_runner_chain"] },
+        "coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["project_mode", "packaged_install", "full_release"],
+          "properties": {
+            "project_mode": { "const": true },
+            "packaged_install": { "const": true },
+            "full_release": { "const": true }
+          }
+        },
+        "requirements": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["powershell", "source_checkout", "dotnet_sdk", "git"],
+          "properties": {
+            "powershell": { "type": "boolean" },
+            "source_checkout": { "const": true },
+            "dotnet_sdk": { "const": true },
+            "git": { "const": true }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "proof_lane": { "const": "full_release" } },
+            "required": ["proof_lane"]
+          },
+          "then": {
+            "properties": {
+              "execution_backend": { "const": "powershell_release_units" },
+              "requirements": {
+                "type": "object",
+                "properties": {
+                  "powershell": { "const": true }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "proof_lane": { "const": "native_full_release" } },
+            "required": ["proof_lane"]
+          },
+          "then": {
+            "properties": {
+              "execution_backend": { "const": "dotnet_full_release_runner_chain" },
+              "requirements": {
+                "type": "object",
+                "properties": {
+                  "powershell": { "const": false }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "verifier_trust_chain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gates_satisfied", "computed_by", "gates"],
+      "properties": {
+        "gates_satisfied": { "type": "boolean" },
+        "computed_by": { "const": "matrix_verifier" },
+        "gates": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/verifier_gate" }
+        }
+      }
+    },
+    "verifier_gate": {
+      "type": "object",
+      "propertyNames": {
+        "enum": ["gate_id", "satisfied", "reason", "issue_codes", "reason_codes"]
+      },
+      "properties": {
+        "gate_id": { "type": "string" },
+        "satisfied": { "type": "boolean" },
+        "reason": { "type": "string" },
+        "issue_codes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["gate_id", "satisfied", "reason", "issue_codes", "reason_codes"]
+    },
+    "summary_privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary_only",
+        "source_upload_required",
+        "raw_diff_upload_required",
+        "prompt_upload_required",
+        "model_response_upload_required",
+        "secrets_required",
+        "hosted_api_required"
+      ],
+      "properties": {
+        "summary_only": { "const": true },
+        "source_upload_required": { "const": false },
+        "raw_diff_upload_required": { "const": false },
+        "prompt_upload_required": { "const": false },
+        "model_response_upload_required": { "const": false },
+        "secrets_required": { "const": false },
+        "hosted_api_required": { "const": false }
+      }
+    },
+    "public_claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["certification", "hosted_verification", "public_leaderboard", "os_sandbox_claim"],
+      "properties": {
+        "certification": { "const": false },
+        "hosted_verification": { "const": false },
+        "public_leaderboard": { "const": false },
+        "os_sandbox_claim": { "const": false }
+      }
+    },
+    "native_summary": {
+      "type": "object",
+      "propertyNames": { "enum": [
+        "passed",
+        "proof_role",
+        "scoring_owner",
+        "alters_shield_score",
+        "shield_status",
+        "shield_standard_label",
+        "lite_score",
+        "consumed_shield_evidence_sha256",
+        "guard_decision_artifact",
+        "handoff_packet_artifact",
+        "consumed_shield_evidence_artifact",
+        "shield_evaluation_artifact",
+        "shield_badge_json_artifact",
+        "shield_badge_svg_artifact",
+        "matrix_summary_artifact",
+        "artifact_root"
+      ] },
+      "properties": {
+        "passed": { "type": "boolean" },
+        "proof_role": { "type": "string" },
+        "scoring_owner": { "type": "string" },
+        "alters_shield_score": { "type": "boolean" },
+        "shield_status": { "type": "string" },
+        "shield_standard_label": { "type": "string" },
+        "lite_score": { "type": "integer", "minimum": 0 },
+        "consumed_shield_evidence_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "guard_decision_artifact": { "type": "string" },
+        "handoff_packet_artifact": { "type": "string" },
+        "consumed_shield_evidence_artifact": { "type": "string" },
+        "shield_evaluation_artifact": { "type": "string" },
+        "shield_badge_json_artifact": { "type": "string" },
+        "shield_badge_svg_artifact": { "type": "string" },
+        "matrix_summary_artifact": { "type": "string" },
+        "artifact_root": { "type": "string" }
+      },
+      "required": [
+        "passed",
+        "proof_role",
+        "scoring_owner",
+        "alters_shield_score",
+        "shield_status",
+        "shield_standard_label",
+        "lite_score",
+        "consumed_shield_evidence_sha256",
+        "guard_decision_artifact",
+        "handoff_packet_artifact",
+        "consumed_shield_evidence_artifact",
+        "shield_evaluation_artifact",
+        "shield_badge_json_artifact",
+        "shield_badge_svg_artifact",
+        "matrix_summary_artifact",
+        "artifact_root"
+      ]
+    },
+    "full_release_project_summary": {
+      "allOf": [
+        { "$ref": "#/$defs/full_release_common_summary" }
+      ],
+      "propertyNames": { "enum": [
+        "passed",
+        "guard_run_id",
+        "shield_status",
+        "shield_standard_label",
+        "lite_score",
+        "consumed_shield_evidence_sha256",
+        "proof_role",
+        "scoring_owner",
+        "alters_shield_score",
+        "consumed_shield_evidence_artifact",
+        "shield_evaluation_artifact",
+        "shield_badge_json_artifact",
+        "shield_badge_svg_artifact",
+        "trust_chain_hardening",
+        "artifact_root"
+      ] }
+    },
+    "full_release_packaged_summary": {
+      "allOf": [
+        { "$ref": "#/$defs/full_release_common_summary" }
+      ],
+      "propertyNames": { "enum": [
+        "passed",
+        "guard_run_id",
+        "shield_status",
+        "shield_standard_label",
+        "lite_score",
+        "consumed_shield_evidence_sha256",
+        "proof_role",
+        "scoring_owner",
+        "alters_shield_score",
+        "consumed_shield_evidence_artifact",
+        "shield_evaluation_artifact",
+        "shield_badge_json_artifact",
+        "shield_badge_svg_artifact",
+        "trust_chain_hardening",
+        "artifact_root",
+        "guard_version",
+        "handoff_version",
+        "audit_version",
+        "shield_version",
+        "matrix_version"
+      ] },
+      "properties": {
+        "guard_version": { "type": "string" },
+        "handoff_version": { "type": "string" },
+        "audit_version": { "type": "string" },
+        "shield_version": { "type": "string" },
+        "matrix_version": { "type": "string" }
+      },
+      "required": ["guard_version", "handoff_version", "audit_version", "shield_version", "matrix_version"]
+    },
+    "full_release_common_summary": {
+      "type": "object",
+      "required": [
+        "passed",
+        "guard_run_id",
+        "shield_status",
+        "shield_standard_label",
+        "lite_score",
+        "consumed_shield_evidence_sha256",
+        "proof_role",
+        "scoring_owner",
+        "alters_shield_score",
+        "consumed_shield_evidence_artifact",
+        "shield_evaluation_artifact",
+        "shield_badge_json_artifact",
+        "shield_badge_svg_artifact",
+        "trust_chain_hardening",
+        "artifact_root"
+      ],
+      "properties": {
+        "passed": { "type": "boolean" },
+        "guard_run_id": { "type": "string" },
+        "shield_status": { "type": "string" },
+        "shield_standard_label": { "type": "string" },
+        "lite_score": { "type": "integer", "minimum": 0 },
+        "consumed_shield_evidence_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "proof_role": { "type": "string" },
+        "scoring_owner": { "type": "string" },
+        "alters_shield_score": { "type": "boolean" },
+        "consumed_shield_evidence_artifact": { "type": "string" },
+        "shield_evaluation_artifact": { "type": "string" },
+        "shield_badge_json_artifact": { "type": "string" },
+        "shield_badge_svg_artifact": { "type": "string" },
+        "artifact_root": { "type": "string" },
+        "trust_chain_hardening": { "$ref": "#/$defs/full_release_evidence_fields" }
+      }
+    },
+    "full_release_evidence_fields": {
+      "type": "object",
+      "propertyNames": { "enum": [
+        "audit_evidence_integrity",
+        "guard_deletion_replacement_honesty",
+        "shield_evidence_contract_alignment",
+        "guard_audit_store_multiprocess_durability",
+        "handoff_completed_state_semantics",
+        "matrix_shield_proof_bridge_claim_boundary",
+        "large_log_streaming_output_boundaries",
+        "handoff_reference_freshness_portability",
+        "usability_coverage_cleanup",
+        "release_checkpoint",
+        "public_rating_claim",
+        "public_rating_claims_allowed"
+      ] },
+      "properties": {
+        "audit_evidence_integrity": { "type": "string" },
+        "guard_deletion_replacement_honesty": { "type": "string" },
+        "shield_evidence_contract_alignment": { "type": "string" },
+        "guard_audit_store_multiprocess_durability": { "type": "string" },
+        "handoff_completed_state_semantics": { "type": "string" },
+        "matrix_shield_proof_bridge_claim_boundary": { "type": "string" },
+        "large_log_streaming_output_boundaries": { "type": "string" },
+        "handoff_reference_freshness_portability": { "type": "string" },
+        "usability_coverage_cleanup": { "type": "string" },
+        "release_checkpoint": { "type": "string" },
+        "public_rating_claim": { "type": "string" },
+        "public_rating_claims_allowed": { "type": "string" }
+      },
+      "required": [
+        "audit_evidence_integrity",
+        "guard_deletion_replacement_honesty",
+        "shield_evidence_contract_alignment",
+        "guard_audit_store_multiprocess_durability",
+        "handoff_completed_state_semantics",
+        "matrix_shield_proof_bridge_claim_boundary",
+        "large_log_streaming_output_boundaries",
+        "handoff_reference_freshness_portability",
+        "usability_coverage_cleanup",
+        "release_checkpoint",
+        "public_rating_claim",
+        "public_rating_claims_allowed"
+      ]
+    }
+  }
+}

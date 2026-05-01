@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.ai/contracts/planning-card-invariant-blocks.schema.json",
+  "title": "CARVES Runtime Planning Card Invariant Blocks",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "state",
+    "can_export_governed_truth",
+    "summary",
+    "remediation_action",
+    "expected_digest",
+    "block_count",
+    "violation_count",
+    "blocks",
+    "violations"
+  ],
+  "properties": {
+    "state": {
+      "type": "string",
+      "enum": [
+        "no_active_planning_card",
+        "valid",
+        "drifted"
+      ]
+    },
+    "can_export_governed_truth": {
+      "type": "boolean"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "remediation_action": {
+      "type": "string"
+    },
+    "expected_digest": {
+      "type": "string"
+    },
+    "actual_digest": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "system_derived_digest": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "block_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "violation_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "blocks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/invariant_block"
+      }
+    },
+    "violations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/invariant_violation"
+      }
+    }
+  },
+  "$defs": {
+    "invariant_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "block_id",
+        "field_path",
+        "line_index",
+        "literal_text",
+        "ownership",
+        "compare_rule",
+        "remediation_action"
+      ],
+      "properties": {
+        "block_id": {
+          "type": "string"
+        },
+        "field_path": {
+          "type": "string"
+        },
+        "line_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "literal_text": {
+          "type": "string"
+        },
+        "ownership": {
+          "type": "string",
+          "const": "system"
+        },
+        "compare_rule": {
+          "type": "string",
+          "enum": [
+            "literal_compare",
+            "digest_compare",
+            "literal_and_digest"
+          ]
+        },
+        "remediation_action": {
+          "type": "string"
+        }
+      }
+    },
+    "invariant_violation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "violation_kind",
+        "block_id",
+        "field_path",
+        "expected_text",
+        "summary",
+        "remediation_action"
+      ],
+      "properties": {
+        "violation_kind": {
+          "type": "string"
+        },
+        "block_id": {
+          "type": "string"
+        },
+        "field_path": {
+          "type": "string"
+        },
+        "expected_text": {
+          "type": "string"
+        },
+        "actual_text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "summary": {
+          "type": "string"
+        },
+        "remediation_action": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

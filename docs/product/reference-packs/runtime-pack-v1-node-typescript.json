@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "carves.pack.v1",
+  "packId": "carves.firstparty.node-typescript",
+  "packVersion": "0.1.0",
+  "name": "CARVES First-Party Node TypeScript",
+  "description": "Bounded project-understanding and verification recipes for Node + TypeScript repositories.",
+  "publisher": {
+    "name": "CARVES",
+    "trustLevel": "first_party",
+    "url": null
+  },
+  "license": {
+    "expression": "MIT",
+    "url": null
+  },
+  "compatibility": {
+    "carvesRuntime": ">=0.4.0",
+    "languages": [
+      "typescript",
+      "javascript"
+    ],
+    "frameworkHints": [
+      "node",
+      "typescript"
+    ],
+    "repoSignals": [
+      "package.json",
+      "tsconfig.json"
+    ]
+  },
+  "capabilityKinds": [
+    "project_understanding_recipe",
+    "verification_recipe"
+  ],
+  "requestedPermissions": {
+    "readPaths": [
+      "src/**",
+      "test/**",
+      "tests/**",
+      "package.json",
+      "tsconfig.json"
+    ],
+    "network": false,
+    "env": false,
+    "secrets": false,
+    "truthWrite": false
+  },
+  "recipes": {
+    "projectUnderstandingRecipes": [
+      {
+        "id": "node-typescript-project-understanding",
+        "description": "Prioritize source, tests, and TypeScript configuration files for bounded context shaping.",
+        "repoSignals": [
+          "package.json",
+          "tsconfig.json"
+        ],
+        "frameworkHints": [
+          "node",
+          "typescript"
+        ],
+        "includeGlobs": [
+          "src/**/*.{ts,tsx,js,jsx}",
+          "test/**/*.{ts,tsx,js,jsx}",
+          "tests/**/*.{ts,tsx,js,jsx}",
+          "package.json",
+          "tsconfig.json"
+        ],
+        "excludeGlobs": [
+          "node_modules/**",
+          "dist/**",
+          "coverage/**",
+          ".git/**",
+          ".carves-platform/**",
+          ".ai/tasks/**",
+          ".ai/memory/**",
+          ".ai/artifacts/reviews/**"
+        ],
+        "priorityRules": [
+          {
+            "id": "node-src-priority",
+            "glob": "src/**/*.{ts,tsx,js,jsx}",
+            "weight": 90
+          },
+          {
+            "id": "node-tests-priority",
+            "glob": "tests/**/*.{ts,tsx,js,jsx}",
+            "weight": 80
+          },
+          {
+            "id": "node-tsconfig-priority",
+            "glob": "tsconfig.json",
+            "weight": 85
+          }
+        ]
+      }
+    ],
+    "verificationRecipes": [
+      {
+        "id": "node-typescript-verification",
+        "description": "Conservative Node + TypeScript verification using bounded known-tool commands only.",
+        "commands": [
+          {
+            "id": "tsc-noemit",
+            "kind": "known_tool_command",
+            "executable": "npx",
+            "args": [
+              "tsc",
+              "--noEmit"
+            ],
+            "cwd": ".",
+            "required": true
+          }
+        ]
+      }
+    ],
+    "reviewRubrics": []
+  }
+}

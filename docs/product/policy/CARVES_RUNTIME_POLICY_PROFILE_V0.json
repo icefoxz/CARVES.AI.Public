@@ -1,0 +1,173 @@
+{
+  "profile_version": "carves.runtime_policy_profile.v0",
+  "policy_version": "carves.execution_intake_policy.v0",
+  "profile_status": "proposed",
+  "runtime_authority": false,
+  "path_classifier_rules": [
+    {
+      "pattern": "docs/product/policy/**",
+      "class": "policy_surface",
+      "reason_code": "POLICY_SURFACE_TOUCHED",
+      "minimum_execution_level": "governed_card_required"
+    },
+    {
+      "pattern": "docs/product/CARVES_STABLE_WORK_V0_DECISION.md",
+      "class": "policy_surface",
+      "reason_code": "POLICY_SURFACE_TOUCHED",
+      "minimum_execution_level": "governed_card_required"
+    },
+    {
+      "pattern": "docs/product/CARVES_STABLE_WORK_V0_AGENT_RULES_CANDIDATE.md",
+      "class": "policy_projection_candidate",
+      "reason_code": "POLICY_SURFACE_TOUCHED",
+      "minimum_execution_level": "governed_card_required"
+    },
+    {
+      "pattern": "AGENTS.md",
+      "class": "agent_entry_policy",
+      "reason_code": "POLICY_SURFACE_TOUCHED",
+      "minimum_execution_level": "governed_card_required"
+    },
+    {
+      "pattern": "docs/guides/AGENT_INITIALIZATION_REPORT_SPEC.md",
+      "class": "agent_entry_policy",
+      "reason_code": "POLICY_SURFACE_TOUCHED",
+      "minimum_execution_level": "governed_card_required"
+    },
+    {
+      "pattern": "docs/matrix/starter-packs/**",
+      "class": "product_contract",
+      "reason_code": "CONTRACT_SURFACE_TOUCHED",
+      "minimum_execution_level": "governed_card_required"
+    },
+    {
+      "pattern": "tests/fixtures/agent-trial-v1/**",
+      "class": "fixture_truth",
+      "reason_code": "FIXTURE_TRUTH_TOUCHED",
+      "minimum_execution_level": "governed_card_required"
+    },
+    {
+      "pattern": "src/CARVES.Runtime.Cli/**",
+      "class": "public_cli",
+      "reason_code": "PUBLIC_CLI_TOUCHED",
+      "minimum_execution_level": "governed_card_required"
+    },
+    {
+      "pattern": "src/CARVES.Matrix.Core/MatrixTrial*",
+      "class": "scorer_behavior",
+      "reason_code": "SCORER_BEHAVIOR_TOUCHED",
+      "minimum_execution_level": "governed_card_required"
+    },
+    {
+      "pattern": "artifacts/release/**",
+      "class": "derived_artifact",
+      "reason_code": "DERIVED_ARTIFACT_TOUCHED",
+      "minimum_execution_level": "none"
+    },
+    {
+      "pattern": ".ai/tasks/nodes/**",
+      "class": "ai_canonical_truth",
+      "reason_code": "TRUTH_WRITE_REQUIRES_GOVERNANCE",
+      "minimum_execution_level": "governed_card_required"
+    },
+    {
+      "pattern": ".ai/STATE.md",
+      "class": "governed_mirror",
+      "reason_code": "GOVERNED_MIRROR_TOUCHED",
+      "minimum_execution_level": "governed_card_required"
+    },
+    {
+      "pattern": ".ai/TASK_QUEUE.md",
+      "class": "governed_mirror",
+      "reason_code": "GOVERNED_MIRROR_TOUCHED",
+      "minimum_execution_level": "governed_card_required"
+    }
+  ],
+  "state_consistency_checks": [
+    {
+      "name": "task_node_vs_markdown_projection",
+      "machine_truth": ".ai/tasks/nodes/*.json",
+      "projection": [
+        ".ai/STATE.md",
+        ".ai/TASK_QUEUE.md"
+      ],
+      "on_conflict_reason_code": "STALE_PROJECTION",
+      "on_conflict_route": "recovery"
+    }
+  ],
+  "scope_domain_profiles": [
+    {
+      "scope_domain": "docs",
+      "allowed_paths": [
+        "README.md",
+        "docs/**"
+      ],
+      "forbidden_paths": [
+        ".ai/**",
+        "src/**",
+        "tests/fixtures/**",
+        "artifacts/release/**",
+        "docs/product/policy/**",
+        "AGENTS.md",
+        "docs/guides/AGENT_INITIALIZATION_REPORT_SPEC.md"
+      ]
+    },
+    {
+      "scope_domain": "tool:<name>",
+      "allowed_paths_template": [
+        "tools/<name>/**",
+        "tests/tools/<name>/**"
+      ],
+      "forbidden_paths": [
+        "src/CARVES.Runtime.Cli/**",
+        ".ai/tasks/**",
+        "artifacts/release/**",
+        "docs/product/policy/**"
+      ]
+    },
+    {
+      "scope_domain": "subproject:node-starter-pack",
+      "allowed_paths": [
+        "docs/matrix/starter-packs/**",
+        "tests/fixtures/agent-trial-v1/**"
+      ],
+      "requires_governed_card": true,
+      "upgrade_if_touched": [
+        "src/CARVES.Runtime.Cli/**",
+        "src/CARVES.Matrix.Core/MatrixTrial*",
+        "artifacts/release/**"
+      ]
+    },
+    {
+      "scope_domain": "policy_bundle_bootstrap",
+      "allowed_paths": [
+        "docs/product/CARVES_STABLE_WORK_V0_DECISION.md",
+        "docs/product/policy/CARVES_EXECUTION_INTAKE_POLICY_V0.json",
+        "docs/product/policy/CARVES_RUNTIME_POLICY_PROFILE_V0.json",
+        "docs/product/policy/CARVES_GOVERNANCE_GATE_FIXTURES_V0.json",
+        "docs/product/CARVES_STABLE_WORK_V0_AGENT_RULES_CANDIDATE.md"
+      ],
+      "forbidden_paths": [
+        "AGENTS.md",
+        "docs/guides/AGENT_INITIALIZATION_REPORT_SPEC.md",
+        ".ai/**",
+        "src/**",
+        "tests/fixtures/**",
+        "artifacts/release/**"
+      ],
+      "runtime_authority_after_completion": false
+    }
+  ],
+  "current_mixed_diff_rule": {
+    "cannot_be_legalized_by_policy_bundle": true,
+    "must_route": "recovery",
+    "allowed_interpretation": "unauthorized_prototype_evidence",
+    "not_allowed": [
+      "mark_completed",
+      "attach_to_completed_card",
+      "submit_as_governed_work",
+      "use_release_artifact_as_truth",
+      "hand_edit_markdown_projection_to_match_desired_state"
+    ]
+  }
+}

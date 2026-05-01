@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "carves.runtime/contracts/provider.schema.json",
+  "title": "CARVES Runtime Provider Artifact Contract",
+  "type": "object",
+  "required": ["schema_version", "captured_at", "task_id", "record"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "captured_at": { "type": "string", "format": "date-time" },
+    "task_id": { "type": "string" },
+    "record": {
+      "type": "object",
+      "required": ["provider", "model", "succeeded", "used_fallback"],
+      "properties": {
+        "provider": { "type": "string" },
+        "model": { "type": "string" },
+        "succeeded": { "type": "boolean" },
+        "used_fallback": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

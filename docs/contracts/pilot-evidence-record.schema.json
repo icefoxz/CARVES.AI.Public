@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PilotEvidenceRecord",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "repo_root",
+    "summary",
+    "observations",
+    "friction_points",
+    "failed_expectations",
+    "follow_ups",
+    "related_suggested_task_ids",
+    "status",
+    "recorded_at_utc"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "pilot-evidence-record.v1" },
+    "evidence_id": { "type": "string" },
+    "repo_root": { "type": "string" },
+    "repo_id": { "type": ["string", "null"] },
+    "task_id": { "type": ["string", "null"] },
+    "card_id": { "type": ["string", "null"] },
+    "summary": { "type": "string" },
+    "observations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "friction_points": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "failed_expectations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "follow_ups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [ "schema_version", "kind", "title", "reason" ],
+        "properties": {
+          "schema_version": { "type": "string", "const": "pilot-follow-up.v1" },
+          "kind": { "type": "string" },
+          "title": { "type": "string" },
+          "reason": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "related_suggested_task_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "attach_proof_id": { "type": ["string", "null"] },
+    "attach_proof_path": { "type": ["string", "null"] },
+    "status": { "type": "string" },
+    "recorded_at_utc": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

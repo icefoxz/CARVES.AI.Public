@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Execution Run Report",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "runId",
+    "taskId",
+    "goal",
+    "runStatus",
+    "modulesTouched",
+    "stepKinds",
+    "filesChanged",
+    "completedSteps",
+    "totalSteps",
+    "fingerprint",
+    "recordedAtUtc"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "execution-run-report.v1"
+    },
+    "runId": {
+      "type": "string"
+    },
+    "taskId": {
+      "type": "string"
+    },
+    "goal": {
+      "type": "string"
+    },
+    "runStatus": {
+      "type": "string",
+      "enum": ["Planned", "Running", "Completed", "Stopped", "Failed", "Abandoned"]
+    },
+    "boundaryReason": {
+      "type": ["string", "null"],
+      "enum": ["SizeExceeded", "RetryExceeded", "UnstableExecution", "Timeout", "ScopeViolation", "RiskExceeded", null]
+    },
+    "failureType": {
+      "type": ["string", "null"],
+      "enum": ["BuildFailure", "TestRegression", "ScopeDrift", "InfinitePatchLoop", "WrongFileTouched", "ContractViolation", "DependencyMisread", "IncompleteTask", "ReviewRejected", "EnvironmentFailure", "Timeout", "Unknown", null]
+    },
+    "replanStrategy": {
+      "type": ["string", "null"],
+      "enum": ["SplitTask", "NarrowScope", "RetryWithReducedBudget", null]
+    },
+    "modulesTouched": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "stepKinds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["Inspect", "Implement", "Verify", "Writeback", "Cleanup", "Replan"]
+      }
+    },
+    "filesChanged": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "completedSteps": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "totalSteps": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "fingerprint": {
+      "type": "string"
+    },
+    "recordedAtUtc": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

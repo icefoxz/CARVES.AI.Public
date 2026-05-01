@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "carves.pack.v1",
+  "packId": "carves.firstparty.security-review",
+  "packVersion": "0.1.0",
+  "name": "CARVES First-Party Security Review",
+  "description": "Bounded review rubric for security-sensitive changes without verdict authority.",
+  "publisher": {
+    "name": "CARVES",
+    "trustLevel": "first_party",
+    "url": null
+  },
+  "license": {
+    "expression": "MIT",
+    "url": null
+  },
+  "compatibility": {
+    "carvesRuntime": ">=0.4.0",
+    "frameworkHints": [
+      "security-review"
+    ]
+  },
+  "capabilityKinds": [
+    "review_rubric"
+  ],
+  "requestedPermissions": {
+    "readPaths": [
+      "src/**",
+      "tests/**",
+      "docs/**"
+    ],
+    "network": false,
+    "env": false,
+    "secrets": false,
+    "truthWrite": false
+  },
+  "recipes": {
+    "projectUnderstandingRecipes": [],
+    "verificationRecipes": [],
+    "reviewRubrics": [
+      {
+        "id": "security-review-rubric",
+        "description": "Review checklist for boundary-sensitive or security-sensitive modifications.",
+        "checklistItems": [
+          {
+            "id": "security-input-validation",
+            "severity": "review",
+            "text": "Check whether new or changed input paths preserve validation and fail-closed behavior."
+          },
+          {
+            "id": "security-secret-handling",
+            "severity": "warn",
+            "text": "Check whether the change expands secret handling, environment-variable reliance, or secret-like file access."
+          },
+          {
+            "id": "security-protected-root-boundary",
+            "severity": "block",
+            "text": "Check whether the change attempts to widen protected-root mutation, review authority, or truth-write authority."
+          }
+        ]
+      }
+    ]
+  }
+}

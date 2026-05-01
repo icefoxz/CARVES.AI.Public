@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CARVES Runtime Planner Proposal Envelope",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "proposal_id",
+    "adapter_id",
+    "provider_id",
+    "configured",
+    "used_fallback",
+    "wake_reason",
+    "wake_detail",
+    "proposal",
+    "raw_response_preview",
+    "acceptance_status",
+    "acceptance_reason",
+    "accepted_task_ids",
+    "rejected_task_ids",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "proposal_id": { "type": "string" },
+    "adapter_id": { "type": "string" },
+    "provider_id": { "type": "string" },
+    "profile_id": { "type": ["string", "null"] },
+    "configured": { "type": "boolean" },
+    "used_fallback": { "type": "boolean" },
+    "wake_reason": { "type": "string" },
+    "wake_detail": { "type": "string" },
+    "proposal": {
+      "type": "object",
+      "required": [
+        "proposal_id",
+        "planner_backend",
+        "goal_summary",
+        "recommended_action",
+        "sleep_recommendation",
+        "escalation_recommendation",
+        "proposed_cards",
+        "proposed_tasks",
+        "dependencies",
+        "risk_flags",
+        "confidence",
+        "rationale"
+      ],
+      "properties": {
+        "proposal_id": { "type": "string" },
+        "planner_backend": { "type": "string" },
+        "goal_summary": { "type": "string" },
+        "recommended_action": { "type": "string" },
+        "sleep_recommendation": { "type": "string" },
+        "escalation_recommendation": { "type": "string" },
+        "proposed_cards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["card_id", "title", "goal", "priority", "scope", "acceptance"],
+            "properties": {
+              "card_id": { "type": "string" },
+              "title": { "type": "string" },
+              "goal": { "type": "string" },
+              "priority": { "type": "string" },
+              "scope": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "acceptance": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "proposed_tasks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "temp_id",
+              "title",
+              "description",
+              "task_type",
+              "priority",
+              "depends_on",
+              "scope",
+              "proposal_source",
+              "proposal_reason",
+              "confidence",
+              "acceptance",
+              "constraints",
+              "metadata"
+            ],
+            "properties": {
+              "temp_id": { "type": "string" },
+              "task_id": { "type": ["string", "null"] },
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "task_type": { "type": "string" },
+              "priority": { "type": "string" },
+              "depends_on": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "scope": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "proposal_source": { "type": "string" },
+              "proposal_reason": { "type": "string" },
+              "confidence": { "type": "number" },
+              "acceptance": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "constraints": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "acceptance_contract": {
+                "$ref": "acceptance-contract.schema.json"
+              },
+              "proof_target": {
+                "type": ["object", "null"],
+                "required": ["kind", "description"],
+                "properties": {
+                  "kind": { "type": "string" },
+                  "description": { "type": "string" }
+                },
+                "additionalProperties": false
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": { "type": "string" }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["from_task_id", "to_task_id"],
+            "properties": {
+              "from_task_id": { "type": "string" },
+              "to_task_id": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "risk_flags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "confidence": { "type": "number" },
+        "rationale": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "raw_response_preview": { "type": "string" },
+    "acceptance_status": { "type": "string" },
+    "acceptance_reason": { "type": "string" },
+    "accepted_task_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rejected_task_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CARVES Operator OS Event Stream",
+  "type": "object",
+  "required": ["entries"],
+  "properties": {
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event_id", "event_kind", "repo_id", "reason_code", "summary", "occurred_at"],
+        "properties": {
+          "event_id": { "type": "string" },
+          "event_kind": { "type": "string" },
+          "repo_id": { "type": "string" },
+          "actor_session_id": { "type": ["string", "null"] },
+          "actor_kind": { "type": ["string", "null"] },
+          "actor_identity": { "type": ["string", "null"] },
+          "task_id": { "type": ["string", "null"] },
+          "run_id": { "type": ["string", "null"] },
+          "backend_id": { "type": ["string", "null"] },
+          "provider_id": { "type": ["string", "null"] },
+          "permission_request_id": { "type": ["string", "null"] },
+          "ownership_scope": { "type": ["string", "null"] },
+          "ownership_target_id": { "type": ["string", "null"] },
+          "incident_id": { "type": ["string", "null"] },
+          "reference_id": { "type": ["string", "null"] },
+          "reason_code": { "type": "string" },
+          "summary": { "type": "string" },
+          "occurred_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+}

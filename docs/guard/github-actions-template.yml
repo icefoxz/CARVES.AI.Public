@@ -1,0 +1,59 @@
+name: CARVES Guard
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  guard-check:
+    name: Guard patch admission
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout CARVES.Guard
+        uses: actions/checkout@v4
+        with:
+          repository: CARVES-AI/CARVES.Runtime
+          ref: v0.2.0-beta.1
+          path: .carves/CARVES.Runtime
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Initialize Guard policy when missing
+        shell: bash
+        run: |
+          if [ ! -f ".ai/guard-policy.json" ]; then
+            dotnet run --project .carves/CARVES.Runtime/src/CARVES.Runtime.Cli/carves.csproj -- --repo-root "$GITHUB_WORKSPACE" guard init
+          fi
+
+      - name: Run Guard check
+        id: guard
+        shell: bash
+        run: |
+          set +e
+          dotnet run --project .carves/CARVES.Runtime/src/CARVES.Runtime.Cli/carves.csproj -- \
+            --repo-root "$GITHUB_WORKSPACE" \
+            guard check --json \
+            --base "origin/${{ github.base_ref || 'main' }}" \
+            > guard-check.json
+          guard_exit=$?
+          set -e
+          cat guard-check.json
+          exit "$guard_exit"
+
+      - name: Upload Guard decision
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: carves-guard-decision
+          path: guard-check.json

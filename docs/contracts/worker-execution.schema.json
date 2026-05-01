@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CARVES Runtime Worker Execution Artifact",
+  "type": "object",
+  "required": ["task_id", "result"],
+  "properties": {
+    "schema_version": {
+      "type": "integer"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "result": {
+      "type": "object",
+      "required": ["run_id", "task_id", "backend_id", "status", "summary", "command_trace"],
+      "properties": {
+        "run_id": { "type": "string" },
+        "task_id": { "type": "string" },
+        "backend_id": { "type": "string" },
+        "provider_id": { "type": "string" },
+        "adapter_id": { "type": "string" },
+        "protocol_family": { "type": ["string", "null"] },
+        "request_family": { "type": ["string", "null"] },
+        "status": { "type": "string" },
+        "failure_kind": { "type": "string" },
+        "failure_layer": { "type": "string" },
+        "retryable": { "type": "boolean" },
+        "summary": { "type": "string" },
+        "changed_files": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "command_trace": {
+          "type": "array",
+          "items": { "$ref": "./worker-execution-trace.schema.json" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/boundary-replan.schema.json",
+  "title": "ExecutionBoundaryReplanRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "taskId", "strategy", "violationReason", "violationPath", "constraints", "followUpSuggestions", "createdAt"],
+  "properties": {
+    "schemaVersion": { "const": "boundary.v1" },
+    "taskId": { "type": "string", "pattern": "^T-" },
+    "strategy": {
+      "type": "string",
+      "enum": ["SplitTask", "NarrowScope", "RetryWithReducedBudget"]
+    },
+    "violationReason": {
+      "type": "string",
+      "enum": ["SizeExceeded", "RetryExceeded", "UnstableExecution", "Timeout", "ScopeViolation", "RiskExceeded"]
+    },
+    "violationPath": { "type": "string" },
+    "constraints": { "type": "object" },
+    "followUpSuggestions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "createdAt": { "type": "string", "format": "date-time" }
+  }
+}

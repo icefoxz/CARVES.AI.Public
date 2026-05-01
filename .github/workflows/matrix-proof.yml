@@ -1,0 +1,278 @@
+name: CARVES Matrix Proof
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - codex/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  matrix-native-proof-linux:
+    name: Matrix native proof (ubuntu-latest)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build Matrix CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet build ./src/CARVES.Matrix.Cli/Carves.Matrix.Cli.csproj --configuration Release
+
+      - name: Run Linux native Matrix proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          artifact_root="artifacts/matrix-native/ubuntu-latest"
+          mkdir -p "$artifact_root"
+
+          dotnet run \
+            --project ./src/CARVES.Matrix.Cli/Carves.Matrix.Cli.csproj \
+            --configuration Release \
+            --no-build \
+            -- \
+            proof \
+            --lane native-minimal \
+            --artifact-root "$artifact_root" \
+            --configuration Release \
+            --json \
+            | tee "$artifact_root/matrix-native-proof.json"
+
+      - name: Verify Linux native Matrix proof bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          proof_root="artifacts/matrix-native/ubuntu-latest"
+          verify_root="artifacts/matrix-native-verify/ubuntu-latest"
+          mkdir -p "$verify_root"
+
+          dotnet run \
+            --project ./src/CARVES.Matrix.Cli/Carves.Matrix.Cli.csproj \
+            --configuration Release \
+            --no-build \
+            -- \
+            verify \
+            "$proof_root" \
+            --json \
+            | tee "$verify_root/matrix-verify.json"
+
+          cp "$proof_root/matrix-artifact-manifest.json" "$verify_root/"
+          cp "$proof_root/matrix-proof-summary.json" "$verify_root/"
+
+      - name: Upload Linux native Matrix proof artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: carves-matrix-native-proof-ubuntu-latest
+          path: artifacts/matrix-native/ubuntu-latest/
+          if-no-files-found: error
+
+      - name: Upload Linux native Matrix verify artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: carves-matrix-native-verify-ubuntu-latest
+          path: artifacts/matrix-native-verify/ubuntu-latest/
+          if-no-files-found: error
+
+  matrix-native-full-release-shadow-linux:
+    name: Matrix native full-release shadow (ubuntu-latest)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build Matrix CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet build ./src/CARVES.Matrix.Cli/Carves.Matrix.Cli.csproj --configuration Release
+
+      - name: Run Linux native Matrix full-release shadow proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          artifact_root="artifacts/matrix-native-full-release-shadow/ubuntu-latest"
+          proof_output_root="artifacts/matrix-native-full-release-shadow-output/ubuntu-latest"
+          mkdir -p "$proof_output_root"
+
+          dotnet run \
+            --project ./src/CARVES.Matrix.Cli/Carves.Matrix.Cli.csproj \
+            --configuration Release \
+            --no-build \
+            -- \
+            proof \
+            --lane native-full-release \
+            --runtime-root . \
+            --artifact-root "$artifact_root" \
+            --configuration Release \
+            --json \
+            | tee "$proof_output_root/matrix-native-full-release-proof.json"
+
+          cp "$proof_output_root/matrix-native-full-release-proof.json" "$artifact_root/"
+
+      - name: Verify Linux native Matrix full-release shadow bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          proof_root="artifacts/matrix-native-full-release-shadow/ubuntu-latest"
+          verify_root="artifacts/matrix-native-full-release-shadow-verify/ubuntu-latest"
+          mkdir -p "$verify_root"
+
+          dotnet run \
+            --project ./src/CARVES.Matrix.Cli/Carves.Matrix.Cli.csproj \
+            --configuration Release \
+            --no-build \
+            -- \
+            verify \
+            "$proof_root" \
+            --json \
+            | tee "$verify_root/matrix-verify.json"
+
+          cp "$proof_root/matrix-artifact-manifest.json" "$verify_root/"
+          cp "$proof_root/matrix-proof-summary.json" "$verify_root/"
+
+      - name: Upload Linux native Matrix full-release shadow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: carves-matrix-native-full-release-shadow-ubuntu-latest
+          path: artifacts/matrix-native-full-release-shadow/ubuntu-latest/
+          if-no-files-found: error
+
+      - name: Upload Linux native Matrix full-release shadow verify artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: carves-matrix-native-full-release-shadow-verify-ubuntu-latest
+          path: artifacts/matrix-native-full-release-shadow-verify/ubuntu-latest/
+          if-no-files-found: error
+
+  matrix-proof:
+    name: Matrix proof (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Run matrix proof lane
+        shell: pwsh
+        run: |
+          ./scripts/matrix/matrix-proof-lane.ps1 `
+            -ArtifactRoot "artifacts/matrix/${{ matrix.os }}" `
+            -Configuration Release
+
+      - name: Verify matrix proof bundle
+        shell: pwsh
+        run: |
+          $proofRoot = "artifacts/matrix/${{ matrix.os }}"
+          $verifyRoot = "artifacts/matrix-verify/${{ matrix.os }}"
+          New-Item -ItemType Directory -Force -Path $verifyRoot | Out-Null
+
+          $verifyOutput = dotnet run `
+            --project ./src/CARVES.Matrix.Cli/Carves.Matrix.Cli.csproj `
+            --configuration Release `
+            -- `
+            verify `
+            $proofRoot `
+            --json
+          $verifyExitCode = $LASTEXITCODE
+
+          $verifyOutput | Set-Content -Path (Join-Path $verifyRoot "matrix-verify.json") -Encoding UTF8
+          Copy-Item -LiteralPath (Join-Path $proofRoot "matrix-artifact-manifest.json") -Destination $verifyRoot
+          Copy-Item -LiteralPath (Join-Path $proofRoot "matrix-proof-summary.json") -Destination $verifyRoot
+
+          if ($verifyExitCode -ne 0) {
+            Write-Error "Matrix proof bundle verification failed with exit code $verifyExitCode."
+            exit $verifyExitCode
+          }
+
+      - name: Run external pilot verify lane
+        shell: pwsh
+        run: |
+          ./scripts/matrix/matrix-cross-platform-verify-pilot.ps1 `
+            -ArtifactRoot "artifacts/matrix-pilot-verify/${{ matrix.os }}" `
+            -Configuration Release
+
+      - name: Upload summary-only matrix artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: carves-matrix-proof-${{ matrix.os }}
+          path: artifacts/matrix/${{ matrix.os }}/
+          if-no-files-found: error
+
+      - name: Upload matrix verification artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: carves-matrix-verify-${{ matrix.os }}
+          path: artifacts/matrix-verify/${{ matrix.os }}/
+          if-no-files-found: error
+
+      - name: Upload pilot verify artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: carves-matrix-pilot-verify-${{ matrix.os }}
+          path: artifacts/matrix-pilot-verify/${{ matrix.os }}/
+          if-no-files-found: error
+
+  windows-playable-scorecmd-smoke:
+    name: Windows playable SCORE.cmd smoke
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Run Windows playable SCORE.cmd path smoke
+        shell: pwsh
+        run: |
+          $workRoot = Join-Path $env:RUNNER_TEMP "CARVES Score Cmd Path Smoke 路径"
+          ./scripts/matrix/smoke-windows-score-cmd-paths.ps1 `
+            -WorkRoot $workRoot `
+            -Configuration Release `
+            -BuildLabel "github-actions-${{ github.run_id }}"
+
+      - name: Upload Windows playable SCORE.cmd smoke artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: carves-windows-playable-scorecmd-smoke
+          path: |
+            ${{ runner.temp }}/CARVES Score Cmd Path Smoke 路径/windows-scorecmd-path-smoke-summary.json
+            ${{ runner.temp }}/CARVES Score Cmd Path Smoke 路径/release output 路径/carves-agent-trial-pack-win-x64.zip
+            ${{ runner.temp }}/CARVES Score Cmd Path Smoke 路径/fresh extracted success/results/**
+            ${{ runner.temp }}/CARVES Score Cmd Path Smoke 路径/fresh extracted missing scorer/results/**
+          if-no-files-found: warn

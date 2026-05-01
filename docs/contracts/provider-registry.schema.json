@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Provider Registry",
+  "type": "object",
+  "required": ["version", "updated_at", "items"],
+  "properties": {
+    "version": { "type": "integer" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["schema_version", "provider_id", "display_name", "capabilities", "profiles"],
+        "properties": {
+          "schema_version": { "type": "integer" },
+          "provider_id": { "type": "string" },
+          "display_name": { "type": "string" },
+          "secret_environment_variable": { "type": "string" },
+          "capabilities": { "type": "object" },
+          "profiles": { "type": "array" }
+        }
+      }
+    }
+  }
+}

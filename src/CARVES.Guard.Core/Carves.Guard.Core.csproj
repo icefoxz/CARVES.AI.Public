@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Carves.Guard.Core</RootNamespace>
+    <PackageId>CARVES.Guard.Core</PackageId>
+    <Version>0.2.0-beta.1</Version>
+    <Authors>CARVES.AI</Authors>
+    <Description>CARVES Guard core runner for local AI code-change boundary checks.</Description>
+    <PackageTags>carves;guard;ai-safety;code-review;policy;diff</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/CARVES-AI/CARVES.Runtime</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CARVES-AI/CARVES.Runtime</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CARVES.Runtime.Application\Carves.Runtime.Application.csproj" />
+    <ProjectReference Include="..\CARVES.Runtime.Infrastructure\Carves.Runtime.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

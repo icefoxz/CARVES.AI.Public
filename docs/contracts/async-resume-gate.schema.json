@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Async Multi Worker Resume Gate",
+  "type": "object",
+  "required": ["schema_version", "reference_path", "preconditions", "resume_order", "anti_duplication_rules"],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "reference_path": {
+      "type": "string"
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resume_order": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["order", "summary", "card_ids", "resume_reason"],
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "summary": {
+            "type": "string"
+          },
+          "card_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resume_reason": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "anti_duplication_rules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

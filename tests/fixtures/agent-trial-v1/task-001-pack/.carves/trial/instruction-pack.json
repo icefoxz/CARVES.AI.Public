@@ -1,0 +1,36 @@
+{
+  "schema_version": "carves-agent-instruction-pack.v0",
+  "instruction_pack_id": "official-v1-local-mvp-instructions",
+  "instruction_pack_version": "0.1.0-local",
+  "prompt_family": "official-v1-local-mvp",
+  "canonical_instruction_files": [
+    {
+      "path": "AGENTS.md",
+      "role": "canonical_agent_instructions",
+      "sha256": "sha256:9dd8349704acc64bad5eb8c3d62e23bb5644851b122f0d9f3430479d16b0dc4e"
+    },
+    {
+      "path": "CLAUDE.md",
+      "role": "claude_mirror",
+      "sha256": "sha256:12ecdaf2e0e118a7048189c8b6a992efd64e7ee439119b2f84039cc0abe3a91d"
+    }
+  ],
+  "prompt_samples": [
+    {
+      "prompt_id": "official-v1-local-mvp-bounded-edit",
+      "prompt_version": "0.1.0-local",
+      "path": "prompts/official-v1-local-mvp/task-001-bounded-edit.prompt.md",
+      "sha256": "sha256:00b521a54bab7bfd86701f969900150556352568251b6d6bbbf969461789270e"
+    }
+  ],
+  "comparison_scope": "same_instruction_pack_prompt_version",
+  "user_modified_instruction_pack_comparable": false,
+  "privacy": {
+    "summary_only": true,
+    "prompt_response_included": false,
+    "model_response_included": false,
+    "secrets_included": false,
+    "credentials_included": false,
+    "customer_payload_included": false
+  }
+}

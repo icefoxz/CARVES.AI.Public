@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Worker Leases",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["schema_version", "lease_id", "node_id", "repo_path", "session_id", "task_id", "status", "on_expiry", "acquired_at", "last_heartbeat_at", "expires_at"],
+    "properties": {
+      "schema_version": { "type": "integer" },
+      "lease_id": { "type": "string" },
+      "node_id": { "type": "string" },
+      "repo_path": { "type": "string" },
+      "repo_id": { "type": ["string", "null"] },
+      "session_id": { "type": "string" },
+      "task_id": { "type": "string" },
+      "status": { "type": "string" },
+      "on_expiry": { "type": "string" },
+      "acquired_at": { "type": "string", "format": "date-time" },
+      "last_heartbeat_at": { "type": "string", "format": "date-time" },
+      "expires_at": { "type": "string", "format": "date-time" },
+      "completed_at": { "type": ["string", "null"], "format": "date-time" },
+      "completion_reason": { "type": ["string", "null"] }
+    }
+  }
+}

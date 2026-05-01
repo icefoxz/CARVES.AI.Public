@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Runtime Instances",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["schema_version", "repo_id", "repo_path", "stage", "status", "provider_binding_id", "policy_binding_id", "projection", "gateway_mode", "gateway_health"],
+    "properties": {
+      "schema_version": { "type": "integer" },
+      "repo_id": { "type": "string" },
+      "repo_path": { "type": "string" },
+      "stage": { "type": "string" },
+      "status": { "type": "string" },
+      "active_session_id": { "type": ["string", "null"] },
+      "provider_binding_id": { "type": "string" },
+      "policy_binding_id": { "type": "string" },
+      "projection": {
+        "type": "object",
+        "required": ["schema_version", "truth_source", "freshness", "last_reconciliation_outcome", "refresh_rule", "stage", "actionability", "open_opportunity_count", "open_task_count", "review_task_count"],
+        "properties": {
+          "schema_version": { "type": "integer" },
+          "truth_source": { "type": "string" },
+          "freshness": { "type": "string" },
+          "last_reconciliation_outcome": { "type": "string" },
+          "refresh_rule": { "type": "string" },
+          "freshness_reason": { "type": ["string", "null"] },
+          "summary_fingerprint": { "type": ["string", "null"] },
+          "projected_at": { "type": ["string", "null"], "format": "date-time" },
+          "repo_observed_at": { "type": ["string", "null"], "format": "date-time" },
+          "last_reconciled_at": { "type": ["string", "null"], "format": "date-time" },
+          "stage": { "type": "string" },
+          "session_status": { "type": ["string", "null"] },
+          "actionability": { "type": "string" },
+          "open_opportunity_count": { "type": "integer" },
+          "open_task_count": { "type": "integer" },
+          "review_task_count": { "type": "integer" },
+          "stop_reason": { "type": ["string", "null"] },
+          "waiting_reason": { "type": ["string", "null"] },
+          "active_session_id": { "type": ["string", "null"] }
+        }
+      },
+      "gateway_mode": { "type": "string" },
+      "gateway_health": { "type": "string" },
+      "gateway_reason": { "type": ["string", "null"] },
+      "last_platform_scheduled_at": { "type": ["string", "null"], "format": "date-time" },
+      "platform_selection_count": { "type": "integer" },
+      "last_fairness_score": { "type": "number" },
+      "last_scheduling_reason": { "type": ["string", "null"] },
+      "updated_at": { "type": "string", "format": "date-time" }
+    }
+  }
+}

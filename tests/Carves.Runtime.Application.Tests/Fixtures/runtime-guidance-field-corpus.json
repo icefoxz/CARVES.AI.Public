@@ -1,0 +1,399 @@
+[
+  {
+    "Id": "ordinary_chat_stays_out",
+    "UserText": "今天可以先聊一下这个想法吗？",
+    "CandidateId": "corpus-ordinary",
+    "SourceTurnRef": "msg-corpus-ordinary",
+    "ShouldProjectCandidate": false,
+    "ExpectFieldDiagnostics": false
+  },
+  {
+    "Id": "field_question_stays_out",
+    "UserText": "目标是什么？范围是什么？我只是确认一下这些字段的意思。",
+    "CandidateId": "corpus-field-question",
+    "SourceTurnRef": "msg-corpus-field-question",
+    "ShouldProjectCandidate": false,
+    "ExpectFieldDiagnostics": false
+  },
+  {
+    "Id": "discussion_only_with_fields_stays_out",
+    "UserText": "只是讨论一下：目标是减少误触发，范围是 Runtime，不要记录候选。",
+    "CandidateId": "corpus-discussion-fields",
+    "SourceTurnRef": "msg-corpus-discussion-fields",
+    "ExistingCandidate": {
+      "CandidateId": "corpus-existing-discussion",
+      "Topic": "Runtime guidance",
+      "DesiredOutcome": "collect stable fields",
+      "Scope": "Runtime Session Gateway",
+      "SuccessSignal": "user confirms candidate",
+      "SourceTurnRefs": ["msg-corpus-existing-discussion"]
+    },
+    "ShouldProjectCandidate": false,
+    "ExpectFieldDiagnostics": false
+  },
+  {
+    "Id": "clear_start_review_ready",
+    "UserText": "项目方向是 Runtime 聊天引导成熟化。目标是减少候选漏填和误填。范围是 Runtime Session Gateway。成功标准是字段满足时提示用户确认。约束是不能自动执行。",
+    "CandidateId": "corpus-clear-start",
+    "SourceTurnRef": "msg-corpus-clear-start",
+    "ShouldProjectCandidate": true,
+    "ExpectedCandidateState": "review_ready",
+    "ExpectedMissingFields": [],
+    "ExpectedReadinessBlocks": [],
+    "ExpectedTopicContains": "Runtime 聊天引导成熟化",
+    "ExpectedDesiredOutcomeContains": "减少候选漏填和误填",
+    "ExpectedScopeContains": "Runtime Session Gateway",
+    "ExpectedSuccessSignalContains": "字段满足时提示用户确认",
+    "ExpectedConstraintContains": "不能自动执行",
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_start",
+      "ResetsCandidate": false,
+      "Fields": [
+        { "Field": "topic", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "desired_outcome", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "scope", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "constraints", "Operation": "append", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "success_signal", "Operation": "set", "ValueCount": 1, "Ambiguous": false }
+      ]
+    }
+  },
+  {
+    "Id": "inline_fields_without_punctuation",
+    "UserText": "项目方向是 Runtime 聊天引导成熟化 目标是减少候选漏填 范围是 Runtime Session Gateway 成功标准是字段满足时提示用户确认",
+    "CandidateId": "corpus-inline-fields",
+    "SourceTurnRef": "msg-corpus-inline-fields",
+    "ShouldProjectCandidate": true,
+    "ExpectedCandidateState": "review_ready",
+    "ExpectedMissingFields": [],
+    "ExpectedReadinessBlocks": [],
+    "ExpectedTopicContains": "Runtime 聊天引导成熟化",
+    "ExpectedDesiredOutcomeContains": "减少候选漏填",
+    "ExpectedScopeContains": "Runtime Session Gateway",
+    "ExpectedSuccessSignalContains": "字段满足时提示用户确认",
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_start",
+      "ResetsCandidate": false,
+      "Fields": [
+        { "Field": "topic", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "desired_outcome", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "scope", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "success_signal", "Operation": "set", "ValueCount": 1, "Ambiguous": false }
+      ]
+    }
+  },
+  {
+    "Id": "ambiguous_scope_preserves_existing_scope",
+    "UserText": "范围可能是 Runtime 或者 Operator，成功标准是字段满足时提示用户确认。",
+    "CandidateId": "corpus-ambiguous-scope",
+    "SourceTurnRef": "msg-corpus-ambiguous-scope",
+    "ExistingCandidate": {
+      "CandidateId": "corpus-existing",
+      "Topic": "Runtime guidance",
+      "DesiredOutcome": "collect stable intent fields",
+      "Scope": "Runtime Session Gateway",
+      "SourceTurnRefs": ["msg-corpus-existing"]
+    },
+    "ShouldProjectCandidate": true,
+    "ExpectedCandidateState": "collecting",
+    "ExpectedMissingFields": ["scope"],
+    "ExpectedReadinessBlocks": [
+      {
+        "Field": "scope",
+        "Reason": "ambiguous_required_field",
+        "SourceKinds": ["explicit_field"],
+        "CandidateGroups": ["candidate_primary"],
+        "HasNegatedEvidence": false
+      }
+    ],
+    "ExpectedTopicContains": "Runtime guidance",
+    "ExpectedDesiredOutcomeContains": "collect stable intent fields",
+    "ExpectedScopeContains": "Runtime Session Gateway",
+    "ExpectedSuccessSignalContains": "字段满足时提示用户确认",
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_update",
+      "ResetsCandidate": false,
+      "Ambiguities": ["scope"],
+      "Fields": [
+        { "Field": "scope", "Operation": "preserve", "ValueCount": 0, "Ambiguous": true },
+        { "Field": "success_signal", "Operation": "set", "ValueCount": 1, "Ambiguous": false }
+      ]
+    }
+  },
+  {
+    "Id": "conflicting_desired_outcome_preserves_existing",
+    "UserText": "目标是生成可审核候选。目标是自动执行实现。",
+    "CandidateId": "corpus-conflict-outcome",
+    "SourceTurnRef": "msg-corpus-conflict-outcome",
+    "ExistingCandidate": {
+      "CandidateId": "corpus-existing-conflict",
+      "Topic": "Runtime guidance",
+      "DesiredOutcome": "collect stable intent fields",
+      "Scope": "Runtime Session Gateway",
+      "SuccessSignal": "user confirms candidate",
+      "SourceTurnRefs": ["msg-corpus-existing-conflict"]
+    },
+    "ShouldProjectCandidate": true,
+    "ExpectedCandidateState": "collecting",
+    "ExpectedMissingFields": ["desired_outcome"],
+    "ExpectedReadinessBlocks": [
+      {
+        "Field": "desired_outcome",
+        "Reason": "conflicting_required_evidence",
+        "SourceKinds": ["explicit_field"],
+        "CandidateGroups": ["candidate_primary"],
+        "HasNegatedEvidence": false
+      }
+    ],
+    "ExpectedTopicContains": "Runtime guidance",
+    "ExpectedDesiredOutcomeContains": "collect stable intent fields",
+    "ExpectedScopeContains": "Runtime Session Gateway",
+    "ExpectedSuccessSignalContains": "user confirms candidate",
+    "ExpectedNotContains": ["自动执行实现", "生成可审核候选"],
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_update",
+      "ResetsCandidate": false,
+      "Ambiguities": ["desired_outcome"],
+      "Fields": [
+        { "Field": "desired_outcome", "Operation": "preserve", "ValueCount": 0, "Ambiguous": true }
+      ]
+    }
+  },
+  {
+    "Id": "multi_candidate_topic_conflict_collecting",
+    "UserText": "项目方向是 Runtime 聊天引导成熟化。另一个方向是导出功能。目标是减少候选漏填。范围是 Runtime Session Gateway。成功标准是用户确认候选。",
+    "CandidateId": "corpus-multi-topic",
+    "SourceTurnRef": "msg-corpus-multi-topic",
+    "ShouldProjectCandidate": true,
+    "ExpectedCandidateState": "collecting",
+    "ExpectedMissingFields": ["topic"],
+    "ExpectedReadinessBlocks": [
+      {
+        "Field": "topic",
+        "Reason": "candidate_group_conflict",
+        "SourceKinds": ["explicit_field", "candidate_alternative"],
+        "CandidateGroups": ["candidate_primary", "candidate_alternative"],
+        "HasNegatedEvidence": false
+      }
+    ],
+    "ExpectedTopicContains": "",
+    "ExpectedDesiredOutcomeContains": "减少候选漏填",
+    "ExpectedScopeContains": "Runtime Session Gateway",
+    "ExpectedSuccessSignalContains": "用户确认候选",
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_start",
+      "ResetsCandidate": false,
+      "Ambiguities": ["topic"],
+      "Fields": [
+        { "Field": "topic", "Operation": "preserve", "ValueCount": 0, "Ambiguous": true },
+        { "Field": "desired_outcome", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "scope", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "success_signal", "Operation": "set", "ValueCount": 1, "Ambiguous": false }
+      ]
+    }
+  },
+  {
+    "Id": "negative_scope_becomes_non_goal",
+    "UserText": "项目方向是 Runtime 聊天引导成熟化。目标是减少候选漏填。范围不是导出功能。范围是 Runtime Session Gateway。成功标准是用户确认候选。",
+    "CandidateId": "corpus-negative-scope",
+    "SourceTurnRef": "msg-corpus-negative-scope",
+    "ShouldProjectCandidate": true,
+    "ExpectedCandidateState": "review_ready",
+    "ExpectedMissingFields": [],
+    "ExpectedReadinessBlocks": [],
+    "ExpectedTopicContains": "Runtime 聊天引导成熟化",
+    "ExpectedDesiredOutcomeContains": "减少候选漏填",
+    "ExpectedScopeContains": "Runtime Session Gateway",
+    "ExpectedSuccessSignalContains": "用户确认候选",
+    "ExpectedNonGoalContains": "导出功能",
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_start",
+      "ResetsCandidate": false,
+      "Fields": [
+        { "Field": "scope", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "non_goals", "Operation": "append", "ValueCount": 1, "Ambiguous": false }
+      ]
+    }
+  },
+  {
+    "Id": "mixed_language_fields_collect",
+    "UserText": "project direction is Runtime guidance。目标是减少候选漏填。scope is Runtime Session Gateway。ready when 用户确认候选。",
+    "CandidateId": "corpus-mixed-language",
+    "SourceTurnRef": "msg-corpus-mixed-language",
+    "ShouldProjectCandidate": true,
+    "ExpectedCandidateState": "review_ready",
+    "ExpectedMissingFields": [],
+    "ExpectedReadinessBlocks": [],
+    "ExpectedTopicContains": "Runtime guidance",
+    "ExpectedDesiredOutcomeContains": "减少候选漏填",
+    "ExpectedScopeContains": "Runtime Session Gateway",
+    "ExpectedSuccessSignalContains": "用户确认候选",
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_start",
+      "ResetsCandidate": false,
+      "Fields": [
+        { "Field": "topic", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "desired_outcome", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "scope", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "success_signal", "Operation": "set", "ValueCount": 1, "Ambiguous": false }
+      ]
+    }
+  },
+  {
+    "Id": "new_direction_resets_stale_candidate",
+    "UserText": "换一个方向：项目方向是导出功能。目标是让用户下载报告。范围是 Runtime export。成功标准是报告可下载。",
+    "CandidateId": "corpus-reset-request",
+    "SourceTurnRef": "msg-corpus-reset",
+    "ExistingCandidate": {
+      "CandidateId": "corpus-old",
+      "Topic": "旧方向",
+      "DesiredOutcome": "旧目标",
+      "Scope": "旧范围",
+      "SuccessSignal": "旧验收",
+      "Constraints": ["不能自动提交"],
+      "SourceTurnRefs": ["msg-corpus-old"]
+    },
+    "ShouldProjectCandidate": true,
+    "ExpectedCandidateState": "review_ready",
+    "ExpectedMissingFields": [],
+    "ExpectedReadinessBlocks": [],
+    "ExpectedTopicContains": "导出功能",
+    "ExpectedDesiredOutcomeContains": "让用户下载报告",
+    "ExpectedScopeContains": "Runtime export",
+    "ExpectedSuccessSignalContains": "报告可下载",
+    "ExpectedNotContains": ["旧方向", "旧目标", "旧范围", "不能自动提交"],
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_update",
+      "ResetsCandidate": true,
+      "Fields": [
+        { "Field": "topic", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "desired_outcome", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "scope", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "success_signal", "Operation": "set", "ValueCount": 1, "Ambiguous": false }
+      ]
+    }
+  },
+  {
+    "Id": "non_goal_boundary_keeps_constraint_separate",
+    "UserText": "项目方向是 Runtime 聊天引导成熟化。目标是生成可审核的方向候选。范围是 Runtime Session Gateway。成功标准是字段满足时提示用户确认。约束是不要自动执行。非目标是不做导出功能。",
+    "CandidateId": "corpus-non-goal",
+    "SourceTurnRef": "msg-corpus-non-goal",
+    "ShouldProjectCandidate": true,
+    "ExpectedCandidateState": "review_ready",
+    "ExpectedMissingFields": [],
+    "ExpectedReadinessBlocks": [],
+    "ExpectedTopicContains": "Runtime 聊天引导成熟化",
+    "ExpectedDesiredOutcomeContains": "生成可审核的方向候选",
+    "ExpectedScopeContains": "Runtime Session Gateway",
+    "ExpectedSuccessSignalContains": "字段满足时提示用户确认",
+    "ExpectedConstraintContains": "不要自动执行",
+    "ExpectedNonGoalContains": "不做导出功能",
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_start",
+      "ResetsCandidate": false,
+      "Fields": [
+        { "Field": "constraints", "Operation": "append", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "non_goals", "Operation": "append", "ValueCount": 1, "Ambiguous": false }
+      ]
+    }
+  },
+  {
+    "Id": "semantic_meta_field_references_do_not_overfill",
+    "UserText": "聊着聊着如果我把目标、边界和验收都说清楚了，它应该提醒我确认要不要落案，而不能自动执行。",
+    "CandidateId": "corpus-semantic-meta",
+    "SourceTurnRef": "msg-corpus-semantic-meta",
+    "ShouldProjectCandidate": true,
+    "ExpectedAdmissionKind": "candidate_start",
+    "ExpectedCanBuildCandidate": true,
+    "ExpectedAdmissionEvidenceCodes": ["candidate_start", "semantic_candidate_frame"],
+    "ExpectedCandidateState": "collecting",
+    "ExpectedMissingFields": ["topic", "desired_outcome", "scope", "success_signal"],
+    "ExpectedReadinessBlocks": [
+      { "Field": "topic", "Reason": "missing_required_field" },
+      { "Field": "desired_outcome", "Reason": "missing_required_field" },
+      { "Field": "scope", "Reason": "missing_required_field" },
+      { "Field": "success_signal", "Reason": "missing_required_field" }
+    ],
+    "ExpectedConstraintContains": "不能自动执行",
+    "ExpectedNotContains": ["目标、边界和验收", "要不要落案"],
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_start",
+      "ResetsCandidate": false,
+      "Fields": [
+        { "Field": "topic", "Operation": "preserve", "ValueCount": 0, "Ambiguous": false },
+        { "Field": "desired_outcome", "Operation": "preserve", "ValueCount": 0, "Ambiguous": false },
+        { "Field": "scope", "Operation": "preserve", "ValueCount": 0, "Ambiguous": false },
+        { "Field": "success_signal", "Operation": "preserve", "ValueCount": 0, "Ambiguous": false },
+        { "Field": "constraints", "Operation": "append", "ValueCount": 1, "Ambiguous": false }
+      ]
+    }
+  },
+  {
+    "Id": "semantic_english_field_references_do_not_overfill",
+    "UserText": "When the conversation has enough goal, scope, and acceptance signal, the runtime should ask for confirmation before executing.",
+    "CandidateId": "corpus-semantic-english-meta",
+    "SourceTurnRef": "msg-corpus-semantic-english-meta",
+    "ShouldProjectCandidate": true,
+    "ExpectedAdmissionKind": "candidate_start",
+    "ExpectedCanBuildCandidate": true,
+    "ExpectedAdmissionEvidenceCodes": ["candidate_start", "semantic_candidate_frame"],
+    "ExpectedCandidateState": "collecting",
+    "ExpectedMissingFields": ["topic", "desired_outcome", "scope", "success_signal"],
+    "ExpectedReadinessBlocks": [
+      { "Field": "topic", "Reason": "missing_required_field" },
+      { "Field": "desired_outcome", "Reason": "missing_required_field" },
+      { "Field": "scope", "Reason": "missing_required_field" },
+      { "Field": "success_signal", "Reason": "missing_required_field" }
+    ],
+    "ExpectedNotContains": ["goal, scope, and acceptance signal", "before executing"],
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_start",
+      "ResetsCandidate": false,
+      "Fields": [
+        { "Field": "topic", "Operation": "preserve", "ValueCount": 0, "Ambiguous": false },
+        { "Field": "desired_outcome", "Operation": "preserve", "ValueCount": 0, "Ambiguous": false },
+        { "Field": "scope", "Operation": "preserve", "ValueCount": 0, "Ambiguous": false },
+        { "Field": "success_signal", "Operation": "preserve", "ValueCount": 0, "Ambiguous": false }
+      ]
+    }
+  },
+  {
+    "Id": "semantic_meta_reference_allows_later_explicit_fields",
+    "UserText": "当目标、范围、验收都说清楚时提醒我确认。项目方向是 Runtime 聊天引导成熟化。目标是生成可审核候选。范围是 Runtime Session Gateway。成功标准是用户确认候选。",
+    "CandidateId": "corpus-semantic-meta-explicit",
+    "SourceTurnRef": "msg-corpus-semantic-meta-explicit",
+    "ShouldProjectCandidate": true,
+    "ExpectedAdmissionKind": "candidate_start",
+    "ExpectedCanBuildCandidate": true,
+    "ExpectedAdmissionEvidenceCodes": ["field_assignment", "candidate_start", "semantic_candidate_frame"],
+    "ExpectedCandidateState": "review_ready",
+    "ExpectedMissingFields": [],
+    "ExpectedReadinessBlocks": [],
+    "ExpectedTopicContains": "Runtime 聊天引导成熟化",
+    "ExpectedDesiredOutcomeContains": "生成可审核候选",
+    "ExpectedScopeContains": "Runtime Session Gateway",
+    "ExpectedSuccessSignalContains": "用户确认候选",
+    "ExpectedNotContains": ["目标、范围、验收都说清楚"],
+    "ExpectFieldDiagnostics": true,
+    "ExpectedDiagnostics": {
+      "AdmissionKind": "candidate_start",
+      "ResetsCandidate": false,
+      "Fields": [
+        { "Field": "topic", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "desired_outcome", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "scope", "Operation": "set", "ValueCount": 1, "Ambiguous": false },
+        { "Field": "success_signal", "Operation": "set", "ValueCount": 1, "Ambiguous": false }
+      ]
+    }
+  }
+]

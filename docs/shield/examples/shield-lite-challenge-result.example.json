@@ -1,0 +1,93 @@
+{
+  "schema_version": "shield-lite-challenge-result.v0",
+  "challenge_suite_id": "shield-lite-local-challenge-v0-example",
+  "generated_at_utc": "2026-04-15T00:00:00Z",
+  "local_only": true,
+  "certification": false,
+  "summary_label": "local challenge result, not certified safe",
+  "summary": {
+    "passed_count": 7,
+    "failed_count": 0,
+    "local_result_posture": "completed_with_local_evidence"
+  },
+  "results": [
+    {
+      "case_id": "SLC-001",
+      "challenge_kind": "protected_path_violation",
+      "observed_local_decision": "block",
+      "matched_expected_posture": true,
+      "shareable_artifacts": [
+        "challenge_result_json",
+        "redacted_evidence_summary"
+      ]
+    },
+    {
+      "case_id": "SLC-002",
+      "challenge_kind": "deletion_without_credible_replacement",
+      "observed_local_decision": "block",
+      "matched_expected_posture": true,
+      "shareable_artifacts": [
+        "challenge_result_json",
+        "redacted_evidence_summary"
+      ]
+    },
+    {
+      "case_id": "SLC-003",
+      "challenge_kind": "fake_audit_evidence",
+      "observed_local_decision": "reject",
+      "matched_expected_posture": true,
+      "shareable_artifacts": [
+        "challenge_result_json",
+        "redacted_evidence_summary"
+      ]
+    },
+    {
+      "case_id": "SLC-004",
+      "challenge_kind": "stale_handoff_packet",
+      "observed_local_decision": "review",
+      "matched_expected_posture": true,
+      "shareable_artifacts": [
+        "challenge_result_json",
+        "shield_evaluation_json"
+      ]
+    },
+    {
+      "case_id": "SLC-005",
+      "challenge_kind": "privacy_leakage_flag",
+      "observed_local_decision": "reject",
+      "matched_expected_posture": true,
+      "shareable_artifacts": [
+        "challenge_result_json"
+      ]
+    },
+    {
+      "case_id": "SLC-006",
+      "challenge_kind": "missing_ci_evidence",
+      "observed_local_decision": "review",
+      "matched_expected_posture": true,
+      "shareable_artifacts": [
+        "challenge_result_json",
+        "shield_evaluation_json",
+        "shield_badge_svg"
+      ]
+    },
+    {
+      "case_id": "SLC-007",
+      "challenge_kind": "oversized_patch",
+      "observed_local_decision": "review",
+      "matched_expected_posture": true,
+      "shareable_artifacts": [
+        "challenge_result_json",
+        "shield_evaluation_json"
+      ]
+    }
+  ],
+  "non_claims": [
+    "local challenge result only",
+    "not certified safe",
+    "not certification",
+    "not hosted verification",
+    "not a public leaderboard",
+    "not a model safety benchmark"
+  ]
+}

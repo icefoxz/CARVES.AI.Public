@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CARVES Runtime Worker Event Stream",
+  "type": "object",
+  "required": ["run_id", "task_id", "event_type", "summary", "occurred_at"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "task_id": { "type": "string" },
+    "event_type": { "type": "string" },
+    "summary": { "type": "string" },
+    "item_type": { "type": ["string", "null"] },
+    "command_text": { "type": ["string", "null"] },
+    "file_path": { "type": ["string", "null"] },
+    "exit_code": { "type": ["integer", "null"] },
+    "raw_payload": { "type": ["string", "null"] },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

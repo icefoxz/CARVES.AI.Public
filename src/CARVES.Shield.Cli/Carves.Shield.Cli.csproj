@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>carves-shield</AssemblyName>
+    <RootNamespace>Carves.Shield.Cli</RootNamespace>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>carves-shield</ToolCommandName>
+    <PackageId>CARVES.Shield.Cli</PackageId>
+    <Version>0.1.0-alpha.1</Version>
+    <Authors>CARVES.AI</Authors>
+    <Description>CARVES Shield CLI for local shield-evidence.v0 self-checks and badges.</Description>
+    <PackageTags>carves;shield;ai-governance;evidence;badge;cli;dotnet-tool</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/CARVES-AI/CARVES.Runtime</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CARVES-AI/CARVES.Runtime</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CARVES.Shield.Core\Carves.Shield.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\shield\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

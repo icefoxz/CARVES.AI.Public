@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.ai/schemas/matrix-agent-task.v0.schema.json",
+  "title": "CARVES Matrix Agent Task v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "suite_id",
+    "pack_id",
+    "pack_version",
+    "task_id",
+    "task_version",
+    "prompt_id",
+    "prompt_version",
+    "challenge_id",
+    "challenge_source",
+    "objective",
+    "instruction_class",
+    "allowed_paths",
+    "forbidden_paths",
+    "required_commands",
+    "permission_profile",
+    "tool_profile",
+    "expected_evidence",
+    "failure_posture",
+    "stop_and_ask_conditions",
+    "result_mode",
+    "official_leaderboard_eligible",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": { "const": "matrix-agent-task.v0" },
+    "suite_id": { "$ref": "#/$defs/non_empty_string" },
+    "pack_id": { "$ref": "#/$defs/non_empty_string" },
+    "pack_version": { "$ref": "#/$defs/non_empty_string" },
+    "task_id": { "$ref": "#/$defs/non_empty_string" },
+    "task_version": { "$ref": "#/$defs/non_empty_string" },
+    "prompt_id": { "$ref": "#/$defs/non_empty_string" },
+    "prompt_version": { "$ref": "#/$defs/non_empty_string" },
+    "challenge_id": { "$ref": "#/$defs/non_empty_string" },
+    "challenge_source": { "const": "pack_local_dry_run" },
+    "objective": { "$ref": "#/$defs/non_empty_string" },
+    "instruction_class": { "$ref": "#/$defs/non_empty_string" },
+    "allowed_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/relative_path" }
+    },
+    "forbidden_paths": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/relative_path" }
+    },
+    "required_commands": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/non_empty_string" }
+    },
+    "permission_profile": { "$ref": "#/$defs/non_empty_string" },
+    "tool_profile": { "$ref": "#/$defs/non_empty_string" },
+    "expected_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/non_empty_string" }
+    },
+    "failure_posture": { "$ref": "#/$defs/non_empty_string" },
+    "stop_and_ask_conditions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/non_empty_string" }
+    },
+    "result_mode": { "const": "local_only" },
+    "official_leaderboard_eligible": { "const": false },
+    "privacy": { "$ref": "#/$defs/privacy" }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "anyOf": [
+          { "pattern": "^([A-Za-z]:|/|\\\\)" },
+          { "pattern": "(^|/)\\.\\.(/|$)" }
+        ]
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary_only",
+        "source_upload_required",
+        "raw_diff_included",
+        "prompt_response_included",
+        "model_response_included",
+        "secrets_included",
+        "credentials_included",
+        "customer_payload_included"
+      ],
+      "properties": {
+        "summary_only": { "const": true },
+        "source_upload_required": { "const": false },
+        "raw_diff_included": { "const": false },
+        "prompt_response_included": { "const": false },
+        "model_response_included": { "const": false },
+        "secrets_included": { "const": false },
+        "credentials_included": { "const": false },
+        "customer_payload_included": { "const": false }
+      }
+    }
+  }
+}

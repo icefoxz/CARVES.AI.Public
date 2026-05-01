@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>carves-handoff</AssemblyName>
+    <RootNamespace>Carves.Handoff.Cli</RootNamespace>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>carves-handoff</ToolCommandName>
+    <PackageId>CARVES.Handoff.Cli</PackageId>
+    <Version>0.1.0-alpha.1</Version>
+    <Authors>CARVES.AI</Authors>
+    <Description>CARVES Handoff CLI for explicit AI session continuity packets.</Description>
+    <PackageTags>carves;handoff;ai-continuity;agent;dotnet-tool</PackageTags>
+    <PackageReadmeFile>CARVES_HANDOFF_DISTRIBUTION.md</PackageReadmeFile>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/CARVES-AI/CARVES.Runtime</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CARVES-AI/CARVES.Runtime</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CARVES.Handoff.Core\Carves.Handoff.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\guides\CARVES_HANDOFF_DISTRIBUTION.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

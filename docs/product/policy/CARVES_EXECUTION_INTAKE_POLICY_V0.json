@@ -1,0 +1,698 @@
+{
+  "policy_version": "carves.execution_intake_policy.v0",
+  "policy_status": "active",
+  "runtime_authority": true,
+  "bundle_stage": "v0_0_policy_bundle",
+  "activation": {
+    "status": "active",
+    "activated_by": "CARD-STABLE-WORK-V0-ACTIVATION/T-CARD-STABLE-WORK-V0-ACTIVATION-002",
+    "activated_at": "2026-04-19T08:15:12Z",
+    "activation_evidence_refs": [
+      {
+        "id": "policy_json_valid",
+        "status": "pass",
+        "evidence_ref": "json-tool:docs/product/policy/CARVES_EXECUTION_INTAKE_POLICY_V0.json",
+        "source_task": "T-CARD-STABLE-WORK-V0-ACTIVATION-001"
+      },
+      {
+        "id": "runtime_profile_json_valid",
+        "status": "pass",
+        "evidence_ref": "json-tool:docs/product/policy/CARVES_RUNTIME_POLICY_PROFILE_V0.json",
+        "source_task": "T-CARD-STABLE-WORK-V0-ACTIVATION-001"
+      },
+      {
+        "id": "fixtures_json_valid",
+        "status": "pass",
+        "evidence_ref": "json-tool:docs/product/policy/CARVES_GOVERNANCE_GATE_FIXTURES_V0.json",
+        "source_task": "T-CARD-STABLE-WORK-V0-ACTIVATION-001"
+      },
+      {
+        "id": "blocking_fixture_validation_result",
+        "status": "pass",
+        "run_id": "fixture-contract-manual-run-20260419-phase4",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-004",
+        "source_task": "T-CARD-STABLE-WORK-V0-ACTIVATION-001"
+      },
+      {
+        "id": "projection_validator_result",
+        "status": "pass",
+        "run_id": "projection-contract-manual-check-20260419-phase4",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-005",
+        "source_task": "T-CARD-STABLE-WORK-V0-ACTIVATION-001"
+      },
+      {
+        "id": "activation_record_write",
+        "status": "pass",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-002"
+      }
+    ],
+    "blocking_fixture_run_id": "fixture-contract-manual-run-20260419-phase4",
+    "projection_check_run_id": "projection-contract-manual-check-20260419-phase4",
+    "default_governance_changed": false,
+    "activation_scope": "policy_bundle_only",
+    "not_authorized": [
+      "AGENTS_md_update",
+      "initialization_report_update",
+      "default_governance_entry_change",
+      "submit",
+      "current_mixed_diff_approval",
+      "worker_sdk_or_api_implementation"
+    ],
+    "write_path": "governed_activation_process",
+    "cannot_be_written_by": [
+      "direct_file_edit",
+      "projection_update",
+      "fixture_expectation_edit",
+      "agent_inference",
+      "README_wording",
+      "AGENTS_wording"
+    ]
+  },
+  "authorized_work_protocol": {
+    "protocol_version": "carves.authorized_work_protocol.v1",
+    "status": "frozen_v1",
+    "runtime_authority": true,
+    "truth_role": "frozen_protocol_truth_for_bounded_runtime_execution",
+    "canonical_machine_truth": "docs/product/policy/CARVES_EXECUTION_INTAKE_POLICY_V0.json:authorized_work_protocol",
+    "operator_companion": "docs/runtime/authorized-work-protocol-active-contract.md",
+    "status_surface": "docs/runtime/authorized-work-protocol-status-assessment-2026-04-21.md",
+    "freeze_closure_plan": "docs/runtime/authorized-work-protocol-v1-freeze-closure-plan-2026-04-21.md",
+    "freeze_validation_bundle_surface": "docs/runtime/authorized-work-protocol-v1-freeze-validation-bundle.md",
+    "active_routes": [
+      "session_gateway_governed_work_order_admission",
+      "result_ingestion_task_truth_transition",
+      "run_to_review_submission_commit",
+      "privileged_work_order_certificate_route",
+      "external_module_receipt_verification"
+    ],
+    "authoritative_host_inputs": {
+      "target_binding": [
+        "explicit_request_target",
+        "host_selected_object_focus",
+        "bound_artifact_hashes"
+      ],
+      "execution_authority": [
+        "typed_operation_registry",
+        "transaction_verification",
+        "capability_lease",
+        "resource_lease",
+        "actual_write_set_reconcile"
+      ],
+      "truth_write_authority": [
+        "sealed_effect_ledger_replay",
+        "state_transition_certificate",
+        "committed_effect_binding"
+      ],
+      "privileged_authority": [
+        "host_policy_backed_actor_session_binding",
+        "structured_confirmation",
+        "operation_target_hash_match",
+        "certificate_expiry"
+      ],
+      "external_governance_authority": [
+        "verified_adapter_receipts",
+        "receipt_hash",
+        "receipt_verdict",
+        "receipt_replay_disposition"
+      ]
+    },
+    "acceptance_surface": {
+      "status": "freeze_validation_bundle_passed",
+      "required_surfaces": [
+        "docs/runtime/authorized-work-protocol-active-contract.md",
+        "docs/runtime/authorized-work-protocol-status-assessment-2026-04-21.md",
+        "docs/runtime/authorized-work-protocol-v1-freeze-closure-plan-2026-04-21.md",
+        "docs/runtime/authorized-work-protocol-v1-freeze-validation-bundle.md"
+      ],
+      "remaining_gate": "none",
+      "validated_at": "2026-04-21"
+    },
+    "non_claims": [
+      "final_standalone_execution_protocol",
+      "full_external_identity_attestation",
+      "replacement_of_host_lifecycle_truth",
+      "universal_route_coverage_for_future_truth_targets"
+    ]
+  },
+  "phase_boundaries": {
+    "design_approved": {
+      "file_write_authority": false,
+      "runtime_authority": false
+    },
+    "bootstrap_authorized": {
+      "file_write_authority": "limited_to_bootstrap_allowed_paths",
+      "runtime_authority": false
+    },
+    "bundle_landed": {
+      "runtime_authority": false,
+      "default_governance_changed": false
+    },
+    "activation_ready": {
+      "runtime_authority": false,
+      "next_step": "governed_activation_event"
+    },
+    "active_policy": {
+      "runtime_authority": true,
+      "default_governance_changed": true
+    }
+  },
+  "bootstrap_authorization": {
+    "required_before_file_creation": true,
+    "allowed_sources": [
+      "explicit_user_message_in_current_thread",
+      "approved_issue_or_pr_comment",
+      "governed_decision_record"
+    ],
+    "not_allowed_sources": [
+      "agent_summary",
+      "agent_inference",
+      "design_approval_alone",
+      "projection_file",
+      "activation_record"
+    ],
+    "must_capture": [
+      "author",
+      "timestamp",
+      "exact_authorization_text",
+      "allowed_paths",
+      "forbidden_paths",
+      "confirmation_no_activation",
+      "confirmation_no_submit",
+      "confirmation_no_current_mixed_diff_approval"
+    ]
+  },
+  "projection_validator_contract": {
+    "contract_status": "defined_for_activation_prep",
+    "runtime_authority": false,
+    "candidate_file": "docs/product/CARVES_STABLE_WORK_V0_AGENT_RULES_CANDIDATE.md",
+    "truth_role_required": "projection_candidate_not_truth",
+    "candidate_first_line_required": "DRAFT PROJECTION CANDIDATE - NOT ACTIVE - NOT TRUTH",
+    "source_files": [
+      "docs/product/CARVES_STABLE_WORK_V0_DECISION.md",
+      "docs/product/policy/CARVES_EXECUTION_INTAKE_POLICY_V0.json",
+      "docs/product/policy/CARVES_RUNTIME_POLICY_PROFILE_V0.json",
+      "docs/product/policy/CARVES_GOVERNANCE_GATE_FIXTURES_V0.json"
+    ],
+    "output_schema": {
+      "status": "pass | fail",
+      "reason_codes": [],
+      "missing_rules": [],
+      "overreach_rules": [],
+      "version_mismatches": [],
+      "forbidden_claims": []
+    },
+    "must_fail_if": [
+      "candidate_first_line_missing_or_changed",
+      "projection_does_not_declare_projection_candidate_not_truth",
+      "projection_claims_policy_active_before_activation",
+      "projection_claims_runtime_authority_before_activation",
+      "projection_grants_permissions_absent_from_policy_json",
+      "projection_softens_submit_rule",
+      "projection_softens_truth_write_rule",
+      "projection_softens_completion_rule",
+      "projection_softens_artifact_not_truth_rule",
+      "projection_softens_prototype_non_completion_rule",
+      "projection_omits_policy_self_governance",
+      "projection_omits_current_mixed_diff_non_retroactivity",
+      "projection_omits_blocking_fixtures_required_before_activation",
+      "projection_claims_blocking_fixtures_passed_without_recorded_result",
+      "projection_claims_AGENTS_md_may_reference_it_before_activation",
+      "projection_versions_mismatch_policy_profile_or_fixture_set"
+    ],
+    "pass_does_not_authorize": [
+      "active_policy",
+      "AGENTS_md_update",
+      "initialization_report_update",
+      "default_governance_entry_change",
+      "submit",
+      "current_mixed_diff_approval"
+    ],
+    "recorded_result_status": "pass",
+    "recorded_result_required_before_activation": true,
+    "result_authority": "projection_check_evidence_ref",
+    "recorded_result": {
+      "run_id": "projection-contract-manual-check-20260419-phase4",
+      "status": "pass",
+      "recorded_at_utc": "2026-04-19T07:54:40Z",
+      "validator": "manual_projection_contract_evaluation",
+      "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-005",
+      "summary": "Agent rules candidate keeps the required first line, declares projection_candidate_not_truth, does not claim active policy or runtime authority, and does not grant submit, truth write, completion, artifact, or activation permission.",
+      "output": {
+        "status": "pass",
+        "reason_codes": [],
+        "missing_rules": [],
+        "overreach_rules": [],
+        "version_mismatches": [],
+        "forbidden_claims": []
+      },
+      "non_authorizing_limits": [
+        "does_not_activate_policy",
+        "does_not_make_projection_truth",
+        "does_not_authorize_AGENTS_md_update",
+        "does_not_authorize_initialization_report_update",
+        "does_not_authorize_default_governance_entry_change",
+        "does_not_authorize_submit",
+        "does_not_legalize_current_mixed_diff"
+      ]
+    }
+  },
+  "activation_prep_evidence_refs": {
+    "status": "prepared_for_later_governed_activation_card",
+    "runtime_authority": false,
+    "does_not_write_activation_record": true,
+    "activation_record_status_remains": "proposed",
+    "bootstrap_authorization_reused_as_activation": false,
+    "prepared_by_task": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-006",
+    "evidence_refs": [
+      {
+        "id": "policy_json_valid",
+        "status": "pass",
+        "evidence_ref": "json-tool:docs/product/policy/CARVES_EXECUTION_INTAKE_POLICY_V0.json",
+        "source_task": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-006"
+      },
+      {
+        "id": "runtime_profile_json_valid",
+        "status": "pass",
+        "evidence_ref": "json-tool:docs/product/policy/CARVES_RUNTIME_POLICY_PROFILE_V0.json",
+        "source_task": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-006"
+      },
+      {
+        "id": "fixtures_json_valid",
+        "status": "pass",
+        "evidence_ref": "json-tool:docs/product/policy/CARVES_GOVERNANCE_GATE_FIXTURES_V0.json",
+        "source_task": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-006"
+      },
+      {
+        "id": "fixtures_have_full_input_snapshots",
+        "status": "pass",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-001",
+        "detail": "9 blocking_fixture_contract entries include input_snapshot data."
+      },
+      {
+        "id": "approved_evaluator_or_validation_method",
+        "status": "pass",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-002",
+        "detail": "manual_policy_contract_evaluation is approved for activation prep and does not require SDK/API worker implementation."
+      },
+      {
+        "id": "projection_validator_contract_defined",
+        "status": "pass",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-003",
+        "detail": "Projection validator output fields and must-fail conditions are defined."
+      },
+      {
+        "id": "blocking_fixture_validation_result",
+        "status": "pass",
+        "run_id": "fixture-contract-manual-run-20260419-phase4",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-004",
+        "detail": "Manual fixture contract validation passed for 9 blocking fixture contracts."
+      },
+      {
+        "id": "projection_validator_result",
+        "status": "pass",
+        "run_id": "projection-contract-manual-check-20260419-phase4",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-005",
+        "detail": "Manual projection contract validation passed with no missing rules, overreach rules, version mismatches, or forbidden claims."
+      },
+      {
+        "id": "activation_record_ready_for_later_governed_event",
+        "status": "prepared_not_written",
+        "evidence_ref": "docs/product/policy/CARVES_EXECUTION_INTAKE_POLICY_V0.json:activation",
+        "detail": "Activation record fields exist and remain proposed; active write is reserved for a later governed activation process."
+      },
+      {
+        "id": "bootstrap_authorization_not_reused",
+        "status": "pass",
+        "evidence_ref": "CARD-STABLE-WORK-V0-ACTIVATION-PREP",
+        "detail": "Bootstrap authorization is historical context only and is not treated as activation authorization."
+      }
+    ],
+    "open_requirements_before_active": [
+      "governed_activation_card",
+      "governed_activation_event",
+      "activation_record_written_by_governed_activation_process",
+      "separate_authorization_for_AGENTS_md_or_initialization_entry_changes"
+    ],
+    "not_authorized_by_these_refs": [
+      "active_policy",
+      "AGENTS_md_update",
+      "initialization_report_update",
+      "default_governance_entry_change",
+      "submit",
+      "current_mixed_diff_approval"
+    ]
+  },
+  "activation_readiness_report": {
+    "status": "consumed_by_governed_activation_record",
+    "reported_at_utc": "2026-04-19T07:58:41Z",
+    "reported_by_task": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-007",
+    "activation_ready": true,
+    "active_policy": true,
+    "runtime_authority": true,
+    "default_governance_changed": false,
+    "readiness_checks": [
+      {
+        "id": "policy_json_valid",
+        "status": "pass",
+        "evidence_ref": "json-tool:docs/product/policy/CARVES_EXECUTION_INTAKE_POLICY_V0.json"
+      },
+      {
+        "id": "runtime_profile_json_valid",
+        "status": "pass",
+        "evidence_ref": "json-tool:docs/product/policy/CARVES_RUNTIME_POLICY_PROFILE_V0.json"
+      },
+      {
+        "id": "fixtures_json_valid",
+        "status": "pass",
+        "evidence_ref": "json-tool:docs/product/policy/CARVES_GOVERNANCE_GATE_FIXTURES_V0.json"
+      },
+      {
+        "id": "fixtures_have_full_input_snapshots",
+        "status": "pass",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-001"
+      },
+      {
+        "id": "approved_evaluator_or_validation_method",
+        "status": "pass",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-002"
+      },
+      {
+        "id": "projection_validator_contract_defined",
+        "status": "pass",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-003"
+      },
+      {
+        "id": "blocking_fixture_result",
+        "status": "pass",
+        "run_id": "fixture-contract-manual-run-20260419-phase4",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-004"
+      },
+      {
+        "id": "projection_validator_result",
+        "status": "pass",
+        "run_id": "projection-contract-manual-check-20260419-phase4",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-005"
+      },
+      {
+        "id": "activation_evidence_refs_prepared",
+        "status": "pass",
+        "evidence_ref": "T-CARD-STABLE-WORK-V0-ACTIVATION-PREP-006"
+      },
+      {
+        "id": "canonical_activation_record_still_proposed",
+        "status": "pass",
+        "evidence_ref": "docs/product/policy/CARVES_EXECUTION_INTAKE_POLICY_V0.json:activation"
+      }
+    ],
+    "canonical_activation_record_state": {
+      "status": "active",
+      "activated_by": "CARD-STABLE-WORK-V0-ACTIVATION/T-CARD-STABLE-WORK-V0-ACTIVATION-002",
+      "activated_at": "2026-04-19T08:15:12Z",
+      "activation_evidence_refs": [
+        "policy_json_valid",
+        "runtime_profile_json_valid",
+        "fixtures_json_valid",
+        "blocking_fixture_validation_result",
+        "projection_validator_result",
+        "activation_record_write"
+      ],
+      "blocking_fixture_run_id": "fixture-contract-manual-run-20260419-phase4",
+      "projection_check_run_id": "projection-contract-manual-check-20260419-phase4",
+      "default_governance_changed": false
+    },
+    "decision": {
+      "may_request_next_card": "CARD-STABLE-WORK-V0-DEFAULT-ENTRY-ROLLOUT",
+      "may_activate_now": false,
+      "requires_next_governed_event": false,
+      "next_action": "Run post-activation boundary verification before requesting any separate default-entry rollout card."
+    },
+    "not_authorized": [
+      "active_default_governance_policy",
+      "AGENTS_md_update",
+      "initialization_report_update",
+      "default_governance_entry_change",
+      "submit",
+      "current_mixed_diff_approval",
+      "worker_sdk_or_api_implementation"
+    ],
+    "remediation_if_not_ready": []
+  },
+  "downstream_rollout_recommendation": {
+    "status": "recommended_not_started",
+    "prepared_by_task": "T-CARD-STABLE-WORK-V0-ACTIVATION-004",
+    "prepared_at": "2026-04-19T08:17:35Z",
+    "next_card_id": "CARD-STABLE-WORK-V0-DEFAULT-ENTRY-ROLLOUT",
+    "purpose": "Govern any later rollout from active policy bundle to default entry surfaces.",
+    "must_remain_separate_from_activation": true,
+    "candidate_scope": [
+      "AGENTS.md",
+      "docs/guides/AGENT_INITIALIZATION_REPORT_SPEC.md",
+      "default_governance_entry_behavior"
+    ],
+    "required_preconditions": [
+      "CARVES_STABLE_WORK_V0 policy_status is active.",
+      "activation.default_governance_changed is false before rollout starts.",
+      "rollout card is separately created and approved.",
+      "rollout taskgraph explicitly scopes AGENTS.md, initialization report, and default entry behavior changes.",
+      "rollout verification proves projection remains subordinate to policy truth."
+    ],
+    "not_authorized_by_activation_card": [
+      "AGENTS_md_update",
+      "initialization_report_update",
+      "default_governance_entry_change",
+      "submit",
+      "current_mixed_diff_approval",
+      "worker_sdk_or_api_implementation"
+    ],
+    "current_mixed_diff_rule": {
+      "status": "not_legalized",
+      "route": "recovery",
+      "allowed_interpretation": "unauthorized_prototype_evidence",
+      "not_allowed": [
+        "mark_completed",
+        "attach_to_completed_card",
+        "submit_as_governed_work",
+        "use_release_artifact_as_truth",
+        "hand_edit_markdown_projection"
+      ]
+    },
+    "recommended_task_slices": [
+      {
+        "id": "rollout_001",
+        "title": "Review active policy projection wording for default entry."
+      },
+      {
+        "id": "rollout_002",
+        "title": "Patch AGENTS.md to reference checked projection only if explicitly approved."
+      },
+      {
+        "id": "rollout_003",
+        "title": "Patch initialization report guidance only if explicitly approved."
+      },
+      {
+        "id": "rollout_004",
+        "title": "Verify default-entry behavior and current mixed diff non-retroactivity."
+      }
+    ]
+  },
+  "top_level_invariants": [
+    "gate_must_not_write_truth",
+    "unknown_blocks_high_risk_execution",
+    "user_direction_is_not_task_authorization",
+    "agent_inference_is_not_fact",
+    "only_observed_evidence_can_support_allow",
+    "artifact_does_not_prove_completion",
+    "completed_card_cannot_accept_new_scope",
+    "markdown_projection_cannot_override_machine_truth",
+    "lightweight_execution_does_not_include_submit",
+    "prototype_is_not_completion",
+    "scope_domain_is_write_boundary",
+    "policy_changes_are_governed_changes",
+    "projection_is_not_truth",
+    "fixtures_are_activation_gate",
+    "policy_bundle_has_no_runtime_authority_before_activation"
+  ],
+  "intake_routes": [
+    "execution",
+    "contract_change",
+    "recovery",
+    "context",
+    "artifact",
+    "policy_change"
+  ],
+  "execution_levels": [
+    "direct_lightweight",
+    "lightweight_task",
+    "governed_card_required",
+    "none"
+  ],
+  "eligibility": [
+    "allowed",
+    "blocked",
+    "needs_confirmation",
+    "needs_readonly_discovery"
+  ],
+  "permissions": [
+    "file_read_allowed",
+    "file_write_allowed",
+    "worker_allowed",
+    "truth_write_allowed",
+    "submit_allowed",
+    "artifact_write_allowed",
+    "completion_allowed"
+  ],
+  "reason_codes": [
+    "DIRECT_LIGHTWEIGHT_ALLOWED",
+    "NEEDS_LIGHTWEIGHT_TASK",
+    "NO_ACTIVE_EXECUTABLE_TASK",
+    "TASK_ALREADY_COMPLETED",
+    "CONTRACT_SURFACE_TOUCHED",
+    "FIXTURE_TRUTH_TOUCHED",
+    "PUBLIC_CLI_TOUCHED",
+    "SCORER_BEHAVIOR_TOUCHED",
+    "DERIVED_ARTIFACT_TOUCHED",
+    "COMPLETED_TASK_SCOPE_REUSE",
+    "GOVERNED_MIRROR_TOUCHED",
+    "STALE_PROJECTION",
+    "MIXED_LIFECYCLE_DIFF",
+    "SCOPE_DOMAIN_MISMATCH",
+    "UNSCOPED_SUBMIT_REQUEST",
+    "PROTOTYPE_NON_COMPLETION",
+    "TRUTH_WRITE_REQUIRES_GOVERNANCE",
+    "HOST_ROUTE_UNVERIFIED",
+    "POLICY_SURFACE_TOUCHED",
+    "UNAUTHORIZED_POLICY_SURFACE_DIFF",
+    "PROJECTION_STALE",
+    "PROJECTION_OVERREACH",
+    "PROJECTION_MISSING_RULE",
+    "PROJECTION_FORBIDDEN_CLAIM",
+    "PROJECTION_VERSION_MISMATCH",
+    "POLICY_BUNDLE_NOT_ACTIVE"
+  ],
+  "resolution_order": [
+    {
+      "rank": 1,
+      "if_any": [
+        "MIXED_LIFECYCLE_DIFF",
+        "STALE_PROJECTION",
+        "COMPLETED_TASK_SCOPE_REUSE",
+        "UNAUTHORIZED_POLICY_SURFACE_DIFF"
+      ],
+      "force": {
+        "intake_route": "recovery",
+        "execution_level": "governed_card_required",
+        "eligibility": "blocked"
+      }
+    },
+    {
+      "rank": 2,
+      "if_any": [
+        "POLICY_SURFACE_TOUCHED"
+      ],
+      "force": {
+        "intake_route": "policy_change",
+        "execution_level": "governed_card_required",
+        "eligibility": "blocked"
+      }
+    },
+    {
+      "rank": 3,
+      "if_any": [
+        "CONTRACT_SURFACE_TOUCHED",
+        "FIXTURE_TRUTH_TOUCHED",
+        "PUBLIC_CLI_TOUCHED",
+        "SCORER_BEHAVIOR_TOUCHED"
+      ],
+      "force": {
+        "intake_route": "contract_change",
+        "execution_level": "governed_card_required",
+        "eligibility": "blocked"
+      }
+    },
+    {
+      "rank": 4,
+      "if_any": [
+        "DERIVED_ARTIFACT_TOUCHED"
+      ],
+      "force": {
+        "intake_route": "artifact",
+        "execution_level": "none",
+        "eligibility": "blocked"
+      }
+    },
+    {
+      "rank": 5,
+      "if_any": [
+        "SCOPE_DOMAIN_MISMATCH"
+      ],
+      "force": {
+        "eligibility": "blocked"
+      }
+    },
+    {
+      "rank": 6,
+      "if_all": [
+        "planned_paths_known",
+        "worktree_clean_or_owned",
+        "no_high_risk_reason_codes",
+        "observed_evidence_available"
+      ],
+      "allow": {
+        "intake_route": "execution",
+        "execution_level": "direct_lightweight",
+        "eligibility": "allowed"
+      }
+    }
+  ],
+  "direct_lightweight_permissions": {
+    "file_read_allowed": true,
+    "file_write_allowed": true,
+    "worker_allowed": false,
+    "truth_write_allowed": false,
+    "submit_allowed": false,
+    "artifact_write_allowed": false,
+    "completion_allowed": false
+  },
+  "host_unverified_blocks": [
+    "truth_write_allowed",
+    "submit_allowed",
+    "artifact_write_allowed",
+    "completion_allowed"
+  ],
+  "bootstrap_postflight": {
+    "required_after_file_creation": true,
+    "checks": [
+      "actual_diff_paths_subset_of_bootstrap_allowed_paths",
+      "policy_status_is_proposed",
+      "runtime_authority_is_false",
+      "agent_rules_path_ends_with_CANDIDATE.md",
+      "agent_rules_first_line_declares_not_active_not_truth",
+      "no_AGENTS_md_change",
+      "no_initialization_spec_change",
+      "no_ai_change_except_host_routed_governance_state",
+      "no_src_change",
+      "no_tests_fixtures_change",
+      "no_artifacts_change"
+    ],
+    "on_failure": {
+      "action": "quarantine",
+      "submit_allowed": false,
+      "activation_allowed": false,
+      "next_route": "recovery"
+    }
+  },
+  "postflight_failure": {
+    "action": "quarantine",
+    "permissions_after_failure": {
+      "submit_allowed": false,
+      "truth_write_allowed": false,
+      "artifact_write_allowed": false,
+      "completion_allowed": false
+    },
+    "required_output": [
+      "actual_diff_inventory",
+      "boundary_violation_reason",
+      "next_route"
+    ]
+  }
+}

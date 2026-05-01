@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/task-result-envelope.schema.json",
+  "title": "CARVES Runtime TaskResultEnvelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "taskId",
+    "backendId",
+    "providerId",
+    "summary",
+    "submissionAction",
+    "requestedFollowUp",
+    "lifecycleWritebackRequested",
+    "outcome",
+    "artifacts",
+    "plannerOwnedNextActions",
+    "submittedAt"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "taskId": { "type": "string", "pattern": "^T-" },
+    "cardId": { "type": ["string", "null"], "pattern": "^CARD-" },
+    "packetId": { "type": ["string", "null"] },
+    "executionRunId": { "type": ["string", "null"] },
+    "workerRunId": { "type": ["string", "null"] },
+    "backendId": { "type": "string" },
+    "providerId": { "type": "string" },
+    "summary": { "type": "string" },
+    "submissionAction": { "const": "submit_result" },
+    "requestedFollowUp": {
+      "type": "string",
+      "enum": ["none", "request_replan"]
+    },
+    "lifecycleWritebackRequested": { "type": "boolean", "const": false },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "retryable", "changedFiles"],
+      "properties": {
+        "status": { "type": "string" },
+        "failureKind": { "type": ["string", "null"] },
+        "retryable": { "type": "boolean" },
+        "changedFiles": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidencePaths"],
+      "properties": {
+        "resultEnvelopePath": { "type": ["string", "null"] },
+        "workerExecutionArtifactPath": { "type": ["string", "null"] },
+        "providerArtifactPath": { "type": ["string", "null"] },
+        "safetyArtifactPath": { "type": ["string", "null"] },
+        "evidencePaths": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "plannerOwnedNextActions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["review_task", "sync_state"]
+      }
+    },
+    "submittedAt": { "type": "string", "format": "date-time" }
+  }
+}

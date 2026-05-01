@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Platform Schedule Decision",
+  "type": "object",
+  "required": ["requested_slots", "granted_slots", "selected_repo_ids", "candidates", "reason"],
+  "properties": {
+    "requested_slots": { "type": "integer" },
+    "granted_slots": { "type": "integer" },
+    "selected_repo_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["repo_id", "selected", "fairness_score", "reason"],
+        "properties": {
+          "repo_id": { "type": "string" },
+          "selected": { "type": "boolean" },
+          "fairness_score": { "type": "number" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "reason": { "type": "string" }
+  }
+}

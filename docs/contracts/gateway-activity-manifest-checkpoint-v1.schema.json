@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Gateway Activity Manifest Checkpoint v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "sequence",
+    "generated_at_utc",
+    "manifest_path",
+    "manifest_sha256",
+    "previous_checkpoint_sha256",
+    "checkpoint_sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "carves-gateway-activity-manifest-checkpoint.v1"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "generated_at_utc": {
+      "type": "string"
+    },
+    "manifest_path": {
+      "type": "string"
+    },
+    "manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "previous_checkpoint_sha256": {
+      "type": "string",
+      "pattern": "^$|^[0-9a-f]{64}$"
+    },
+    "checkpoint_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

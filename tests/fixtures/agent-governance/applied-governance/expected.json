@@ -1,0 +1,51 @@
+{
+  "cases": [
+    {
+      "path": "AGENTS.md",
+      "lifecycle_class": "OutsideAiLifecycle",
+      "commit_class": "requires_governed_card_first",
+      "correct_action": "host-routed-card-first",
+      "short_reason": "Bootstrap asset is not a GovernedMirror or sole truth owner."
+    },
+    {
+      "path": ".carves-platform/runtime-state/",
+      "lifecycle_class": "MixedUmbrellaRoot",
+      "commit_class": "not_a_normal_commit_target",
+      "correct_action": "operator_review_first",
+      "short_reason": "Runtime-state root must not be flattened into one lifecycle class."
+    },
+    {
+      "path": "docs/runtime/POST_323_CHECKPOINT.md",
+      "lifecycle_class": "OutsideAiLifecycle",
+      "commit_class": "not_a_normal_commit_target",
+      "correct_action": "keep_local",
+      "short_reason": "Checkpoint docs are classified by path, not inbound task references."
+    },
+    {
+      "path": "docs/guides/AGENT_APPLIED_GOVERNANCE_TEST.md",
+      "lifecycle_class": "OutsideAiLifecycle",
+      "commit_class": "requires_governed_card_first",
+      "correct_action": "host-routed-card-first",
+      "short_reason": "Governance-boundary docs default to Host-routed card first."
+    },
+    {
+      "path": "docs/runtime/runtime-applied-governance-operator-override-phase-7-5.md",
+      "lifecycle_class": "OutsideAiLifecycle",
+      "commit_class": "requires_governed_card_first",
+      "correct_action": "operator-directed-local-commit",
+      "short_reason": "Explicit operator phase request allows bounded Git evidence only."
+    },
+    {
+      "path": "docs/unknown/future-surface.md",
+      "lifecycle_class": "UnclassifiedPath",
+      "commit_class": "not_a_normal_commit_target",
+      "correct_action": "operator_review_first",
+      "short_reason": "Unknown path family needs canonical owner or operator review first."
+    }
+  ],
+  "final_verdict": {
+    "bounded_work_ready": "yes",
+    "deep_governance_ready": "no",
+    "reason": "Operator-directed local governance patch is bounded Git evidence, not Host lifecycle truth."
+  }
+}

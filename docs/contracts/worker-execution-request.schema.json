@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/worker-execution-request.schema.json",
+  "title": "CARVES Runtime Worker Execution Request",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "requestId",
+    "taskId",
+    "title",
+    "description",
+    "instructions",
+    "input",
+    "timeoutSeconds",
+    "repoRoot",
+    "worktreeRoot",
+    "baseCommit",
+    "profile",
+    "allowedFiles",
+    "validationCommands",
+    "metadata"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "integer" },
+    "requestId": { "type": "string" },
+    "taskId": { "type": "string", "pattern": "^T-" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "instructions": { "type": "string" },
+    "input": { "type": "string" },
+    "maxOutputTokens": { "type": "integer", "minimum": 0 },
+    "timeoutSeconds": { "type": "integer", "minimum": 1 },
+    "repoRoot": { "type": "string" },
+    "worktreeRoot": { "type": "string" },
+    "baseCommit": { "type": "string" },
+    "backendHint": { "type": "string" },
+    "modelOverride": { "type": ["string", "null"] },
+    "reasoningEffort": { "type": ["string", "null"] },
+    "routingIntent": { "type": ["string", "null"] },
+    "routingModuleId": { "type": ["string", "null"] },
+    "routingProfileId": { "type": ["string", "null"] },
+    "routingRuleId": { "type": ["string", "null"] },
+    "activeRoutingProfileId": { "type": ["string", "null"] },
+    "dryRun": { "type": "boolean" },
+    "profile": {
+      "type": "object",
+      "required": ["profileId", "trusted"],
+      "properties": {
+        "profileId": { "type": "string" },
+        "trusted": { "type": "boolean" }
+      }
+    },
+    "allowedFiles": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "validationCommands": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}

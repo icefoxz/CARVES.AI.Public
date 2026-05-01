@@ -1,0 +1,188 @@
+{
+  "schema_version": "matrix-artifact-manifest.v0",
+  "created_at": "2026-04-15T00:00:00+00:00",
+  "producer": {
+    "tool": "carves-matrix",
+    "component": "CARVES.Matrix.Core",
+    "mode": "local_proof_bundle"
+  },
+  "artifact_root": ".",
+  "producer_artifact_root": "<redacted-local-artifact-root>",
+  "privacy": {
+    "summary_only": true,
+    "source_included": false,
+    "raw_diff_included": false,
+    "prompt_included": false,
+    "model_response_included": false,
+    "secrets_included": false,
+    "credentials_included": false,
+    "private_payload_included": false,
+    "customer_payload_included": false,
+    "hosted_upload_required": false,
+    "certification_claim": false,
+    "public_leaderboard_claim": false
+  },
+  "artifacts": [
+    {
+      "artifact_kind": "guard_decision",
+      "path": "project/decisions.jsonl",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000001",
+      "size": 1824,
+      "schema_version": "guard-decision-jsonl",
+      "producer": "carves-guard",
+      "created_at": "2026-04-15T00:00:00+00:00",
+      "privacy_flags": {
+        "summary_only": true,
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false,
+        "private_payload_included": false,
+        "customer_payload_included": false,
+        "hosted_upload_required": false,
+        "certification_claim": false,
+        "public_leaderboard_claim": false
+      }
+    },
+    {
+      "artifact_kind": "handoff_packet",
+      "path": "project/handoff.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000002",
+      "size": 2048,
+      "schema_version": "carves-continuity-handoff.v1",
+      "producer": "carves-handoff",
+      "created_at": "2026-04-15T00:00:00+00:00",
+      "privacy_flags": {
+        "summary_only": true,
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false,
+        "private_payload_included": false,
+        "customer_payload_included": false,
+        "hosted_upload_required": false,
+        "certification_claim": false,
+        "public_leaderboard_claim": false
+      }
+    },
+    {
+      "artifact_kind": "audit_evidence",
+      "path": "project/shield-evidence.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000003",
+      "size": 4096,
+      "schema_version": "shield-evidence.v0",
+      "producer": "carves-audit",
+      "created_at": "2026-04-15T00:00:00+00:00",
+      "privacy_flags": {
+        "summary_only": true,
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false,
+        "private_payload_included": false,
+        "customer_payload_included": false,
+        "hosted_upload_required": false,
+        "certification_claim": false,
+        "public_leaderboard_claim": false
+      }
+    },
+    {
+      "artifact_kind": "shield_evaluation",
+      "path": "project/shield-evaluate.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000004",
+      "size": 1536,
+      "schema_version": "shield-evaluate.v0",
+      "producer": "carves-shield",
+      "created_at": "2026-04-15T00:00:00+00:00",
+      "privacy_flags": {
+        "summary_only": true,
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false,
+        "private_payload_included": false,
+        "customer_payload_included": false,
+        "hosted_upload_required": false,
+        "certification_claim": false,
+        "public_leaderboard_claim": false
+      }
+    },
+    {
+      "artifact_kind": "shield_badge_json",
+      "path": "project/shield-badge.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000005",
+      "size": 1024,
+      "schema_version": "shield-badge.v0",
+      "producer": "carves-shield",
+      "created_at": "2026-04-15T00:00:00+00:00",
+      "privacy_flags": {
+        "summary_only": true,
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false,
+        "private_payload_included": false,
+        "customer_payload_included": false,
+        "hosted_upload_required": false,
+        "certification_claim": false,
+        "public_leaderboard_claim": false
+      }
+    },
+    {
+      "artifact_kind": "shield_badge_svg",
+      "path": "project/shield-badge.svg",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000006",
+      "size": 768,
+      "schema_version": "shield-badge-svg.v0",
+      "producer": "carves-shield",
+      "created_at": "2026-04-15T00:00:00+00:00",
+      "privacy_flags": {
+        "summary_only": true,
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false,
+        "private_payload_included": false,
+        "customer_payload_included": false,
+        "hosted_upload_required": false,
+        "certification_claim": false,
+        "public_leaderboard_claim": false
+      }
+    },
+    {
+      "artifact_kind": "matrix_summary",
+      "path": "project/matrix-summary.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000007",
+      "size": 3072,
+      "schema_version": "matrix-summary.v0",
+      "producer": "carves-matrix",
+      "created_at": "2026-04-15T00:00:00+00:00",
+      "privacy_flags": {
+        "summary_only": true,
+        "source_included": false,
+        "raw_diff_included": false,
+        "prompt_included": false,
+        "model_response_included": false,
+        "secrets_included": false,
+        "credentials_included": false,
+        "private_payload_included": false,
+        "customer_payload_included": false,
+        "hosted_upload_required": false,
+        "certification_claim": false,
+        "public_leaderboard_claim": false
+      }
+    }
+  ]
+}

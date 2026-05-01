@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "carves.runtime/contracts/artifact.schema.json",
+  "title": "CARVES Runtime Worker Artifact Contract",
+  "type": "object",
+  "required": ["schema_version", "captured_at", "report"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "captured_at": { "type": "string", "format": "date-time" },
+    "report": {
+      "type": "object",
+      "required": ["task_id", "session", "validation", "safety_decision"],
+      "properties": {
+        "task_id": { "type": "string" },
+        "session": { "type": "object" },
+        "validation": { "type": "object" },
+        "patch": { "type": ["object", "null"] },
+        "safety_decision": { "type": "object" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

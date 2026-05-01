@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/worker-execution-result.schema.json",
+  "title": "CARVES Runtime Worker Execution Result",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "runId",
+    "taskId",
+    "backendId",
+    "providerId",
+    "adapterId",
+    "status",
+    "failureKind",
+    "failureLayer",
+    "retryable",
+    "configured",
+    "summary",
+    "changedFiles",
+    "events",
+    "commandTrace",
+    "startedAt",
+    "completedAt"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "integer" },
+    "runId": { "type": "string" },
+    "taskId": { "type": "string", "pattern": "^T-" },
+    "backendId": { "type": "string" },
+    "providerId": { "type": "string" },
+    "adapterId": { "type": "string" },
+    "adapterReason": { "type": "string" },
+    "protocolFamily": { "type": ["string", "null"] },
+    "requestFamily": { "type": ["string", "null"] },
+    "profileId": { "type": "string" },
+    "trustedProfile": { "type": "boolean" },
+    "status": { "type": "string" },
+    "failureKind": { "type": "string" },
+    "failureLayer": { "type": "string" },
+    "retryable": { "type": "boolean" },
+    "configured": { "type": "boolean" },
+    "model": { "type": "string" },
+    "requestId": { "type": ["string", "null"] },
+    "requestPreview": { "type": "string" },
+    "requestHash": { "type": "string" },
+    "summary": { "type": "string" },
+    "rationale": { "type": ["string", "null"] },
+    "failureReason": { "type": ["string", "null"] },
+    "responsePreview": { "type": ["string", "null"] },
+    "responseHash": { "type": ["string", "null"] },
+    "changedFiles": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "events": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "commandTrace": {
+      "type": "array",
+      "items": { "$ref": "./worker-execution-trace.schema.json" }
+    },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "completedAt": { "type": "string", "format": "date-time" }
+  }
+}

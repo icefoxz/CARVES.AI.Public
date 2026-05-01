@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Carves.Shield.Core</RootNamespace>
+    <PackageId>CARVES.Shield.Core</PackageId>
+    <Version>0.1.0-alpha.1</Version>
+    <Authors>CARVES.AI</Authors>
+    <Description>CARVES Shield core runner for local shield-evidence.v0 self-checks and badges.</Description>
+    <PackageTags>carves;shield;ai-governance;evidence;badge</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/CARVES-AI/CARVES.Runtime</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CARVES-AI/CARVES.Runtime</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CARVES.Runtime.Application\Carves.Runtime.Application.csproj" />
+  </ItemGroup>
+
+</Project>

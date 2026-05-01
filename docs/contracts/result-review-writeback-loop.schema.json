@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/result-review-writeback-loop.schema.json",
+  "title": "CARVES Runtime Result Review Writeback Loop",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "loop_class",
+    "surface_status",
+    "task_id",
+    "repo_id",
+    "entrypoints",
+    "result_submission",
+    "review_gate",
+    "writeback_gate",
+    "stop_replan_policy",
+    "projection_policy",
+    "invariants",
+    "validation"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "loop_class": { "const": "result_review_writeback_loop" },
+    "surface_status": { "const": "validation_over_existing_lifecycle" },
+    "task_id": { "type": "string", "pattern": "^T-" },
+    "repo_id": { "type": "string" },
+    "entrypoints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result_entrypoint",
+        "review_entrypoint",
+        "writeback_entrypoint"
+      ],
+      "properties": {
+        "result_entrypoint": { "const": "task ingest-result <task-id>" },
+        "review_entrypoint": { "const": "review-task / approve-review" },
+        "writeback_entrypoint": { "const": "sync-state / governed writeback" }
+      }
+    },
+    "result_submission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "submission_action",
+        "lifecycle_writeback_requested",
+        "allowed_follow_up",
+        "resulting_boundary",
+        "cannot_mark_completed"
+      ],
+      "properties": {
+        "submission_action": { "const": "submit_result" },
+        "lifecycle_writeback_requested": { "const": false },
+        "allowed_follow_up": {
+          "type": "array",
+          "prefixItems": [
+            { "const": "none" },
+            { "const": "request_replan" }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "resulting_boundary": { "const": "review_required" },
+        "cannot_mark_completed": { "const": true }
+      }
+    },
+    "review_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before_writeback_gate",
+        "null_worker_is_diagnostic_only",
+        "requires_concrete_worker_evidence",
+        "host_writeback_is_not_worker_evidence"
+      ],
+      "properties": {
+        "before_writeback_gate": { "const": "review_evidence_gate" },
+        "null_worker_is_diagnostic_only": { "const": true },
+        "requires_concrete_worker_evidence": { "const": true },
+        "host_writeback_is_not_worker_evidence": { "const": true }
+      }
+    },
+    "writeback_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requires_review_approval",
+        "requires_boundary_decision",
+        "requires_state_transition_certificate",
+        "worker_result_can_bypass_writeback"
+      ],
+      "properties": {
+        "requires_review_approval": { "const": true },
+        "requires_boundary_decision": { "const": true },
+        "requires_state_transition_certificate": { "const": true },
+        "worker_result_can_bypass_writeback": { "const": false }
+      }
+    },
+    "stop_replan_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stop_disposition",
+        "silent_retry_allowed",
+        "direct_retry_without_review_allowed"
+      ],
+      "properties": {
+        "stop_disposition": { "const": "planner_review_or_replan_required" },
+        "silent_retry_allowed": { "const": false },
+        "direct_retry_without_review_allowed": { "const": false }
+      }
+    },
+    "projection_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projections_are_rebuildable",
+        "projection_can_mutate_task_truth",
+        "projection_can_complete_task"
+      ],
+      "properties": {
+        "projections_are_rebuildable": { "const": true },
+        "projection_can_mutate_task_truth": { "const": false },
+        "projection_can_complete_task": { "const": false }
+      }
+    },
+    "invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "no_direct_completion_from_worker_result",
+        "no_result_writeback_without_review",
+        "no_projection_truth_mutation",
+        "no_second_task_queue",
+        "no_second_execution_truth_root",
+        "stop_routes_to_replan_or_review"
+      ],
+      "properties": {
+        "no_direct_completion_from_worker_result": { "const": true },
+        "no_result_writeback_without_review": { "const": true },
+        "no_projection_truth_mutation": { "const": true },
+        "no_second_task_queue": { "const": true },
+        "no_second_execution_truth_root": { "const": true },
+        "stop_routes_to_replan_or_review": { "const": true }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_refs",
+        "test_refs"
+      ],
+      "properties": {
+        "schema_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "contains": { "const": "docs/contracts/task-result-envelope.schema.json" }
+        },
+        "test_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        }
+      }
+    }
+  }
+}

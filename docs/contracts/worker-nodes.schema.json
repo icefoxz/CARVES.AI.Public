@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Worker Nodes",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["schema_version", "node_id", "capabilities", "status", "active_lease_count"],
+    "properties": {
+      "schema_version": { "type": "integer" },
+      "node_id": { "type": "string" },
+      "capabilities": { "type": "object" },
+      "status": { "type": "string" },
+      "active_lease_count": { "type": "integer" },
+      "last_reason": { "type": ["string", "null"] },
+      "last_heartbeat_at": { "type": "string", "format": "date-time" }
+    }
+  }
+}

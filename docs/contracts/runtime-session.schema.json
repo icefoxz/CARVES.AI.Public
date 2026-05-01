@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "carves.runtime/contracts/runtime-session.schema.json",
+  "title": "CARVES Runtime Session Contract",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "session_id",
+    "attached_repo_root",
+    "status",
+    "loop_mode",
+    "dry_run",
+    "active_worker_count",
+    "tick_count",
+    "last_reason",
+    "loop_reason",
+    "loop_actionability",
+    "started_at",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "session_id": { "type": "string" },
+    "attached_repo_root": { "type": "string" },
+    "status": { "type": "string" },
+    "loop_mode": { "type": "string" },
+    "dry_run": { "type": "boolean" },
+    "active_worker_count": { "type": "integer", "minimum": 0 },
+    "tick_count": { "type": "integer", "minimum": 0 },
+    "active_task_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "review_pending_task_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "current_task_id": { "type": ["string", "null"] },
+    "last_task_id": { "type": ["string", "null"] },
+    "last_review_task_id": { "type": ["string", "null"] },
+    "last_reason": { "type": "string" },
+    "loop_reason": { "type": "string" },
+    "loop_actionability": { "type": "string" },
+    "waiting_reason": { "type": ["string", "null"] },
+    "waiting_actionability": { "type": "string" },
+    "stop_reason": { "type": ["string", "null"] },
+    "stop_actionability": { "type": "string" },
+    "last_planner_reentry_outcome": { "type": ["string", "null"] },
+    "last_planner_reentry_task_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "planner_round": { "type": "integer", "minimum": 0 },
+    "planner_lifecycle_state": { "type": "string" },
+    "planner_sleep_reason": { "type": "string" },
+    "planner_wake_reason": { "type": "string" },
+    "planner_escalation_reason": { "type": "string" },
+    "planner_lifecycle_reason": { "type": ["string", "null"] },
+    "planner_adapter_id": { "type": ["string", "null"] },
+    "planner_proposal_id": { "type": ["string", "null"] },
+    "detected_opportunity_count": { "type": "integer", "minimum": 0 },
+    "evaluated_opportunity_count": { "type": "integer", "minimum": 0 },
+    "last_opportunity_source": { "type": ["string", "null"] },
+    "analysis_reason": { "type": ["string", "null"] },
+    "started_at": { "type": "string", "format": "date-time" },
+    "last_tick_at": { "type": ["string", "null"], "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

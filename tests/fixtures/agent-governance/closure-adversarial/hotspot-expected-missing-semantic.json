@@ -1,0 +1,8 @@
+{
+  "cases": [
+    {
+      "case_id": "H1",
+      "admission_decision": "ready_for_bounded_task"
+    }
+  ]
+}

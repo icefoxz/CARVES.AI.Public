@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/multi-worker-hardening.schema.json",
+  "title": "CARVES Runtime Multi Worker Hardening",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "hardening_class",
+    "surface_status",
+    "repo_id",
+    "capacity_gate",
+    "scope_conflict_gate",
+    "capability_routing_gate",
+    "expired_lease_recovery",
+    "result_boundary",
+    "projection_policy",
+    "invariants",
+    "validation"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "hardening_class": { "const": "multi_worker_hardening" },
+    "surface_status": { "const": "validation_over_existing_control_plane" },
+    "repo_id": { "type": "string" },
+    "capacity_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "session_worker_pool_required",
+        "platform_worker_capacity_required",
+        "max_dispatch_per_tick_policy",
+        "over_capacity_disposition"
+      ],
+      "properties": {
+        "owner": { "const": "host_scheduler" },
+        "session_worker_pool_required": { "const": true },
+        "platform_worker_capacity_required": { "const": true },
+        "max_dispatch_per_tick_policy": { "const": "task_concurrency_policy" },
+        "over_capacity_disposition": { "const": "idle_or_defer_without_claim" }
+      }
+    },
+    "scope_conflict_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "scheduler_precheck_required",
+        "resource_lease_required",
+        "conflict_classes",
+        "conflicting_dispatch_allowed",
+        "non_conflicting_dispatch_allowed"
+      ],
+      "properties": {
+        "owner": { "const": "host_scheduler" },
+        "scheduler_precheck_required": { "const": true },
+        "resource_lease_required": { "const": true },
+        "conflict_classes": {
+          "type": "array",
+          "prefixItems": [
+            { "const": "same_task" },
+            { "const": "same_path_write" },
+            { "const": "same_module" },
+            { "const": "same_truth_operation" },
+            { "const": "same_target_branch" },
+            { "const": "running_task_overlap" },
+            { "const": "review_pending_overlap" }
+          ],
+          "minItems": 7,
+          "maxItems": 7
+        },
+        "conflicting_dispatch_allowed": { "const": false },
+        "non_conflicting_dispatch_allowed": { "const": true }
+      }
+    },
+    "capability_routing_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "worker_selection_required",
+        "provider_health_required",
+        "capability_compatibility_required",
+        "profile_compatibility_required",
+        "incompatible_route_disposition"
+      ],
+      "properties": {
+        "owner": { "const": "worker_selection_policy" },
+        "worker_selection_required": { "const": true },
+        "provider_health_required": { "const": true },
+        "capability_compatibility_required": { "const": true },
+        "profile_compatibility_required": { "const": true },
+        "incompatible_route_disposition": {
+          "type": "string",
+          "enum": ["fallback", "deny", "defer"]
+        }
+      }
+    },
+    "expired_lease_recovery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "expiry_detection_required",
+        "lost_tracking_disposition",
+        "direct_retry_allowed",
+        "truth_writeback_allowed"
+      ],
+      "properties": {
+        "owner": { "const": "worker_lease_store" },
+        "expiry_detection_required": { "const": true },
+        "lost_tracking_disposition": { "const": "block_or_escalate_to_operator" },
+        "direct_retry_allowed": { "const": false },
+        "truth_writeback_allowed": { "const": false }
+      }
+    },
+    "result_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result_entrypoint",
+        "review_required",
+        "writeback_required",
+        "worker_completion_authority"
+      ],
+      "properties": {
+        "result_entrypoint": { "const": "task ingest-result <task-id>" },
+        "review_required": { "const": true },
+        "writeback_required": { "const": true },
+        "worker_completion_authority": { "const": false }
+      }
+    },
+    "projection_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dispatch_projection_rebuildable",
+        "worker_inbox_truth_allowed",
+        "worker_outbox_truth_allowed",
+        "projection_can_allocate_lease"
+      ],
+      "properties": {
+        "dispatch_projection_rebuildable": { "const": true },
+        "worker_inbox_truth_allowed": { "const": false },
+        "worker_outbox_truth_allowed": { "const": false },
+        "projection_can_allocate_lease": { "const": false }
+      }
+    },
+    "invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "host_owns_dispatch",
+        "scheduler_owns_selection",
+        "worker_leases_own_execution_claims",
+        "workers_do_not_select_priority",
+        "workers_do_not_share_mutable_worktree",
+        "no_second_task_queue",
+        "no_second_execution_truth_root",
+        "no_completion_without_review_writeback"
+      ],
+      "properties": {
+        "host_owns_dispatch": { "const": true },
+        "scheduler_owns_selection": { "const": true },
+        "worker_leases_own_execution_claims": { "const": true },
+        "workers_do_not_select_priority": { "const": true },
+        "workers_do_not_share_mutable_worktree": { "const": true },
+        "no_second_task_queue": { "const": true },
+        "no_second_execution_truth_root": { "const": true },
+        "no_completion_without_review_writeback": { "const": true }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_refs",
+        "test_refs"
+      ],
+      "properties": {
+        "schema_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "contains": { "const": "docs/contracts/worker-leases.schema.json" }
+        },
+        "test_refs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        }
+      }
+    }
+  }
+}

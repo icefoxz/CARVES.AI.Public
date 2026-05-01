@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\CARVES.Runtime.Domain\Carves.Runtime.Domain.csproj" />
+    <ProjectReference Include="..\CARVES.Runtime.Application\Carves.Runtime.Application.csproj" />
+    <ProjectReference Include="..\CARVES.Runtime.Infrastructure\Carves.Runtime.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\templates\interaction\**\*">
+      <Link>templates\interaction\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

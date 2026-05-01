@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Host Control Contract",
+  "type": "object",
+  "required": ["action", "reason"],
+  "properties": {
+    "action": {
+      "type": "string",
+      "enum": ["pause", "resume", "stop"]
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false
+}

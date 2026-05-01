@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.dev/contracts/runtime-pack-policy-package.schema.json",
+  "title": "Runtime Pack Policy Package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "exportedAtUtc",
+    "sourceMode",
+    "runtimeStandardVersion",
+    "admissionPolicy",
+    "switchPolicy",
+    "summary",
+    "notes"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "runtime-pack-policy-package.v1"
+    },
+    "packageId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exportedAtUtc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sourceMode": {
+      "type": "string",
+      "const": "local_runtime_export"
+    },
+    "runtimeStandardVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "admissionPolicy": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "policyId",
+        "runtimeStandardVersion",
+        "allowedChannels",
+        "allowedPackTypes",
+        "requireSignature",
+        "requireProvenance",
+        "summary"
+      ]
+    },
+    "switchPolicy": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "policyId",
+        "policyMode",
+        "pinActive",
+        "reason",
+        "summary"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

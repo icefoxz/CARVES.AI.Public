@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "carves.runtime/contracts/backlog.schema.json",
+  "title": "CARVES Runtime Refactoring Backlog Contract",
+  "type": "object",
+  "required": ["version", "generated_at", "items"],
+  "properties": {
+    "version": { "const": 1 },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item_id", "fingerprint", "kind", "path", "reason", "priority", "status"],
+        "properties": {
+          "item_id": { "type": "string" },
+          "fingerprint": { "type": "string" },
+          "kind": { "type": "string" },
+          "path": { "type": "string" },
+          "reason": { "type": "string" },
+          "severity": { "type": "string" },
+          "priority": { "type": "string" },
+          "status": { "type": "string" },
+          "suggested_task_id": { "type": ["string", "null"] }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

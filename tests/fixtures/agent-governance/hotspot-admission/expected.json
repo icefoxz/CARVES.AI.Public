@@ -1,0 +1,82 @@
+{
+  "cases": [
+    {
+      "case_id": "H1",
+      "hotspot_family": "Host bootstrap, dispatch, and composition",
+      "scope_anchor": "`src/Carves.Runtime.Host/CommandRouting` bounded slice",
+      "write_surface": "`src/Carves.Runtime.Host/CommandRouting/*`, `tests/Carves.Runtime.IntegrationTests/HostClientSurfaceTests.*`",
+      "proof_target": "existing host command routing behavior remains stable",
+      "preservation_constraints": "no command rename, no lifecycle semantic change, no second Host path",
+      "validation_surface": "focused host command/integration surface tests",
+      "shared_write_surface_gate": "passes: no unrelated dirty overlap in write surface",
+      "admission_decision": "ready_for_bounded_task",
+      "blocked_actions": "execution without approved bounded task remains blocked",
+      "safe_next_step": "create or inspect bounded task before editing"
+    },
+    {
+      "case_id": "H2",
+      "hotspot_family": "Operator projection and control-plane surfaces",
+      "scope_anchor": "draft projection boundary only",
+      "write_surface": "proposed docs and formatter scope still needs exact files",
+      "proof_target": "preserve operator-facing output semantics",
+      "preservation_constraints": "no public claim change and no release gate change",
+      "validation_surface": "validation candidate not selected yet",
+      "shared_write_surface_gate": "no write-surface check because scope is planning-only",
+      "admission_decision": "planning_only",
+      "blocked_actions": "code edits are blocked until exact scope and validation are named",
+      "safe_next_step": "write a bounded plan with exact files and validation"
+    },
+    {
+      "case_id": "H3",
+      "hotspot_family": "Execution, review, and boundary pipeline",
+      "scope_anchor": "missing: exact module boundary not named",
+      "write_surface": "missing: write files not named",
+      "proof_target": "preserve execution, review, and boundary ordering",
+      "preservation_constraints": "no behavior change hidden inside refactor",
+      "validation_surface": "likely targeted execution/review tests, but not bound to files",
+      "shared_write_surface_gate": "cannot evaluate overlap without scope",
+      "admission_decision": "blocked_missing_scope",
+      "blocked_actions": "editing before scope anchor and write surface are named",
+      "safe_next_step": "inspect source and name one bounded module/file surface"
+    },
+    {
+      "case_id": "H4",
+      "hotspot_family": "Context, worker request, and adapter pipeline",
+      "scope_anchor": "`src/Carves.Runtime.Application/Workers` candidate slice",
+      "write_surface": "`src/Carves.Runtime.Application/Workers/*`",
+      "proof_target": "preserve worker request selection and adapter routing",
+      "preservation_constraints": "no provider routing change and no new worker pipeline",
+      "validation_surface": "missing: no focused validation identified",
+      "shared_write_surface_gate": "pending: write surface must be checked after validation is named",
+      "admission_decision": "blocked_missing_validation",
+      "blocked_actions": "claiming ready or complete without targeted validation",
+      "safe_next_step": "identify or add cheapest focused worker/adapter test"
+    },
+    {
+      "case_id": "H5",
+      "hotspot_family": "Code-understanding and artifact-governance support",
+      "scope_anchor": "codegraph artifact-policy support slice",
+      "write_surface": "`src/Carves.Runtime.Application/CodeGraph/*`, `tests/Carves.Runtime.Application.Tests/CodeGraph*`",
+      "proof_target": "preserve codegraph lookup and artifact policy behavior",
+      "preservation_constraints": "no truth ownership change and no protected root write",
+      "validation_surface": "codegraph or artifact-policy focused tests",
+      "shared_write_surface_gate": "blocked: overlapping dirty/user-owned write surface reported",
+      "admission_decision": "blocked_shared_write_surface",
+      "blocked_actions": "editing overlapping dirty surface",
+      "safe_next_step": "pause for operator review or wait for surface ownership to clear"
+    },
+    {
+      "case_id": "H6",
+      "hotspot_family": "High-churn tests coupled to production family",
+      "scope_anchor": "protected lifecycle fixture rewrite proposal",
+      "write_surface": "`.ai/tasks/graph.json`, `tests/Carves.Runtime.Application.Tests/*`",
+      "proof_target": "preserve task graph and test behavior",
+      "preservation_constraints": "no direct protected truth mutation",
+      "validation_surface": "tests alone are not enough for protected truth writes",
+      "shared_write_surface_gate": "blocked: proposed write surface includes protected root",
+      "admission_decision": "blocked_governed_route_required",
+      "blocked_actions": "direct protected-root edit or lifecycle mutation",
+      "safe_next_step": "route through Host/governed card and remove protected root from local refactor"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/execution-telemetry.schema.json",
+  "title": "ExecutionTelemetry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "filesChanged",
+    "linesChanged",
+    "retryCount",
+    "failureCount",
+    "failureDensity",
+    "durationSeconds",
+    "observedPaths",
+    "changeKinds",
+    "budgetExceeded"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "filesChanged": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "linesChanged": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "retryCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "failureCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "failureDensity": {
+      "type": "number",
+      "minimum": 0
+    },
+    "durationSeconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "observedPaths": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "changeKinds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "SourceCode",
+          "Tests",
+          "Documentation",
+          "Configuration",
+          "ControlPlaneState",
+          "Contracts"
+        ]
+      }
+    },
+    "budgetExceeded": {
+      "type": "boolean"
+    },
+    "summary": {
+      "type": ["string", "null"]
+    }
+  }
+}

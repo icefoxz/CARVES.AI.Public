@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/boundary-violation.schema.json",
+  "title": "ExecutionBoundaryViolation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "taskId", "reason", "detail", "riskLevel", "riskScore", "budget", "telemetry", "confidence", "occurredAt"],
+  "properties": {
+    "schemaVersion": { "const": "boundary.v1" },
+    "taskId": { "type": "string", "pattern": "^T-" },
+    "reason": {
+      "type": "string",
+      "enum": ["SizeExceeded", "RetryExceeded", "UnstableExecution", "Timeout", "ScopeViolation", "RiskExceeded"]
+    },
+    "detail": { "type": "string" },
+    "riskLevel": {
+      "type": "string",
+      "enum": ["Low", "Medium", "High", "Critical"]
+    },
+    "riskScore": { "type": "integer", "minimum": 0 },
+    "budget": { "type": "object" },
+    "telemetry": { "type": "object" },
+    "confidence": { "type": "object" },
+    "occurredAt": { "type": "string", "format": "date-time" }
+  }
+}

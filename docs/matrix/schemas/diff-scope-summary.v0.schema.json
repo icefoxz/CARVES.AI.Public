@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.ai/schemas/diff-scope-summary.v0.schema.json",
+  "title": "CARVES Diff Scope Summary v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "task_version",
+    "challenge_id",
+    "base_ref",
+    "worktree_ref",
+    "pre_command_snapshot",
+    "post_command_snapshot",
+    "changed_files",
+    "changed_file_count",
+    "buckets",
+    "allowed_scope_match",
+    "forbidden_path_violations",
+    "unrequested_change_count",
+    "source_files_changed_without_tests",
+    "deleted_files",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": { "const": "diff-scope-summary.v0" },
+    "task_id": { "$ref": "#/$defs/non_empty_string" },
+    "task_version": { "$ref": "#/$defs/non_empty_string" },
+    "challenge_id": { "$ref": "#/$defs/non_empty_string" },
+    "base_ref": { "$ref": "#/$defs/non_empty_string" },
+    "worktree_ref": { "$ref": "#/$defs/non_empty_string" },
+    "pre_command_snapshot": { "$ref": "#/$defs/workspace_snapshot" },
+    "post_command_snapshot": { "$ref": "#/$defs/workspace_snapshot" },
+    "changed_files": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/changed_file" }
+    },
+    "changed_file_count": { "type": "integer", "minimum": 0 },
+    "buckets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "test", "docs", "config", "generated", "metadata", "unknown"],
+      "properties": {
+        "source": { "type": "integer", "minimum": 0 },
+        "test": { "type": "integer", "minimum": 0 },
+        "docs": { "type": "integer", "minimum": 0 },
+        "config": { "type": "integer", "minimum": 0 },
+        "generated": { "type": "integer", "minimum": 0 },
+        "metadata": { "type": "integer", "minimum": 0 },
+        "unknown": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "allowed_scope_match": { "type": "boolean" },
+    "forbidden_path_violations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relative_path" }
+    },
+    "unrequested_change_count": { "type": "integer", "minimum": 0 },
+    "source_files_changed_without_tests": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relative_path" }
+    },
+    "deleted_files": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relative_path" }
+    },
+    "privacy": { "$ref": "#/$defs/privacy" }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "anyOf": [
+          { "pattern": "^([A-Za-z]:|/|\\\\)" },
+          { "pattern": "(^|/)\\.\\.(/|$)" }
+        ]
+      }
+    },
+    "changed_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "change_kind",
+        "bucket",
+        "allowed",
+        "forbidden",
+        "expected_by_task",
+        "generated",
+        "deleted",
+        "replacement_claimed",
+        "staged",
+        "unstaged",
+        "untracked",
+        "seen_pre_command",
+        "seen_post_command"
+      ],
+      "properties": {
+        "path": { "$ref": "#/$defs/relative_path" },
+        "change_kind": { "enum": ["added", "modified", "deleted", "renamed", "unknown"] },
+        "bucket": { "enum": ["source", "test", "docs", "config", "metadata", "generated", "artifact", "unknown"] },
+        "allowed": { "type": "boolean" },
+        "forbidden": { "type": "boolean" },
+        "expected_by_task": { "type": "boolean" },
+        "generated": { "type": "boolean" },
+        "deleted": { "type": "boolean" },
+        "replacement_claimed": { "type": "boolean" },
+        "staged": { "type": "boolean" },
+        "unstaged": { "type": "boolean" },
+        "untracked": { "type": "boolean" },
+        "seen_pre_command": { "type": "boolean" },
+        "seen_post_command": { "type": "boolean" }
+      }
+    },
+    "workspace_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "phase",
+        "available",
+        "error",
+        "changed_files",
+        "changed_file_count",
+        "forbidden_path_violations",
+        "unrequested_change_count",
+        "unknown_file_count"
+      ],
+      "properties": {
+        "phase": { "enum": ["pre_command", "post_command"] },
+        "available": { "type": "boolean" },
+        "error": { "type": ["string", "null"] },
+        "changed_files": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/changed_file" }
+        },
+        "changed_file_count": { "type": "integer", "minimum": 0 },
+        "forbidden_path_violations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/relative_path" }
+        },
+        "unrequested_change_count": { "type": "integer", "minimum": 0 },
+        "unknown_file_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary_only", "raw_diff_included", "source_included"],
+      "properties": {
+        "summary_only": { "const": true },
+        "raw_diff_included": { "const": false },
+        "source_included": { "const": false }
+      }
+    }
+  }
+}

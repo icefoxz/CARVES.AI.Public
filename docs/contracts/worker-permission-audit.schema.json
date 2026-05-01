@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Worker Permission Audit Log",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "schema_version",
+      "audit_id",
+      "repo_id",
+      "permission_request_id",
+      "run_id",
+      "task_id",
+      "backend_id",
+      "provider_id",
+      "permission_kind",
+      "risk_level",
+      "event_kind",
+      "actor_kind",
+      "actor_identity",
+      "reason_code",
+      "reason",
+      "consequence_summary",
+      "occurred_at"
+    ],
+    "properties": {
+      "schema_version": { "type": "integer" },
+      "audit_id": { "type": "string" },
+      "repo_id": { "type": "string" },
+      "permission_request_id": { "type": "string" },
+      "run_id": { "type": "string" },
+      "task_id": { "type": "string" },
+      "backend_id": { "type": "string" },
+      "provider_id": { "type": "string" },
+      "permission_kind": { "type": "string" },
+      "risk_level": { "type": "string" },
+      "event_kind": { "type": "string" },
+      "decision": { "type": ["string", "null"] },
+      "actor_kind": { "type": "string" },
+      "actor_identity": { "type": "string" },
+      "reason_code": { "type": "string" },
+      "reason": { "type": "string" },
+      "consequence_summary": { "type": "string" },
+      "occurred_at": { "type": "string", "format": "date-time" }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "cases": [
+    {
+      "case_id": "R1",
+      "decision": "refuse",
+      "required_route": "governed_bootstrap_first"
+    }
+  ]
+}

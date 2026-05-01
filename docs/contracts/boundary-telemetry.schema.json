@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/boundary-telemetry.schema.json",
+  "title": "ExecutionBoundaryTelemetrySnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "taskId", "telemetry", "recordedAt"],
+  "properties": {
+    "schemaVersion": { "const": "boundary.v1" },
+    "taskId": { "type": "string", "pattern": "^T-" },
+    "telemetry": { "type": "object" },
+    "recordedAt": { "type": "string", "format": "date-time" }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CARVES Worker Selection Decision",
+  "type": "object",
+  "required": ["repo_id", "allowed", "requested_trust_profile_id", "summary", "reason_code", "candidates"],
+  "properties": {
+    "repo_id": { "type": "string" },
+    "task_id": { "type": ["string", "null"] },
+    "allowed": { "type": "boolean" },
+    "used_fallback": { "type": "boolean" },
+    "requested_trust_profile_id": { "type": "string" },
+    "selected_backend_id": { "type": ["string", "null"] },
+    "selected_provider_id": { "type": ["string", "null"] },
+    "selected_adapter_id": { "type": ["string", "null"] },
+    "selected_routing_profile_id": { "type": ["string", "null"] },
+    "active_routing_profile_id": { "type": ["string", "null"] },
+    "applied_routing_rule_id": { "type": ["string", "null"] },
+    "routing_intent": { "type": ["string", "null"] },
+    "routing_module_id": { "type": ["string", "null"] },
+    "selected_model_id": { "type": ["string", "null"] },
+    "route_source": { "type": "string" },
+    "route_reason": { "type": "string" },
+    "summary": { "type": "string" },
+    "reason_code": { "type": "string" },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["backend_id", "provider_id", "health_state", "profile_compatible", "capability_compatible", "selected", "reason"],
+        "properties": {
+          "backend_id": { "type": "string" },
+          "provider_id": { "type": "string" },
+          "routing_profile_id": { "type": ["string", "null"] },
+          "routing_rule_id": { "type": ["string", "null"] },
+          "route_disposition": { "type": "string" },
+          "health_state": { "type": "string" },
+          "profile_compatible": { "type": "boolean" },
+          "capability_compatible": { "type": "boolean" },
+          "selected": { "type": "boolean" },
+          "reason": { "type": "string" }
+        }
+      }
+    }
+  }
+}

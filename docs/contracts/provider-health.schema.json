@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CARVES Provider Health Snapshot",
+  "type": "object",
+  "required": ["entries"],
+  "properties": {
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["backend_id", "provider_id", "adapter_id", "state", "summary", "consecutive_failure_count", "last_failure_kind", "checked_at"],
+        "properties": {
+          "backend_id": { "type": "string" },
+          "provider_id": { "type": "string" },
+          "adapter_id": { "type": "string" },
+          "state": { "type": "string" },
+          "summary": { "type": "string" },
+          "latency_ms": { "type": ["integer", "null"] },
+          "degradation_reason": { "type": ["string", "null"] },
+          "consecutive_failure_count": { "type": "integer" },
+          "last_failure_kind": { "type": "string" },
+          "checked_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  }
+}

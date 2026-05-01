@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/runtime-pack-command-admission.schema.json",
+  "title": "CARVES Runtime Pack Command Admission Decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "decisionId",
+    "taskId",
+    "runId",
+    "packSelectionId",
+    "packId",
+    "packVersion",
+    "channel",
+    "commandRef",
+    "requestedKind",
+    "decision",
+    "recordedAtUtc",
+    "command",
+    "effectivePermissions",
+    "evidence"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "decisionId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "taskId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packSelectionId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "channel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "commandRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recipeId",
+        "commandId"
+      ],
+      "properties": {
+        "recipeId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+([._-][a-z0-9]+)*$",
+          "minLength": 3
+        },
+        "commandId": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+([._-][a-z0-9]+)*$",
+          "minLength": 3
+        }
+      }
+    },
+    "requestedKind": {
+      "type": "string",
+      "enum": [
+        "known_tool_command",
+        "package_manager_script",
+        "repo_script",
+        "shell_command"
+      ]
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdict",
+        "basis",
+        "riskLevel"
+      ],
+      "properties": {
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "admitted",
+            "admitted_with_elevated_risk",
+            "blocked",
+            "rejected"
+          ]
+        },
+        "basis": {
+          "type": "string",
+          "enum": [
+            "default_policy",
+            "repo_policy_exception",
+            "manual_review",
+            "hard_deny"
+          ]
+        },
+        "riskLevel": {
+          "type": "string",
+          "enum": [
+            "l3_known_tool",
+            "l3_package_script",
+            "blocked_repo_script",
+            "rejected_shell"
+          ]
+        },
+        "stopReasons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "recordedAtUtc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "executable",
+        "args",
+        "cwd",
+        "required"
+      ],
+      "properties": {
+        "executable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cwd": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "effectivePermissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "network",
+        "env",
+        "secrets",
+        "writes"
+      ],
+      "properties": {
+        "network": {
+          "type": "boolean"
+        },
+        "env": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "allowed"
+          ],
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "none",
+                "allowlist"
+              ]
+            },
+            "allowed": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        "secrets": {
+          "type": "boolean"
+        },
+        "writes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "allowedPaths",
+            "protectedRoots"
+          ],
+          "properties": {
+            "allowedPaths": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            },
+            "protectedRoots": {
+              "const": "deny"
+            }
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expectedArtifacts",
+        "failureIsBlocking"
+      ],
+      "properties": {
+        "expectedArtifacts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "failureIsBlocking": {
+          "type": "boolean"
+        }
+      }
+    },
+    "sourcePolicyRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  }
+}

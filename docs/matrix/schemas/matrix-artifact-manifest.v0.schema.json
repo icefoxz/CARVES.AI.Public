@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.ai/schemas/matrix-artifact-manifest.v0.schema.json",
+  "title": "CARVES Matrix Artifact Manifest v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "created_at",
+    "producer",
+    "artifact_root",
+    "privacy",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "matrix-artifact-manifest.v0"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool",
+        "component",
+        "mode"
+      ],
+      "properties": {
+        "tool": {
+          "const": "carves-matrix"
+        },
+        "component": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "artifact_root": {
+      "type": "string",
+      "description": "Portable bundle root marker. Current Matrix writers use '.'.",
+      "minLength": 1
+    },
+    "producer_artifact_root": {
+      "type": "string",
+      "description": "Redacted local producer root marker. This field is diagnostic only and is not trusted for artifact reads.",
+      "minLength": 1
+    },
+    "privacy": {
+      "$ref": "#/$defs/privacy_flags"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_kind",
+        "path",
+        "sha256",
+        "size",
+        "schema_version",
+        "producer",
+        "created_at",
+        "privacy_flags"
+      ],
+      "properties": {
+        "artifact_kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "pattern": "^([A-Za-z]:|/|\\\\)"
+          }
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "privacy_flags": {
+          "$ref": "#/$defs/privacy_flags"
+        }
+      }
+    },
+    "privacy_flags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary_only",
+        "source_included",
+        "raw_diff_included",
+        "prompt_included",
+        "model_response_included",
+        "secrets_included",
+        "credentials_included",
+        "private_payload_included",
+        "customer_payload_included",
+        "hosted_upload_required",
+        "certification_claim",
+        "public_leaderboard_claim"
+      ],
+      "properties": {
+        "summary_only": {
+          "const": true
+        },
+        "source_included": {
+          "const": false
+        },
+        "raw_diff_included": {
+          "const": false
+        },
+        "prompt_included": {
+          "const": false
+        },
+        "model_response_included": {
+          "const": false
+        },
+        "secrets_included": {
+          "const": false
+        },
+        "credentials_included": {
+          "const": false
+        },
+        "private_payload_included": {
+          "const": false
+        },
+        "customer_payload_included": {
+          "const": false
+        },
+        "hosted_upload_required": {
+          "const": false
+        },
+        "certification_claim": {
+          "const": false
+        },
+        "public_leaderboard_claim": {
+          "const": false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/telemetry-queue-batch.schema.json",
+  "title": "TelemetryQueueBatch",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "queueClass",
+    "recordedAt",
+    "records"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "telemetry-queue-batch.v1" },
+    "queueClass": { "const": "local_durable_projection" },
+    "recordedAt": { "type": "string", "format": "date-time" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "recordId",
+          "recordKind",
+          "payloadSchemaRef",
+          "redactionProfile",
+          "recordedAt",
+          "deliveryDisposition",
+          "payload"
+        ],
+        "properties": {
+          "recordId": { "type": "string" },
+          "recordKind": {
+            "type": "string",
+            "enum": [
+              "execution_telemetry",
+              "boundary_telemetry",
+              "operator_os_event",
+              "delegation_telemetry",
+              "bug_bundle_intent"
+            ]
+          },
+          "payloadSchemaRef": { "type": "string" },
+          "redactionProfile": {
+            "type": "string",
+            "enum": [
+              "default_runtime_summary",
+              "conditional_operator_diagnostic",
+              "bug_bundle_opt_in"
+            ]
+          },
+          "recordedAt": { "type": "string", "format": "date-time" },
+          "deliveryDisposition": {
+            "type": "string",
+            "enum": [
+              "pending_local",
+              "submitted",
+              "failed"
+            ]
+          },
+          "repoId": { "type": ["string", "null"] },
+          "taskId": { "type": ["string", "null"] },
+          "sessionId": { "type": ["string", "null"] },
+          "operationId": { "type": ["string", "null"] },
+          "payload": { "type": "object" }
+        }
+      }
+    }
+  }
+}

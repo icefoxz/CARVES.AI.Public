@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/pack-artifact.schema.json",
+  "title": "CARVES Pack Artifact",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packId",
+    "packVersion",
+    "packType",
+    "channel",
+    "runtimeCompatibility",
+    "kernelCompatibility",
+    "executionProfiles",
+    "operatorChecklistRefs",
+    "signature",
+    "provenance"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "packId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packType": {
+      "type": "string",
+      "enum": [
+        "runtime_pack",
+        "vertical_runtime_pack",
+        "enterprise_profile_pack",
+        "offline_bundle_pack"
+      ]
+    },
+    "channel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runtimeCompatibility": {
+      "$ref": "#/$defs/compatibilityRange"
+    },
+    "kernelCompatibility": {
+      "$ref": "#/$defs/compatibilityRange"
+    },
+    "executionProfiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policyPreset",
+        "gatePreset",
+        "validatorProfile",
+        "environmentProfile"
+      ],
+      "properties": {
+        "policyPreset": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gatePreset": {
+          "type": "string",
+          "minLength": 1
+        },
+        "validatorProfile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "routingProfile": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "providerAllowlist": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "environmentProfile": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "environmentAssumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "operatorChecklistRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "supportBoundaryRef": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scheme",
+        "keyId",
+        "digest"
+      ],
+      "properties": {
+        "scheme": {
+          "type": "string",
+          "minLength": 1
+        },
+        "keyId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]+$"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "publishedAtUtc",
+        "publishedBy",
+        "sourcePackLine",
+        "sourceGenerationId"
+      ],
+      "properties": {
+        "publishedAtUtc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "publishedBy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "releaseNoteRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sourcePackLine": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceGenerationId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parentPackVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "supersedes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "approvalRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "compatibilityRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minVersion"
+      ],
+      "properties": {
+        "minVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maxVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

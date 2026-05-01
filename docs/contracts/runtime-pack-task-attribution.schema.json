@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/runtime-pack-task-attribution.schema.json",
+  "title": "CARVES Runtime Pack Task Attribution",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "taskId",
+    "runId",
+    "recordedAtUtc",
+    "packSelectionId",
+    "packs"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "taskId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recordedAtUtc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "packSelectionId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "packs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/packAttributionEntry"
+      }
+    }
+  },
+  "$defs": {
+    "stableId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+([._-][a-z0-9]+)*$",
+      "minLength": 3
+    },
+    "capabilityKind": {
+      "type": "string",
+      "enum": [
+        "project_understanding_recipe",
+        "verification_recipe",
+        "review_rubric"
+      ]
+    },
+    "contributionRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/stableId"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "project_understanding_recipe",
+            "priority_rule",
+            "verification_recipe",
+            "verification_command",
+            "review_rubric",
+            "review_check"
+          ]
+        }
+      }
+    },
+    "packAttributionEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "packId",
+        "packVersion",
+        "channel",
+        "artifactRef",
+        "capabilitiesUsed",
+        "contributions",
+        "admissionDecisionRef"
+      ],
+      "properties": {
+        "packId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "packVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "channel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifactRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "artifactDigest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[A-Za-z0-9._:-]+$"
+        },
+        "capabilitiesUsed": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/capabilityKind"
+          }
+        },
+        "contributions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "projectUnderstandingRefs",
+            "verificationCommandRefs",
+            "reviewRubricRefs"
+          ],
+          "properties": {
+            "projectUnderstandingRefs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/contributionRef"
+              }
+            },
+            "verificationCommandRefs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/contributionRef"
+              }
+            },
+            "reviewRubricRefs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/contributionRef"
+              }
+            }
+          }
+        },
+        "admissionDecisionRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commandAdmissionDecisionRefs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

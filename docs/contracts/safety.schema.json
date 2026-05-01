@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "carves.runtime/contracts/safety.schema.json",
+  "title": "CARVES Runtime Safety Artifact Contract",
+  "type": "object",
+  "required": ["schema_version", "captured_at", "decision"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "captured_at": { "type": "string", "format": "date-time" },
+    "decision": {
+      "type": "object",
+      "required": ["task_id", "outcome", "results"],
+      "properties": {
+        "task_id": { "type": "string" },
+        "outcome": { "type": "string" },
+        "results": { "type": "array", "items": { "type": "object" } }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

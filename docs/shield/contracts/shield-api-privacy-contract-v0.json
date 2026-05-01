@@ -1,0 +1,180 @@
+{
+  "contract_id": "shield-api-privacy-contract.v0",
+  "status": "draft",
+  "implemented": false,
+  "endpoint_contracts": [
+    {
+      "method": "POST",
+      "path": "/v0/shield/evaluate",
+      "implemented": false,
+      "request_contract": {
+        "required_fields": [
+          "contract_version",
+          "request_id",
+          "requested_outputs",
+          "evaluation_posture",
+          "privacy_posture",
+          "evidence"
+        ],
+        "contract_version": "shield-api-privacy-contract.v0",
+        "requested_outputs": [
+          "lite",
+          "standard",
+          "combined"
+        ],
+        "evaluation_postures": {
+          "active": [
+            "self_check"
+          ],
+          "reserved": [
+            "verified",
+            "third_party_verified"
+          ]
+        },
+        "privacy_postures": {
+          "default": "evidence_summary",
+          "allowed": [
+            "evidence_summary",
+            "opt_in_rich_evidence"
+          ],
+          "implemented": [
+            "evidence_summary"
+          ],
+          "reserved": [
+            "opt_in_rich_evidence"
+          ]
+        },
+        "evidence_schema": "shield-evidence.v0"
+      },
+      "response_contract": {
+        "required_fields": [
+          "contract_version",
+          "request_id",
+          "result_id",
+          "evaluation_posture",
+          "privacy_posture",
+          "status",
+          "certification"
+        ],
+        "statuses": [
+          "ok",
+          "unsupported_schema",
+          "invalid_privacy_posture",
+          "rate_limited",
+          "internal_error"
+        ],
+        "outputs": {
+          "lite": {
+            "model_id": "shield-lite-scoring.v0",
+            "certification": false
+          },
+          "standard": {
+            "rubric_id": "shield-standard-gha-rubric.v0",
+            "overall_score": null
+          },
+          "combined": {
+            "contains": [
+              "lite",
+              "standard"
+            ],
+            "standard_must_preserve_dimensions": true
+          }
+        }
+      }
+    }
+  ],
+  "privacy": {
+    "default_posture": "evidence_summary",
+    "default_upload_required": false,
+    "forbidden_by_default": [
+      "source_code",
+      "raw_git_diff",
+      "prompts",
+      "model_responses",
+      "secrets",
+      "credentials",
+      "environment_variable_values",
+      "private_file_payloads"
+    ],
+    "required_false_fields": [
+      "evidence.privacy.source_included",
+      "evidence.privacy.raw_diff_included",
+      "evidence.privacy.prompt_included",
+      "evidence.privacy.secrets_included"
+    ],
+    "allowed_default_upload_intents": [
+      "local_only",
+      "api_evidence_summary"
+    ],
+    "reserved_upload_intents": [
+      "api_opt_in_rich_evidence"
+    ],
+    "default_allowed_evidence": [
+      "booleans",
+      "counts",
+      "stable_rule_ids",
+      "timestamps",
+      "normalized_path_prefixes",
+      "safe_ci_metadata",
+      "repo_id_hash",
+      "evidence_hash",
+      "handoff_metadata",
+      "audit_metadata"
+    ]
+  },
+  "validation_outcomes": {
+    "unsupported_schema": {
+      "code": "unsupported_schema_version",
+      "message": "The evidence schema version is not supported."
+    },
+    "invalid_privacy_posture": {
+      "code": "default_upload_forbidden",
+      "message": "Default evidence summary requests must not include source, raw diff, prompt, secret, credential, or private file payloads."
+    },
+    "rate_limited": {
+      "code": "rate_limited",
+      "message": "Request rate limit was reached."
+    }
+  },
+  "self_check_vs_verified": {
+    "default_evaluation_posture": "self_check",
+    "default_certification": false,
+    "reserved_verified_terms": [
+      "verified",
+      "third_party_verified"
+    ],
+    "v0_must_not_emit": [
+      "CARVES certified this project.",
+      "CARVES verified this repository."
+    ]
+  },
+  "retention": {
+    "implemented": false,
+    "must_be_defined_before_hosted_launch": true,
+    "default_result_metadata_allowed": [
+      "request_id",
+      "result_id",
+      "contract_version",
+      "model_id",
+      "rubric_id",
+      "status",
+      "evidence_hash"
+    ]
+  },
+  "non_goals": [
+    "hosted API implementation",
+    "carves shield evaluate implementation",
+    "authentication",
+    "billing",
+    "persistence",
+    "network transport",
+    "storage retention implementation",
+    "badge rendering",
+    "public leaderboard",
+    "public project directory",
+    "project certification",
+    "source upload",
+    "source code inspection",
+    "operating-system sandbox proof"
+  ]
+}

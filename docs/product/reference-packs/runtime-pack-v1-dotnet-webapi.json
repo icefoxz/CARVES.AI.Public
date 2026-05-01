@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "carves.pack.v1",
+  "packId": "carves.firstparty.dotnet-webapi",
+  "packVersion": "0.1.0",
+  "name": "CARVES First-Party .NET Web API",
+  "description": "Bounded project-understanding and verification recipes for ASP.NET Core Web API repositories.",
+  "publisher": {
+    "name": "CARVES",
+    "trustLevel": "first_party",
+    "url": null
+  },
+  "license": {
+    "expression": "MIT",
+    "url": null
+  },
+  "compatibility": {
+    "carvesRuntime": ">=0.4.0",
+    "languages": [
+      "csharp"
+    ],
+    "frameworkHints": [
+      "aspnetcore",
+      "dotnet"
+    ],
+    "repoSignals": [
+      "*.sln",
+      "*.csproj",
+      "Program.cs"
+    ]
+  },
+  "capabilityKinds": [
+    "project_understanding_recipe",
+    "verification_recipe"
+  ],
+  "requestedPermissions": {
+    "readPaths": [
+      "src/**",
+      "tests/**",
+      "*.sln",
+      "*.csproj",
+      "Program.cs"
+    ],
+    "network": false,
+    "env": false,
+    "secrets": false,
+    "truthWrite": false
+  },
+  "recipes": {
+    "projectUnderstandingRecipes": [
+      {
+        "id": "dotnet-webapi-project-understanding",
+        "description": "Prioritize ASP.NET Core source, tests, and project files for bounded context shaping.",
+        "repoSignals": [
+          "*.sln",
+          "*.csproj",
+          "Program.cs"
+        ],
+        "frameworkHints": [
+          "aspnetcore",
+          "dotnet"
+        ],
+        "includeGlobs": [
+          "src/**/*.cs",
+          "tests/**/*.cs",
+          "*.sln",
+          "*.csproj",
+          "Program.cs"
+        ],
+        "excludeGlobs": [
+          "**/bin/**",
+          "**/obj/**",
+          ".git/**",
+          ".carves-platform/**",
+          ".ai/tasks/**",
+          ".ai/memory/**",
+          ".ai/artifacts/reviews/**"
+        ],
+        "priorityRules": [
+          {
+            "id": "dotnet-src-priority",
+            "glob": "src/**/*.cs",
+            "weight": 90
+          },
+          {
+            "id": "dotnet-tests-priority",
+            "glob": "tests/**/*.cs",
+            "weight": 80
+          },
+          {
+            "id": "dotnet-project-files-priority",
+            "glob": "*.csproj",
+            "weight": 85
+          }
+        ]
+      }
+    ],
+    "verificationRecipes": [
+      {
+        "id": "dotnet-build-and-test",
+        "description": "Bounded build and test commands for a .NET Web API repository.",
+        "commands": [
+          {
+            "id": "dotnet-build",
+            "kind": "known_tool_command",
+            "executable": "dotnet",
+            "args": [
+              "build"
+            ],
+            "cwd": ".",
+            "required": true
+          },
+          {
+            "id": "dotnet-test",
+            "kind": "known_tool_command",
+            "executable": "dotnet",
+            "args": [
+              "test"
+            ],
+            "cwd": ".",
+            "required": true
+          }
+        ]
+      }
+    ],
+    "reviewRubrics": []
+  }
+}

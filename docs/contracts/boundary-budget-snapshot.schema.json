@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/boundary-budget-snapshot.schema.json",
+  "title": "ExecutionBoundaryBudgetSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "taskId", "budget", "confidence", "recordedAt"],
+  "properties": {
+    "schemaVersion": { "const": "boundary.v1" },
+    "taskId": { "type": "string", "pattern": "^T-" },
+    "budget": { "type": "object" },
+    "confidence": { "type": "object" },
+    "recordedAt": { "type": "string", "format": "date-time" }
+  }
+}

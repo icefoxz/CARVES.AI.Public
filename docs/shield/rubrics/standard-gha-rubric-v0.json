@@ -1,0 +1,248 @@
+{
+  "rubric_id": "shield-standard-gha-rubric.v0",
+  "evidence_schema": "shield-evidence.v0",
+  "mode": "standard",
+  "output_dimensions": [
+    "guard",
+    "handoff",
+    "audit"
+  ],
+  "overall_score": false,
+  "levels": {
+    "0": {
+      "band": "gray",
+      "meaning": "not enabled or no evidence"
+    },
+    "1-4": {
+      "band": "white",
+      "meaning": "basic configured"
+    },
+    "5-7": {
+      "band": "yellow",
+      "meaning": "disciplined"
+    },
+    "8-9": {
+      "band": "green",
+      "meaning": "sustained or strong"
+    },
+    "C": {
+      "band": "red",
+      "meaning": "critical failure"
+    }
+  },
+  "shared_rules": [
+    "Guard, Handoff, and Audit are independent dimensions.",
+    "Standard must not produce a single overall score.",
+    "Numeric levels are cumulative.",
+    "Missing evidence does not satisfy a predicate.",
+    "Critical Gate failure returns C for the affected dimension.",
+    "Effective dimension window uses dimension-specific window_days first, then top-level sample_window_days, then no sustained sample window.",
+    "Level 8 requires at least 30 days of sustained evidence.",
+    "Level 9 requires at least 90 days of sustained evidence.",
+    "The rubric consumes summary evidence and does not require source code, raw diff, prompt, secret, or credential upload."
+  ],
+  "input_validity": {
+    "required_schema_version": "shield-evidence.v0",
+    "invalid_input_result": "unsupported_or_invalid_input",
+    "privacy_must_remain_false": [
+      "privacy.source_included",
+      "privacy.raw_diff_included",
+      "privacy.prompt_included",
+      "privacy.secrets_included",
+      "privacy.credential_included",
+      "privacy.credentials_included",
+      "privacy.model_response_included",
+      "privacy.model_responses_included",
+      "privacy.private_payload_included",
+      "privacy.private_file_payloads_included"
+    ]
+  },
+  "dimensions": {
+    "guard": {
+      "prefix": "G",
+      "evidence_path": "dimensions.guard",
+      "critical_gates": [
+        {
+          "id": "CG-01",
+          "condition": "enabled=true and policy.schema_valid=false",
+          "result": "GC"
+        },
+        {
+          "id": "CG-02",
+          "condition": "enabled=true and (policy.fail_closed=false or policy.protected_path_action!=block)",
+          "result": "GC"
+        },
+        {
+          "id": "CG-03",
+          "condition": "ci.detected=true and ci.guard_check_command_detected=true and ci.fails_on_review_or_block=false",
+          "result": "GC"
+        },
+        {
+          "id": "CG-04",
+          "condition": "decisions.unresolved_block_count>0",
+          "result": "GC"
+        }
+      ],
+      "level_predicates": {
+        "0": "enabled=false or policy.present is missing or false",
+        "1": "policy.present=true",
+        "2": "level 1 and policy.schema_valid=true",
+        "3": "level 2 and policy.fail_closed=true and policy.protected_path_action=block and effective_protected_path_prefixes has at least one entry",
+        "4": "level 3 and policy.change_budget_present=true and policy.outside_allowed_action is review or block",
+        "5": "level 4 and ci.detected=true and ci.guard_check_command_detected=true and ci.fails_on_review_or_block=true",
+        "6": "level 5 and policy.source_test_rule_present=true and (policy.dependency_policy_present=true or policy.mixed_feature_refactor_rule_present=true)",
+        "7": "level 6 and decisions.present=true and decisions.unresolved_review_count=0 and decisions.unresolved_block_count=0",
+        "8": "level 7 and decisions.window_days>=30 and proofs has at least one entry",
+        "9": "level 8 and decisions.window_days>=90 and dependency/source-test/mixed-feature-refactor discipline rules are all present and CI proof exists"
+      },
+      "caps": [
+        {
+          "id": "G-CAP-01",
+          "condition": "decisions.window_days is missing and top-level sample_window_days is missing",
+          "max_level": 7
+        },
+        {
+          "id": "G-CAP-02",
+          "condition": "effective guard window is less than 30 days",
+          "max_level": 7
+        },
+        {
+          "id": "G-CAP-03",
+          "condition": "effective guard window is less than 90 days",
+          "max_level": 8
+        },
+        {
+          "id": "G-CAP-04",
+          "condition": "decisions.unresolved_review_count>0 and decisions.unresolved_block_count=0",
+          "max_level": 6
+        }
+      ]
+    },
+    "handoff": {
+      "prefix": "H",
+      "evidence_path": "dimensions.handoff",
+      "critical_gates": [
+        {
+          "id": "CH-01",
+          "condition": "enabled=true and latest_packet.schema_valid=false",
+          "result": "HC"
+        },
+        {
+          "id": "CH-02",
+          "condition": "enabled=true and latest_packet.target_repo_matches=false",
+          "result": "HC"
+        },
+        {
+          "id": "CH-03",
+          "condition": "enabled=true and (latest_packet.current_objective_present=false or latest_packet.remaining_work_present=false)",
+          "result": "HC"
+        },
+        {
+          "id": "CH-04",
+          "condition": "enabled=true and latest_packet.age_days>30",
+          "result": "HC"
+        }
+      ],
+      "level_predicates": {
+        "0": "enabled=false or packets.present is missing or false",
+        "1": "packets.present=true and packets.count>=1",
+        "2": "level 1 and latest_packet.schema_valid=true",
+        "3": "level 2 and latest_packet.current_objective_present=true and latest_packet.remaining_work_present=true",
+        "4": "level 3 and latest_packet.must_not_repeat_present=true and latest_packet.completed_facts_with_evidence_count>=1",
+        "5": "level 4 and latest_packet.repo_orientation_fresh=true and latest_packet.target_repo_matches=true and latest_packet.age_days<=7",
+        "6": "level 5 and latest_packet.decision_refs_count>=1 and latest_packet.confidence is medium or high",
+        "7": "level 6 and continuity.session_switches_with_packet equals continuity.session_switch_count and continuity.stale_packet_count=0",
+        "8": "level 7 and packets.window_days>=30 and packets.count>=3",
+        "9": "level 8 and packets.window_days>=90 and continuity.session_switch_count>=5 and latest_packet.completed_facts_with_evidence_count>=10 and latest_packet.decision_refs_count>=3"
+      },
+      "caps": [
+        {
+          "id": "H-CAP-01",
+          "condition": "packets.window_days is missing and top-level sample_window_days is missing",
+          "max_level": 7
+        },
+        {
+          "id": "H-CAP-02",
+          "condition": "effective handoff window is less than 30 days",
+          "max_level": 7
+        },
+        {
+          "id": "H-CAP-03",
+          "condition": "effective handoff window is less than 90 days",
+          "max_level": 8
+        },
+        {
+          "id": "H-CAP-04",
+          "condition": "latest_packet.age_days>7 and latest_packet.age_days<=30",
+          "max_level": 4
+        }
+      ]
+    },
+    "audit": {
+      "prefix": "A",
+      "evidence_path": "dimensions.audit",
+      "critical_gates": [
+        {
+          "id": "CA-01",
+          "condition": "enabled=true and log.present=true and (log.readable=false or log.schema_supported=false)",
+          "result": "AC"
+        },
+        {
+          "id": "CA-02",
+          "condition": "log.append_only_claimed=true and log.integrity_check_passed=false",
+          "result": "AC"
+        },
+        {
+          "id": "CA-03",
+          "condition": "coverage.block_decision_count>coverage.block_explain_covered_count",
+          "result": "AC"
+        }
+      ],
+      "level_predicates": {
+        "0": "enabled=false or log.present is missing or false or log.readable=false",
+        "1": "log.present=true and log.readable=true",
+        "2": "level 1 and log.schema_supported=true",
+        "3": "level 2 and records.record_count>=1 and earliest/latest record timestamps are present",
+        "4": "level 3 and records_with_rule_id_count>0 and records_with_evidence_count>0",
+        "5": "level 4 and malformed_record_count=0 and future_schema_record_count=0",
+        "6": "level 5 and block/review explain coverage equals block/review decision counts",
+        "7": "level 6 and reports.summary_generated_in_window=true",
+        "8": "level 7 and effective audit window is at least 30 days and records.record_count>=10",
+        "9": "level 8 and effective audit window is at least 90 days and log.integrity_check_passed=true and either change_report_generated_in_window=true or failure_pattern_distribution_present=true"
+      },
+      "caps": [
+        {
+          "id": "A-CAP-01",
+          "condition": "records window is missing and top-level sample_window_days is missing",
+          "max_level": 7
+        },
+        {
+          "id": "A-CAP-02",
+          "condition": "effective audit window is less than 30 days",
+          "max_level": 7
+        },
+        {
+          "id": "A-CAP-03",
+          "condition": "effective audit window is less than 90 days",
+          "max_level": 8
+        },
+        {
+          "id": "A-CAP-04",
+          "condition": "malformed_record_count>0 or future_schema_record_count>0",
+          "max_level": 4
+        }
+      ]
+    }
+  },
+  "non_goals": [
+    "Shield Lite scoring",
+    "single Standard score",
+    "evaluator implementation",
+    "hosted API behavior",
+    "badge rendering",
+    "project certification",
+    "source code inspection",
+    "source upload",
+    "operating-system sandbox proof"
+  ]
+}

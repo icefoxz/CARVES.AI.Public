@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/execution-run.schema.json",
+  "title": "ExecutionRun",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runId",
+    "taskId",
+    "status",
+    "createdAtUtc",
+    "triggerReason",
+    "goal",
+    "currentStepIndex",
+    "steps"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "execution-run.v1" },
+    "runId": {
+      "type": "string",
+      "pattern": "^RUN-"
+    },
+    "taskId": {
+      "type": "string",
+      "pattern": "^T-"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Planned", "Running", "Completed", "Stopped", "Failed", "Abandoned"]
+    },
+    "createdAtUtc": { "type": "string", "format": "date-time" },
+    "startedAtUtc": { "type": ["string", "null"], "format": "date-time" },
+    "endedAtUtc": { "type": ["string", "null"], "format": "date-time" },
+    "plannerContextId": { "type": ["string", "null"] },
+    "triggerReason": {
+      "type": "string",
+      "enum": ["Initial", "Retry", "Replan", "Resume"]
+    },
+    "goal": { "type": "string" },
+    "currentStepIndex": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "resultEnvelopePath": { "type": ["string", "null"] },
+    "boundaryViolationPath": { "type": ["string", "null"] },
+    "replanArtifactPath": { "type": ["string", "null"] },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["stepId", "title", "kind", "status"],
+        "properties": {
+          "stepId": { "type": "string" },
+          "title": { "type": "string" },
+          "kind": {
+            "type": "string",
+            "enum": ["Inspect", "Implement", "Verify", "Writeback", "Cleanup", "Replan"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Pending", "InProgress", "Completed", "Skipped", "Failed", "Blocked"]
+          },
+          "startedAtUtc": { "type": ["string", "null"], "format": "date-time" },
+          "endedAtUtc": { "type": ["string", "null"], "format": "date-time" },
+          "notes": { "type": ["string", "null"] },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

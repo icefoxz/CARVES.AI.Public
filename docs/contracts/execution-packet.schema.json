@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carves.runtime/contracts/execution-packet.schema.json",
+  "title": "CARVES Runtime ExecutionPacket",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packetId",
+    "taskRef",
+    "goal",
+    "plannerIntent",
+    "scope",
+    "nonGoals",
+    "context",
+    "permissions",
+    "budgets",
+    "requiredValidation",
+    "stableEvidenceSurfaces",
+    "workerAllowedActions",
+    "plannerOnlyActions",
+    "stopConditions"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "packetId": { "type": "string", "pattern": "^EP-" },
+    "taskRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cardId", "taskId", "taskRevision"],
+      "properties": {
+        "cardId": { "type": "string", "pattern": "^CARD-" },
+        "taskId": { "type": "string", "pattern": "^T-" },
+        "taskRevision": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "goal": { "type": "string" },
+    "plannerIntent": {
+      "type": "string",
+      "enum": ["planning", "execution", "maintenance", "writeback"]
+    },
+    "scope": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "nonGoals": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "acceptanceContract": {
+      "type": ["object", "null"]
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assemblyOrder", "memoryBundleRefs", "codegraphQueries", "relevantFiles"],
+      "properties": {
+        "assemblyOrder": { "type": "array", "items": { "type": "string" } },
+        "memoryBundleRefs": { "type": "array", "items": { "type": "string" } },
+        "codegraphQueries": { "type": "array", "items": { "type": "string" } },
+        "relevantFiles": { "type": "array", "items": { "type": "string" } },
+        "contextPackRef": { "type": ["string", "null"] },
+        "windowedReads": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "totalLines", "startLine", "endLine", "reason", "truncated"],
+            "properties": {
+              "path": { "type": "string" },
+              "totalLines": { "type": "integer", "minimum": 0 },
+              "startLine": { "type": "integer", "minimum": 1 },
+              "endLine": { "type": "integer", "minimum": 0 },
+              "reason": { "type": "string" },
+              "truncated": { "type": "boolean" }
+            }
+          }
+        },
+        "compaction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["strategy", "candidateFileCount", "relevantFileCount", "windowedReadCount", "fullReadCount", "omittedFileCount"],
+          "properties": {
+            "strategy": { "type": "string" },
+            "candidateFileCount": { "type": "integer", "minimum": 0 },
+            "relevantFileCount": { "type": "integer", "minimum": 0 },
+            "windowedReadCount": { "type": "integer", "minimum": 0 },
+            "fullReadCount": { "type": "integer", "minimum": 0 },
+            "omittedFileCount": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["editableRoots", "readOnlyRoots", "truthRoots", "repoMirrorRoots"],
+      "properties": {
+        "editableRoots": { "type": "array", "items": { "type": "string" } },
+        "readOnlyRoots": { "type": "array", "items": { "type": "string" } },
+        "truthRoots": { "type": "array", "items": { "type": "string" } },
+        "repoMirrorRoots": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxFilesChanged", "maxLinesChanged", "maxShellCommands"],
+      "properties": {
+        "maxFilesChanged": { "type": "integer", "minimum": 0 },
+        "maxLinesChanged": { "type": "integer", "minimum": 0 },
+        "maxShellCommands": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "requiredValidation": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "stableEvidenceSurfaces": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "workerAllowedActions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "plannerOnlyActions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "stopConditions": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
