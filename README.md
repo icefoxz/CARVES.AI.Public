@@ -14,6 +14,12 @@ Current public snapshot:
 
 This is still beta software. It is suitable for local source inspection, local build, and bounded local startup experiments. It is not a hosted service, not a signed release, and not API/SDK worker execution authority.
 
+## Disclaimer
+
+CARVES.AI is provided as-is. You are responsible for reviewing, approving, and validating any action taken with or through CARVES.AI. Do not use it on sensitive, production, regulated, confidential, customer-owned, or business-critical systems without your own authorization, backups, security controls, and recovery plan.
+
+See [DISCLAIMER.md](DISCLAIMER.md).
+
 ## Requirements
 
 - .NET SDK 10.0
