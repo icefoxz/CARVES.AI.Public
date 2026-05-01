@@ -9,7 +9,7 @@ Use it after the Phase 4 external-target flow is available and you want to test 
 The current pilot target is:
 
 ```text
-D:\Projects\CARVES.AI\CARVES.AgentCoach
+<target-project>
 ```
 
 This target is a pilot repo. Its first job is to prove CARVES-controlled onboarding and planning, not to start broad product implementation.
@@ -25,33 +25,33 @@ Start the Runtime host from the Runtime repo:
 From the target repo:
 
 ```powershell
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 init . --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 doctor --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 pilot readiness --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 pilot invocation --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 pilot activation --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 pilot dist-smoke --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 pilot dist-binding --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 pilot target-proof --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 pilot residue --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 pilot ignore-plan --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 pilot ignore-record --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 agent handoff --json
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 pilot guide
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 pilot status
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 inspect runtime-first-run-operator-packet
+& <carves-root>\carves.ps1 init . --json
+& <carves-root>\carves.ps1 doctor --json
+& <carves-root>\carves.ps1 pilot readiness --json
+& <carves-root>\carves.ps1 pilot invocation --json
+& <carves-root>\carves.ps1 pilot activation --json
+& <carves-root>\carves.ps1 pilot dist-smoke --json
+& <carves-root>\carves.ps1 pilot dist-binding --json
+& <carves-root>\carves.ps1 pilot target-proof --json
+& <carves-root>\carves.ps1 pilot residue --json
+& <carves-root>\carves.ps1 pilot ignore-plan --json
+& <carves-root>\carves.ps1 pilot ignore-record --json
+& <carves-root>\carves.ps1 agent handoff --json
+& <carves-root>\carves.ps1 pilot guide
+& <carves-root>\carves.ps1 pilot status
+& <carves-root>\carves.ps1 inspect runtime-first-run-operator-packet
 ```
 
 Then start guided planning:
 
 ```powershell
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 intent draft
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 intent focus candidate-first-slice
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 intent decision first_validation_artifact resolved
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 intent decision first_slice_boundary resolved
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 intent candidate candidate-first-slice ready_to_plan
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 plan init candidate-first-slice
-& D:\Projects\CARVES.AI\CARVES.Runtime\carves.ps1 plan status
+& <carves-root>\carves.ps1 intent draft
+& <carves-root>\carves.ps1 intent focus candidate-first-slice
+& <carves-root>\carves.ps1 intent decision first_validation_artifact resolved
+& <carves-root>\carves.ps1 intent decision first_slice_boundary resolved
+& <carves-root>\carves.ps1 intent candidate candidate-first-slice ready_to_plan
+& <carves-root>\carves.ps1 plan init candidate-first-slice
+& <carves-root>\carves.ps1 plan status
 ```
 
 ## Expected Readback

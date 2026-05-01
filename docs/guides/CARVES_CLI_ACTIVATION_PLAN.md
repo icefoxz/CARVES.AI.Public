@@ -80,7 +80,7 @@ Useful for Windows tools that cannot invoke PowerShell scripts directly.
 ### Optional .NET Tool
 
 ```powershell
-dotnet tool install --global CARVES.Runtime.Cli --add-source <package-root> --version 0.6.1-beta
+dotnet tool install --global CARVES.Runtime.Cli --add-source <package-root> --version 0.6.2-beta
 ```
 
 Optional packaging lane only. It does not replace `pilot invocation`, `pilot activation`, or Runtime-root proof.

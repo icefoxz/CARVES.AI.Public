@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "card_id": "CARD-927",
+  "task_id": "T-CARD-927-001",
+  "updated_at": "2026-04-17T14:40:00+08:00",
+  "read_model_kind": "pack_cold_audit_completion_gate",
+  "authority_posture": "repo_local_cold_audit_readback",
+  "audit_posture": "completion_gate_no_platform_escalation",
+  "source_artifact_refs": {
+    "identity_review_posture": "docs/runtime/runtime-pack-identity-review-posture.json",
+    "budget_readback": "docs/runtime/runtime-context-pack-budget-readback.json",
+    "default_context_gate": "docs/runtime/runtime-pack-default-context-gate.json",
+    "phase_usage_contract": "docs/runtime/runtime-pack-agent-phase-usage-contract.json"
+  },
+  "cold_audit_summary": {
+    "pack_candidate_count": 9,
+    "identity_covered_count": 9,
+    "reviewed_count": 9,
+    "stale_count": 0,
+    "unreviewed_count": 0,
+    "needs_review_count": 0,
+    "budget_readback_count": 1,
+    "budget_required_missing_count": 0,
+    "default_context_eligible_candidate_count": 0,
+    "pointer_only_count": 1,
+    "blocked_count": 7,
+    "manual_review_required_count": 1,
+    "estimated_included_tokens": 2150,
+    "estimated_omitted_tokens": 24700
+  },
+  "coverage_by_pack": [
+    {
+      "pack_id": "runtime.context_pack",
+      "pack_family": "context_pack",
+      "identity_covered": true,
+      "review_posture": "reviewed",
+      "budget_readback": "readback_available",
+      "default_context_decision": "pointer_only",
+      "phase_contract_posture": "covered_by_pointer_only_rules",
+      "estimated_included_tokens": 2150,
+      "estimated_omitted_tokens": 24700,
+      "remaining_debt": [
+        "conservative_estimator_not_tokenizer_exact",
+        "omitted_material_requires_explicit_expansion"
+      ]
+    },
+    {
+      "pack_id": "runtime.runtime_pack",
+      "pack_family": "runtime_pack",
+      "identity_covered": true,
+      "review_posture": "reviewed",
+      "budget_readback": "not_required_for_blocked_decision",
+      "default_context_decision": "blocked",
+      "phase_contract_posture": "no_default_context_expansion",
+      "estimated_included_tokens": 0,
+      "estimated_omitted_tokens": 0,
+      "remaining_debt": [
+        "version_graph_future_work",
+        "platform_admission_not_in_this_line"
+      ]
+    },
+    {
+      "pack_id": "runtime.release_pack",
+      "pack_family": "release_pack",
+      "identity_covered": true,
+      "review_posture": "reviewed",
+      "budget_readback": "not_required_for_blocked_decision",
+      "default_context_decision": "blocked",
+      "phase_contract_posture": "no_default_context_expansion",
+      "estimated_included_tokens": 0,
+      "estimated_omitted_tokens": 0,
+      "remaining_debt": [
+        "publish_install_flow_future_work"
+      ]
+    },
+    {
+      "pack_id": "runtime.external_resource_pack",
+      "pack_family": "external_resource_pack",
+      "identity_covered": true,
+      "review_posture": "reviewed",
+      "budget_readback": "not_required_for_blocked_decision",
+      "default_context_decision": "blocked",
+      "phase_contract_posture": "explicit_lookup_only",
+      "estimated_included_tokens": 0,
+      "estimated_omitted_tokens": 0,
+      "remaining_debt": [
+        "external_projection_refresh_policy_future_work"
+      ]
+    },
+    {
+      "pack_id": "runtime.proof_bundle",
+      "pack_family": "proof_bundle",
+      "identity_covered": true,
+      "review_posture": "reviewed",
+      "budget_readback": "manual_review_scope_required",
+      "default_context_decision": "manual_review_required",
+      "phase_contract_posture": "human_scoped_expansion_only",
+      "estimated_included_tokens": 0,
+      "estimated_omitted_tokens": 0,
+      "remaining_debt": [
+        "proof_scope_selection_remains_manual"
+      ]
+    },
+    {
+      "pack_id": "runtime.state_package",
+      "pack_family": "runtime_state_package",
+      "identity_covered": true,
+      "review_posture": "reviewed",
+      "budget_readback": "not_required_for_blocked_decision",
+      "default_context_decision": "blocked",
+      "phase_contract_posture": "no_default_context_expansion",
+      "estimated_included_tokens": 0,
+      "estimated_omitted_tokens": 0,
+      "remaining_debt": [
+        "state_exchange_contract_future_work"
+      ]
+    },
+    {
+      "pack_id": "runtime.policy_package",
+      "pack_family": "policy_package",
+      "identity_covered": true,
+      "review_posture": "reviewed",
+      "budget_readback": "not_required_for_blocked_decision",
+      "default_context_decision": "blocked",
+      "phase_contract_posture": "explicit_local_policy_operation_only",
+      "estimated_included_tokens": 0,
+      "estimated_omitted_tokens": 0,
+      "remaining_debt": [
+        "policy_import_apply_flow_not_opened"
+      ]
+    },
+    {
+      "pack_id": "matrix.trial_starter_pack",
+      "pack_family": "trial_starter_pack",
+      "identity_covered": true,
+      "review_posture": "reviewed",
+      "budget_readback": "not_required_for_blocked_decision",
+      "default_context_decision": "blocked",
+      "phase_contract_posture": "matrix_fixture_not_runtime_startup_context",
+      "estimated_included_tokens": 0,
+      "estimated_omitted_tokens": 0,
+      "remaining_debt": [
+        "matrix_trial_scope_remains_separate"
+      ]
+    },
+    {
+      "pack_id": "matrix.instruction_pack",
+      "pack_family": "instruction_pack",
+      "identity_covered": true,
+      "review_posture": "reviewed",
+      "budget_readback": "not_required_for_blocked_decision",
+      "default_context_decision": "blocked",
+      "phase_contract_posture": "matrix_instruction_identity_not_runtime_startup_context",
+      "estimated_included_tokens": 0,
+      "estimated_omitted_tokens": 0,
+      "remaining_debt": [
+        "matrix_instruction_scope_remains_separate"
+      ]
+    }
+  ],
+  "completed_guardrails": [
+    {
+      "card_id": "CARD-922",
+      "guardrail": "identity_and_review_posture",
+      "artifact_ref": "docs/runtime/runtime-pack-identity-review-posture.json",
+      "status": "completed"
+    },
+    {
+      "card_id": "CARD-924",
+      "guardrail": "context_pack_budget_readback",
+      "artifact_ref": "docs/runtime/runtime-context-pack-budget-readback.json",
+      "status": "completed"
+    },
+    {
+      "card_id": "CARD-925",
+      "guardrail": "default_context_candidate_gate",
+      "artifact_ref": "docs/runtime/runtime-pack-default-context-gate.json",
+      "status": "completed"
+    },
+    {
+      "card_id": "CARD-926",
+      "guardrail": "agent_phase_usage_contract",
+      "artifact_ref": "docs/runtime/runtime-pack-agent-phase-usage-contract.json",
+      "status": "completed"
+    }
+  ],
+  "remaining_pack_debt": [
+    {
+      "debt_id": "tokenizer_exact_budgeting",
+      "severity": "optional_targeted_debt",
+      "current_posture": "conservative_estimate_only",
+      "recommended_disposition": "open_only_if_a_specific_cost_accuracy_card_is_approved"
+    },
+    {
+      "debt_id": "content_revision_and_version_graph",
+      "severity": "optional_platform_debt",
+      "current_posture": "not_implemented",
+      "recommended_disposition": "do_not_open_inside_current_governance_line"
+    },
+    {
+      "debt_id": "registry_rollout_activation",
+      "severity": "optional_platform_debt",
+      "current_posture": "explicitly_closed",
+      "recommended_disposition": "separate_product_or_platform_track_only_if_new_evidence_requires_it"
+    },
+    {
+      "debt_id": "multi_pack_orchestration",
+      "severity": "optional_platform_debt",
+      "current_posture": "explicitly_closed",
+      "recommended_disposition": "do_not_open_without_operator_approved_platform_scope"
+    },
+    {
+      "debt_id": "runtime_inspect_api_surface",
+      "severity": "optional_surface_debt",
+      "current_posture": "not_added",
+      "recommended_disposition": "defer_until_a_real_consumer_needs_machine_query_surface"
+    }
+  ],
+  "completion_gate": {
+    "line_verdict": "stop_current_pack_governance_line",
+    "stop_reason": "identity, budget, default-context, phase-usage, and cold-audit guardrails now exist as repo-local readbacks without broad platform expansion",
+    "continue_with_targeted_debt": false,
+    "escalate_to_platform_track": false,
+    "requires_new_operator_approved_card_for_any_platform_work": true,
+    "allowed_follow_up_posture": "targeted_debt_only_if_new_task_evidence_requires_it"
+  },
+  "startup_read_path": {
+    "mandatory_startup_reads_changed": false,
+    "agents_initialization_reads_changed": false,
+    "default_pack_reads_added": false,
+    "runtime_inspect_api_surface_added": false,
+    "registry_added": false,
+    "rollout_added": false,
+    "automatic_activation_added": false,
+    "multi_pack_orchestration_added": false
+  },
+  "closed_lines": [
+    "not_startup_read_path",
+    "not_agents_initialization_change",
+    "not_runtime_inspect_or_api_surface",
+    "not_registry",
+    "not_publish_install_flow",
+    "not_rollout_assignment",
+    "not_automatic_activation",
+    "not_multi_pack_orchestration",
+    "not_platform_escalation"
+  ],
+  "non_claims": [
+    "audit_success_does_not_open_pack_platform",
+    "audit_success_does_not_make_blocked_packs_eligible",
+    "audit_success_does_not_make_pointer_only_content_default_context",
+    "audit_success_does_not_remove_remaining_optional_debt",
+    "audit_success_does_not_override_task_or_repo_governance"
+  ]
+}

@@ -60,8 +60,8 @@ That readback keeps bootstrap truth, onboarding acceleration boundaries, current
 
 For the first real internal proof attempt, record the same run in:
 
-- [internal-operator-proof-runbook.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/internal-operator-proof-runbook.md)
-- [INTERNAL_OPERATOR_PROOF_PACKET_TEMPLATE.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/INTERNAL_OPERATOR_PROOF_PACKET_TEMPLATE.md)
+- `internal-operator-proof-runbook.md`
+- `INTERNAL_OPERATOR_PROOF_PACKET_TEMPLATE.md`
 
 ## Expected Readback
 
@@ -77,4 +77,4 @@ The quickstart is considered aligned when:
 
 ## If Something Looks Wrong
 
-Collect the bundle from [BUG_REPORT_BUNDLE.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/BUG_REPORT_BUNDLE.md) before attempting manual repair.
+Collect the bundle from [BUG_REPORT_BUNDLE.md](/docs/session-gateway/BUG_REPORT_BUNDLE.md) before attempting manual repair.

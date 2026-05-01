@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$Version = "0.6.1-beta",
+    [string]$Version = "0.6.2-beta",
     [string]$OutputRoot,
     [ValidateSet("release", "dev")]
     [string]$DistKind = "release",
@@ -125,6 +125,7 @@ if [[ ! -f "$CLI_ENTRY" ]]; then
   exit 1
 fi
 
+export CARVES_RUNTIME_ROOT="$SCRIPT_DIR"
 exec dotnet "$CLI_ENTRY" "$@"
 '@
 
@@ -139,6 +140,7 @@ if (-not (Test-Path -LiteralPath $CliEntry -PathType Leaf)) {
     exit 1
 }
 
+$env:CARVES_RUNTIME_ROOT = $ScriptRoot
 & dotnet $CliEntry @args
 exit $LASTEXITCODE
 '@
@@ -154,25 +156,67 @@ exit /b %ERRORLEVEL%
     Set-Content -LiteralPath (Join-Path $DistRoot "carves.cmd") -Value $cmdWrapper -Encoding ASCII
 }
 
-function Get-ReleaseDocPaths([string]$RepoRootPath) {
+function Get-ReleaseDocPaths([string]$RepoRootPath, [string]$Version) {
     $paths = New-Object System.Collections.Generic.List[string]
 
     $productClosurePhasePaths = @(
-        "docs/runtime/runtime-project-recenter-carves-g0-visible-gateway-contract.md",
-        "docs/runtime/runtime-cli-first-architecture.md",
-        "docs/runtime/runtime-first-run-operator-packet.md",
-        "docs/runtime/runtime-adapter-handoff-contract.md",
-        "docs/runtime/runtime-governed-agent-handoff-proof.md",
-        "docs/runtime/runtime-managed-workspace-file-operation-model.md",
-        "docs/runtime/runtime-protected-truth-root-policy.md",
-        "docs/runtime/workbench-v1-scope-and-boundary.md"
+        "docs/runtime/carves-product-closure-phase-0-baseline.md",
+        "docs/runtime/carves-product-closure-phase-1-cli-distribution.md",
+        "docs/runtime/carves-product-closure-phase-2-readiness-separation.md",
+        "docs/runtime/carves-product-closure-phase-3-minimal-init-onboarding.md",
+        "docs/runtime/carves-product-closure-phase-4-external-target-dogfood-proof.md",
+        "docs/runtime/carves-product-closure-phase-5-real-project-pilot.md",
+        "docs/runtime/carves-product-closure-phase-6-official-truth-writeback.md",
+        "docs/runtime/carves-product-closure-phase-7-managed-workspace-execution.md",
+        "docs/runtime/carves-product-closure-phase-8-managed-workspace-writeback.md",
+        "docs/runtime/carves-product-closure-phase-9-productized-pilot-guide.md",
+        "docs/runtime/carves-product-closure-phase-10-productized-pilot-status.md",
+        "docs/runtime/carves-product-closure-phase-11b-target-agent-bootstrap-pack.md",
+        "docs/runtime/carves-product-closure-phase-12-existing-target-bootstrap-repair.md",
+        "docs/runtime/carves-product-closure-phase-13-target-commit-hygiene.md",
+        "docs/runtime/carves-product-closure-phase-14-target-commit-plan.md",
+        "docs/runtime/carves-product-closure-phase-15-target-commit-closure.md",
+        "docs/runtime/carves-product-closure-phase-16-local-dist-handoff.md",
+        "docs/runtime/carves-product-closure-phase-17-product-pilot-proof.md",
+        "docs/runtime/carves-product-closure-phase-18-external-consumer-resource-pack.md",
+        "docs/runtime/carves-product-closure-phase-19-cli-invocation-contract.md",
+        "docs/runtime/carves-product-closure-phase-20-cli-activation-plan.md",
+        "docs/runtime/carves-product-closure-phase-21-target-dist-binding-plan.md",
+        "docs/runtime/carves-product-closure-phase-22-local-dist-freshness-smoke.md",
+        "docs/runtime/carves-product-closure-phase-23-frozen-dist-target-readback-proof.md",
+        "docs/runtime/carves-product-closure-phase-24-wrapper-runtime-root-binding.md",
+        "docs/runtime/carves-product-closure-phase-25-external-target-product-proof-closure.md",
+        "docs/runtime/carves-product-closure-phase-26-real-external-repo-pilot.md",
+        "docs/runtime/carves-product-closure-phase-26a-product-closure-projection-cleanup.md",
+        "docs/runtime/carves-product-closure-phase-27-external-target-residue-policy.md",
+        "docs/runtime/carves-product-closure-phase-28-target-ignore-decision-plan.md",
+        "docs/runtime/carves-product-closure-phase-29-target-ignore-decision-record.md",
+        "docs/runtime/carves-product-closure-phase-30-target-ignore-decision-record-audit.md",
+        "docs/runtime/carves-product-closure-phase-31-target-ignore-decision-record-commit-readback.md",
+        "docs/runtime/carves-product-closure-phase-32-alpha-external-use-readiness-rollup.md",
+        "docs/runtime/carves-product-closure-phase-33-external-target-pilot-start-bundle.md",
+        "docs/runtime/carves-product-closure-phase-34-agent-problem-intake.md",
+        "docs/runtime/carves-product-closure-phase-35-agent-problem-triage-ledger.md",
+        "docs/runtime/carves-product-closure-phase-36-agent-problem-follow-up-candidates.md",
+        "docs/runtime/carves-product-closure-phase-37-agent-problem-follow-up-decision-plan.md",
+        "docs/runtime/carves-product-closure-phase-38-agent-problem-follow-up-decision-record.md",
+        "docs/runtime/carves-product-closure-phase-39-agent-problem-follow-up-planning-intake.md",
+        "docs/runtime/carves-product-closure-phase-40-agent-problem-follow-up-planning-gate.md"
     )
 
     foreach ($path in $productClosurePhasePaths) {
-        $paths.Add($path)
+        if (Test-Path -LiteralPath (Join-Path $RepoRootPath $path) -PathType Leaf) {
+            $paths.Add($path)
+        }
     }
 
-    foreach ($file in Get-ChildItem -LiteralPath (Join-Path $RepoRootPath "docs/release") -Filter "runtime-0.6.1-beta-*.md" -File -ErrorAction SilentlyContinue) {
+    $releaseDocPattern = ("runtime-{0}-*.md" -f $Version)
+    $releaseDocs = @(Get-ChildItem -LiteralPath (Join-Path $RepoRootPath "docs/release") -Filter $releaseDocPattern -File -ErrorAction SilentlyContinue)
+    if ($releaseDocs.Count -eq 0) {
+        $releaseDocs = @(Get-ChildItem -LiteralPath (Join-Path $RepoRootPath "docs/release") -Filter "runtime-0.6.1-beta-*.md" -File -ErrorAction SilentlyContinue)
+    }
+
+    foreach ($file in $releaseDocs) {
         $paths.Add((Convert-ToManifestPath ([System.IO.Path]::GetRelativePath($RepoRootPath, $file.FullName))))
     }
 
@@ -197,12 +241,33 @@ function Get-ReleaseDocPaths([string]$RepoRootPath) {
         "docs/guides/CARVES_TARGET_AGENT_BOOTSTRAP_PACK.md",
         "docs/guides/CARVES_TARGET_DIST_BINDING_PLAN.md",
         "docs/guides/HOST_AND_PROVIDER_QUICKSTART.md",
+        "docs/guides/RUNTIME_AGENT_V1_DELIVERY_READINESS.md",
+        "docs/guides/RUNTIME_AGENT_V1_OPERATOR_FEEDBACK_GUIDE.md",
+        "docs/guides/RUNTIME_AGENT_V1_VALIDATION_BUNDLE.md",
         "docs/release/runtime-versioning-policy.md",
         "docs/runtime/runtime-adapter-handoff-contract.md",
+        "docs/runtime/runtime-agent-governed-failure-classification-recovery-closure-contract.md",
+        "docs/runtime/runtime-agent-governed-operator-feedback-closure-contract.md",
+        "docs/runtime/runtime-agent-governed-packaging-closure-delivery-readiness-contract.md",
+        "docs/runtime/runtime-agent-working-modes-and-constraint-ladder.md",
+        "docs/runtime/runtime-agent-working-modes-implementation-plan.md",
         "docs/runtime/runtime-cli-first-architecture.md",
+        "docs/runtime/runtime-collaboration-and-surface-projection.md",
+        "docs/runtime/runtime-constraint-ladder-and-collaboration-plane.md",
         "docs/runtime/runtime-first-run-operator-packet.md",
+        "docs/runtime/runtime-governance-program-reaudit.md",
         "docs/runtime/runtime-governed-agent-handoff-proof.md",
+        "docs/runtime/runtime-guided-planning-intent-stabilizer-graph-boundary.md",
+        "docs/runtime/runtime-hotspot-backlog-drain-governance.md",
+        "docs/runtime/runtime-hotspot-cross-family-patterns.md",
         "docs/runtime/runtime-managed-workspace-file-operation-model.md",
+        "docs/runtime/runtime-managed-workspace-lease.md",
+        "docs/runtime/runtime-mode-d-scoped-task-workspace-hardening.md",
+        "docs/runtime/runtime-mode-e-brokered-execution.md",
+        "docs/runtime/runtime-packaging-proof-federation-maturity.md",
+        "docs/runtime/runtime-plan-mode-and-active-planning-card.md",
+        "docs/runtime/runtime-plan-required-and-workspace-required-gates.md",
+        "docs/runtime/runtime-planning-packet-and-replan-rules.md",
         "docs/runtime/runtime-protected-truth-root-policy.md",
         "docs/session-gateway/ALPHA_QUICKSTART.md",
         "docs/session-gateway/ALPHA_SETUP.md",
@@ -214,12 +279,15 @@ function Get-ReleaseDocPaths([string]$RepoRootPath) {
         "docs/session-gateway/operator-proof-contract.md",
         "docs/session-gateway/release-surface.md",
         "docs/session-gateway/repeatability-readiness.md",
+        "docs/session-gateway/session-gateway-v1-post-closure-execution-plan.md",
         "docs/session-gateway/session-gateway-v1.md",
         "docs/runtime/workbench-v1-scope-and-boundary.md"
     )
 
     foreach ($path in $manualPaths) {
-        $paths.Add($path)
+        if (Test-Path -LiteralPath (Join-Path $RepoRootPath $path) -PathType Leaf) {
+            $paths.Add($path)
+        }
     }
 
     return @($paths | Sort-Object -Unique)
@@ -313,7 +381,7 @@ if ($DistKind -eq "dev") {
 else {
     Copy-RequiredRelativeFiles -RepoRootPath $repoRoot -OutputRootPath $outputPath -RelativePaths $releaseRootFiles
     Write-ReleaseWrappers -DistRoot $outputPath
-    Copy-RequiredRelativeFiles -RepoRootPath $repoRoot -OutputRootPath $outputPath -RelativePaths (Get-ReleaseDocPaths -RepoRootPath $repoRoot)
+    Copy-RequiredRelativeFiles -RepoRootPath $repoRoot -OutputRootPath $outputPath -RelativePaths (Get-ReleaseDocPaths -RepoRootPath $repoRoot -Version $Version)
     Copy-RequiredRelativeFiles -RepoRootPath $repoRoot -OutputRootPath $outputPath -RelativePaths $releaseInteractionTemplateFiles
     Copy-RequiredRelativeFile -RepoRootPath $repoRoot -OutputRootPath $outputPath -RelativePath ".ai/PROJECT_BOUNDARY.md"
 }

@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "card_id": "CARD-924",
+  "task_id": "T-CARD-924-001",
+  "updated_at": "2026-04-17T12:48:00+08:00",
+  "read_model_kind": "context_pack_budget_readback",
+  "authority_posture": "repo_local_read_only_projection",
+  "identity_model_ref": "docs/runtime/runtime-pack-identity-review-posture.json",
+  "estimator": {
+    "estimator_id": "context_pack_conservative_estimator_v1",
+    "estimator_posture": "conservative_estimate",
+    "tokenizer_exact": false,
+    "precision_claim": "not_tokenizer_exact",
+    "budget_unit": "estimated_tokens",
+    "automatic_trimming": false,
+    "phase_specific_selection": false,
+    "startup_read_path_changed": false,
+    "inspect_api_surface_added": false,
+    "default_context_activation": false
+  },
+  "required_readback_fields": [
+    "pack_id",
+    "pack_family",
+    "identity_ref",
+    "review_posture",
+    "budget_posture",
+    "estimated_included_tokens",
+    "estimated_omitted_tokens",
+    "included_sections",
+    "omitted_sections",
+    "largest_contributors",
+    "expansion_refs",
+    "non_claims"
+  ],
+  "content_kind_estimates": [
+    {
+      "content_kind": "summary",
+      "estimator_method": "word_count_x_1_4_plus_structure_margin",
+      "precision_claim": "conservative_not_exact"
+    },
+    {
+      "content_kind": "governance_metadata",
+      "estimator_method": "json_property_count_plus_string_length_margin",
+      "precision_claim": "conservative_not_exact"
+    },
+    {
+      "content_kind": "acceptance_task_truth",
+      "estimator_method": "line_count_and_keyword_density_margin",
+      "precision_claim": "conservative_not_exact"
+    },
+    {
+      "content_kind": "source_excerpt",
+      "estimator_method": "code_line_count_x_rough_token_density",
+      "precision_claim": "conservative_not_exact"
+    },
+    {
+      "content_kind": "large_file_window",
+      "estimator_method": "selected_window_line_count_with_path_overhead",
+      "precision_claim": "conservative_not_exact"
+    }
+  ],
+  "separation_rules": [
+    "reviewed_content_can_be_over_budget",
+    "within_budget_content_can_be_unreviewed",
+    "budget_success_does_not_grant_default_context",
+    "budget_readback_does_not_change_review_posture"
+  ],
+  "closed_lines": [
+    "not_automatic_trimming",
+    "not_phase_specific_selection",
+    "not_tokenizer_exact_accounting",
+    "not_a_runtime_inspect_or_api_surface",
+    "not_a_pack_registry",
+    "not_rollout_assignment",
+    "not_automatic_activation",
+    "not_multi_pack_orchestration",
+    "not_startup_read_path"
+  ],
+  "readbacks": [
+    {
+      "pack_id": "runtime.context_pack",
+      "pack_family": "context_pack",
+      "identity_ref": "docs/runtime/runtime-pack-identity-review-posture.json#runtime.context_pack",
+      "review_posture": "reviewed",
+      "budget_posture": "readback_available",
+      "budget_limit_estimated_tokens": 8000,
+      "estimated_included_tokens": 2150,
+      "estimated_omitted_tokens": 24700,
+      "estimate_precision": "conservative_not_tokenizer_exact",
+      "included_sections": [
+        {
+          "section_id": "identity_header",
+          "content_kind": "governance_metadata",
+          "estimated_tokens": 220,
+          "source_refs": [
+            "docs/runtime/runtime-pack-identity-review-posture.json#runtime.context_pack"
+          ],
+          "preserve_reason": "Required to know pack family, lifecycle, review posture, and default-context posture."
+        },
+        {
+          "section_id": "task_acceptance_summary",
+          "content_kind": "acceptance_task_truth",
+          "estimated_tokens": 560,
+          "source_refs": [
+            ".ai/tasks/cards/CARD-924.md",
+            ".ai/tasks/nodes/T-CARD-924-001.json"
+          ],
+          "preserve_reason": "Acceptance and constraints cannot be trimmed only to reduce cost."
+        },
+        {
+          "section_id": "context_pack_builder_rules",
+          "content_kind": "summary",
+          "estimated_tokens": 480,
+          "source_refs": [
+            "docs/runtime/context-pack-builder.md"
+          ],
+          "preserve_reason": "Keeps Context Pack as bounded AI-facing projection rather than truth replacement."
+        },
+        {
+          "section_id": "pack_identity_cost_rules",
+          "content_kind": "summary",
+          "estimated_tokens": 520,
+          "source_refs": [
+            "docs/runtime/runtime-pack-identity-context-cost-clarification.md"
+          ],
+          "preserve_reason": "Links cost readback to CARD-920/CARD-922 closed lines."
+        },
+        {
+          "section_id": "targeted_source_window",
+          "content_kind": "source_excerpt",
+          "estimated_tokens": 370,
+          "source_refs": [
+            "tests/Carves.Runtime.Application.Tests/RuntimeContextPackBudgetReadbackTests.cs"
+          ],
+          "preserve_reason": "Test source excerpt is included only as a narrow validation anchor."
+        }
+      ],
+      "omitted_sections": [
+        {
+          "section_id": "full_task_queue",
+          "content_kind": "large_file_window",
+          "estimated_tokens": 18000,
+          "source_refs": [
+            ".ai/TASK_QUEUE.md"
+          ],
+          "trim_reason": "Full queue is broad history; current task and one-hop dependencies are sufficient for this readback.",
+          "expansion_refs": [
+            ".ai/TASK_QUEUE.md#T-CARD-924-001"
+          ]
+        },
+        {
+          "section_id": "full_runtime_docs_tree",
+          "content_kind": "large_file_window",
+          "estimated_tokens": 5200,
+          "source_refs": [
+            "docs/runtime/"
+          ],
+          "trim_reason": "Runtime docs are targeted lookup material, not default Context Pack payload.",
+          "expansion_refs": [
+            "docs/runtime/runtime-pack-identity-context-cost-clarification.md",
+            "docs/runtime/runtime-default-context-budget-audit.md"
+          ]
+        },
+        {
+          "section_id": "raw_logs_and_failure_history",
+          "content_kind": "source_excerpt",
+          "estimated_tokens": 1500,
+          "source_refs": [
+            ".ai/runtime/",
+            ".ai/evidence/"
+          ],
+          "trim_reason": "No CARD-924 failure repair context requires raw logs; compact evidence refs are enough.",
+          "expansion_refs": [
+            ".ai/evidence/"
+          ]
+        }
+      ],
+      "largest_contributors": [
+        {
+          "section_id": "full_task_queue",
+          "estimated_tokens": 18000,
+          "included": false
+        },
+        {
+          "section_id": "full_runtime_docs_tree",
+          "estimated_tokens": 5200,
+          "included": false
+        },
+        {
+          "section_id": "task_acceptance_summary",
+          "estimated_tokens": 560,
+          "included": true
+        }
+      ],
+      "expansion_refs": [
+        "docs/runtime/context-pack-builder.md",
+        "docs/runtime/runtime-pack-identity-context-cost-clarification.md",
+        "docs/runtime/runtime-default-context-budget-audit.md",
+        ".ai/tasks/cards/CARD-924.md",
+        ".ai/tasks/nodes/T-CARD-924-001.json"
+      ],
+      "non_claims": [
+        "does_not_auto_trim",
+        "does_not_select_phase_windows",
+        "does_not_claim_tokenizer_exactness",
+        "does_not_grant_default_context_eligibility",
+        "does_not_add_startup_read",
+        "does_not_open_runtime_api_or_inspect_surface"
+      ]
+    }
+  ]
+}

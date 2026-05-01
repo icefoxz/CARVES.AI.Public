@@ -2,7 +2,7 @@
 
 This guide records the Phase 22 read-only smoke for a frozen local Runtime dist.
 
-Use it before asking an external target repo to bind to or claim stable consumption from `D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta`.
+Use it before asking an external target repo to bind to or claim stable consumption from `<runtime-dist>`.
 
 ## Commands
 
@@ -38,7 +38,7 @@ The smoke is ready only when:
 From the Runtime source repo:
 
 ```powershell
-.\scripts\pack-runtime-dist.ps1 -Version 0.6.1-beta -Force
+.\scripts\pack-runtime-dist.ps1 -Version 0.6.2-beta -Force
 carves pilot dist-smoke --json
 ```
 

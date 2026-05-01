@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "card_id": "CARD-922",
+  "task_id": "T-CARD-922-001",
+  "updated_at": "2026-04-17T11:58:00+08:00",
+  "read_model_kind": "pack_identity_review_posture",
+  "authority_posture": "repo_local_read_only_projection",
+  "required_identity_fields": [
+    "pack_id",
+    "pack_family",
+    "schema_version",
+    "lifecycle_state",
+    "review_posture",
+    "review_evidence_refs",
+    "truth_source_refs",
+    "default_context_posture",
+    "expansion_refs",
+    "non_claims"
+  ],
+  "allowed_values": {
+    "pack_family": [
+      "context_pack",
+      "runtime_pack",
+      "release_pack",
+      "external_resource_pack",
+      "proof_pack",
+      "proof_bundle",
+      "runtime_state_package",
+      "policy_package",
+      "trial_starter_pack",
+      "instruction_pack"
+    ],
+    "lifecycle_state": [
+      "draft",
+      "active",
+      "deprecated",
+      "archived"
+    ],
+    "review_posture": [
+      "unreviewed",
+      "reviewed",
+      "stale",
+      "needs_review"
+    ],
+    "default_context_posture": [
+      "blocked",
+      "pointer_only",
+      "eligible_candidate",
+      "manual_review_required"
+    ]
+  },
+  "closed_lines": [
+    "not_a_runtime_inspect_or_api_surface",
+    "not_a_pack_registry",
+    "not_rollout_assignment",
+    "not_automatic_activation",
+    "not_multi_pack_orchestration",
+    "not_context_budget_calculation",
+    "not_startup_read_path"
+  ],
+  "entries": [
+    {
+      "pack_id": "runtime.context_pack",
+      "pack_family": "context_pack",
+      "schema_version": 1,
+      "lifecycle_state": "active",
+      "review_posture": "reviewed",
+      "review_evidence_refs": [
+        {
+          "ref": "CARD-920",
+          "scope": "pack_family_clarification",
+          "reason": "Defines Context Pack as bounded AI-facing projection rather than canonical truth."
+        },
+        {
+          "ref": "CARD-922",
+          "scope": "identity_read_model",
+          "reason": "Classifies context_pack as active and pointer-first while budget readback remains future work."
+        }
+      ],
+      "truth_source_refs": [
+        ".ai/memory/architecture/07_CONTEXT_PACK_POLICY.md",
+        "docs/runtime/context-pack-builder.md",
+        ".ai/tasks/"
+      ],
+      "default_context_posture": "pointer_only",
+      "expansion_refs": [
+        ".ai/memory/architecture/07_CONTEXT_PACK_POLICY.md",
+        "docs/runtime/context-pack-builder.md"
+      ],
+      "non_claims": [
+        "does_not_replace_task_truth",
+        "does_not_replace_memory_truth",
+        "does_not_enter_broad_startup_context",
+        "does_not_estimate_or_trim_budget_in_card_922"
+      ]
+    },
+    {
+      "pack_id": "runtime.runtime_pack",
+      "pack_family": "runtime_pack",
+      "schema_version": 1,
+      "lifecycle_state": "active",
+      "review_posture": "reviewed",
+      "review_evidence_refs": [
+        {
+          "ref": "CARD-920",
+          "scope": "pack_family_clarification",
+          "reason": "Separates runtime/release pack lifecycle from Context Pack cost work."
+        },
+        {
+          "ref": "docs/runtime/pack-artifact-and-provenance-schema.md",
+          "scope": "artifact_contract",
+          "reason": "Documents runtime-local pack artifact and provenance shape."
+        }
+      ],
+      "truth_source_refs": [
+        "docs/runtime/pack-artifact-and-provenance-schema.md",
+        "docs/runtime/runtime-packaging-proof-federation-maturity.md"
+      ],
+      "default_context_posture": "blocked",
+      "expansion_refs": [
+        "docs/runtime/pack-artifact-and-provenance-schema.md"
+      ],
+      "non_claims": [
+        "does_not_open_registry",
+        "does_not_open_rollout",
+        "does_not_auto_activate",
+        "does_not_become_default_ai_context"
+      ]
+    },
+    {
+      "pack_id": "runtime.release_pack",
+      "pack_family": "release_pack",
+      "schema_version": 1,
+      "lifecycle_state": "active",
+      "review_posture": "reviewed",
+      "review_evidence_refs": [
+        {
+          "ref": "CARD-920",
+          "scope": "pack_family_clarification",
+          "reason": "Treats release_pack as artifact/distribution language, not Context Pack language."
+        }
+      ],
+      "truth_source_refs": [
+        "docs/runtime/pack-artifact-and-provenance-schema.md"
+      ],
+      "default_context_posture": "blocked",
+      "expansion_refs": [
+        "docs/runtime/pack-artifact-and-provenance-schema.md"
+      ],
+      "non_claims": [
+        "does_not_publish_package",
+        "does_not_open_remote_registry",
+        "does_not_auto_rollout"
+      ]
+    },
+    {
+      "pack_id": "runtime.external_resource_pack",
+      "pack_family": "external_resource_pack",
+      "schema_version": 1,
+      "lifecycle_state": "active",
+      "review_posture": "reviewed",
+      "review_evidence_refs": [
+        {
+          "ref": "CARD-920",
+          "scope": "pack_family_clarification",
+          "reason": "Keeps external resource packs as read-only guidance projections for target repos."
+        }
+      ],
+      "truth_source_refs": [
+        "docs/runtime/runtime-pack-identity-context-cost-clarification.md",
+        "docs/runtime/runtime-external-agent-ingress-contract.md"
+      ],
+      "default_context_posture": "blocked",
+      "expansion_refs": [
+        "docs/runtime/runtime-pack-identity-context-cost-clarification.md"
+      ],
+      "non_claims": [
+        "does_not_make_target_repo_runtime_truth_owner",
+        "does_not_copy_runtime_truth",
+        "does_not_enter_runtime_startup_context"
+      ]
+    },
+    {
+      "pack_id": "runtime.proof_bundle",
+      "pack_family": "proof_bundle",
+      "schema_version": 1,
+      "lifecycle_state": "active",
+      "review_posture": "reviewed",
+      "review_evidence_refs": [
+        {
+          "ref": "CARD-920",
+          "scope": "pack_family_clarification",
+          "reason": "Separates proof bundles from default AI context and runtime-local pack lifecycle."
+        },
+        {
+          "ref": "docs/runtime/runtime-packaging-proof-federation-maturity.md",
+          "scope": "proof_packaging_boundary",
+          "reason": "Records proof and packaging maturity as read-model evidence, not broad execution authority."
+        }
+      ],
+      "truth_source_refs": [
+        "docs/runtime/runtime-packaging-proof-federation-maturity.md",
+        "docs/runtime/runtime-controlled-governance-proof-integration.md"
+      ],
+      "default_context_posture": "manual_review_required",
+      "expansion_refs": [
+        "docs/runtime/runtime-packaging-proof-federation-maturity.md",
+        "docs/runtime/runtime-controlled-governance-proof-integration.md"
+      ],
+      "non_claims": [
+        "does_not_replace_proof_truth",
+        "does_not_become_second_proof_ledger",
+        "does_not_enter_startup_context"
+      ]
+    },
+    {
+      "pack_id": "runtime.state_package",
+      "pack_family": "runtime_state_package",
+      "schema_version": 1,
+      "lifecycle_state": "active",
+      "review_posture": "reviewed",
+      "review_evidence_refs": [
+        {
+          "ref": "CARD-920",
+          "scope": "pack_family_clarification",
+          "reason": "Classifies runtime state packages as exchange projections over existing truth."
+        }
+      ],
+      "truth_source_refs": [
+        "docs/runtime/runtime-pack-identity-context-cost-clarification.md",
+        ".ai/STATE.md"
+      ],
+      "default_context_posture": "blocked",
+      "expansion_refs": [
+        ".ai/STATE.md"
+      ],
+      "non_claims": [
+        "does_not_embed_full_history",
+        "does_not_replace_state_truth",
+        "does_not_enter_default_ai_context"
+      ]
+    },
+    {
+      "pack_id": "runtime.policy_package",
+      "pack_family": "policy_package",
+      "schema_version": 1,
+      "lifecycle_state": "active",
+      "review_posture": "reviewed",
+      "review_evidence_refs": [
+        {
+          "ref": "CARD-920",
+          "scope": "pack_family_clarification",
+          "reason": "Separates local policy transfer packages from remote policy bundles or automatic apply."
+        }
+      ],
+      "truth_source_refs": [
+        "docs/runtime/pack-artifact-and-provenance-schema.md"
+      ],
+      "default_context_posture": "blocked",
+      "expansion_refs": [
+        "docs/runtime/pack-artifact-and-provenance-schema.md"
+      ],
+      "non_claims": [
+        "does_not_open_remote_policy_bundle",
+        "does_not_auto_apply_policy",
+        "does_not_enter_startup_context"
+      ]
+    },
+    {
+      "pack_id": "matrix.trial_starter_pack",
+      "pack_family": "trial_starter_pack",
+      "schema_version": 1,
+      "lifecycle_state": "active",
+      "review_posture": "reviewed",
+      "review_evidence_refs": [
+        {
+          "ref": "CARD-920",
+          "scope": "pack_family_clarification",
+          "reason": "Classifies trial starter packs as local trial fixtures rather than Runtime lifecycle truth."
+        }
+      ],
+      "truth_source_refs": [
+        "tests/fixtures/agent-trial-v1/task-001-pack/README.md",
+        "docs/matrix/"
+      ],
+      "default_context_posture": "blocked",
+      "expansion_refs": [
+        "tests/fixtures/agent-trial-v1/task-001-pack/README.md",
+        "docs/matrix/"
+      ],
+      "non_claims": [
+        "does_not_certify_model",
+        "does_not_publish_benchmark",
+        "does_not_become_runtime_pack_lifecycle_truth"
+      ]
+    },
+    {
+      "pack_id": "matrix.instruction_pack",
+      "pack_family": "instruction_pack",
+      "schema_version": 1,
+      "lifecycle_state": "active",
+      "review_posture": "reviewed",
+      "review_evidence_refs": [
+        {
+          "ref": "CARD-920",
+          "scope": "pack_family_clarification",
+          "reason": "Classifies instruction packs as local instruction identity bundles, not Runtime startup context."
+        }
+      ],
+      "truth_source_refs": [
+        "tests/fixtures/agent-trial-v1/task-001-pack/README.md"
+      ],
+      "default_context_posture": "blocked",
+      "expansion_refs": [
+        "tests/fixtures/agent-trial-v1/task-001-pack/README.md"
+      ],
+      "non_claims": [
+        "does_not_override_task_acceptance",
+        "does_not_enter_runtime_startup_context",
+        "does_not_define_runtime_pack_schema"
+      ]
+    }
+  ]
+}

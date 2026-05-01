@@ -39,8 +39,15 @@ jobs:
         shell: pwsh
         run: ./scripts/shield/shield-github-actions-proof.ps1 -Configuration Release -SkipBuild
 
-      - name: Test
-        run: dotnet test CARVES.Runtime.sln --no-build --configuration Release --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
+      - name: Public snapshot tests
+        shell: pwsh
+        run: |
+          dotnet test tests/Carves.Runtime.Domain.Tests/Carves.Runtime.Domain.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=domain.trx" --results-directory TestResults
+          dotnet test tests/Carves.Handoff.Tests/Carves.Handoff.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=handoff.trx" --results-directory TestResults
+          dotnet test tests/Carves.Audit.Tests/Carves.Audit.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=audit.trx" --results-directory TestResults
+          dotnet test tests/Carves.Shield.Tests/Carves.Shield.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=shield.trx" --results-directory TestResults
+          dotnet test tests/Carves.Matrix.Tests/Carves.Matrix.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=matrix.trx" --results-directory TestResults
+          dotnet test tests/Carves.Runtime.IntegrationTests/Carves.Runtime.IntegrationTests.csproj --no-build --configuration Release --filter "RuntimeWrapperSlimmingTests|GuardExtractionShellTests|ShieldExtractionShellTests|MatrixExtractionShellTests|MatrixReleaseReadinessTests|GitHubPublishReadinessTests|ProductExtractionReadinessCheckpointTests" --logger "trx;LogFileName=public-integration.trx" --results-directory TestResults
 
       - name: Upload Shield proof artifacts
         if: always()

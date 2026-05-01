@@ -163,6 +163,58 @@ public sealed partial class RuntimeGovernedAgentHandoffServicesTests
 
 
     [Fact]
+    public void AgentThreadStart_AllowsLimitedPublicSnapshotWhenPrivateClosureDocsAreNotPackaged()
+    {
+        using var publicRuntime = new TemporaryWorkspace();
+        publicRuntime.WriteFile("README.md", "# CARVES.AI Public\n\nThis is a clean public source snapshot.");
+        publicRuntime.WriteFile("START_CARVES.md", "# Start CARVES");
+        publicRuntime.WriteFile("carves", "#!/usr/bin/env bash");
+        publicRuntime.WriteFile("docs/runtime/runtime-governed-agent-handoff-proof.md", "# handoff proof");
+        publicRuntime.WriteFile("docs/runtime/runtime-first-run-operator-packet.md", "# first run");
+        using var target = new TemporaryWorkspace();
+        target.WriteFile(".ai/runtime.json", JsonSerializer.Serialize(new { runtime_root = publicRuntime.RootPath }));
+        target.WriteFile(
+            ".ai/runtime/attach-handshake.json",
+            JsonSerializer.Serialize(new { request = new { runtime_root = publicRuntime.RootPath } }));
+        target.WriteFile(".carves/agent-start.json", "{}");
+        target.WriteFile(".carves/AGENT_START.md", "# CARVES Agent Start");
+        target.WriteFile("CARVES_START.md", "# Start CARVES");
+
+        var surface = new RuntimeAgentThreadStartService(
+            target.RootPath,
+            () => throw new InvalidOperationException("pilot start should not be evaluated for limited public snapshot start"),
+            () => throw new InvalidOperationException("follow-up gate should not be evaluated for limited public snapshot start"),
+            () => throw new InvalidOperationException("pilot status should not be evaluated for limited public snapshot start"),
+            () => throw new InvalidOperationException("handoff should not be evaluated for limited public snapshot start")).Build();
+
+        Assert.True(surface.IsValid, string.Join(Environment.NewLine, surface.Errors));
+        Assert.True(surface.ThreadStartReady);
+        Assert.Equal("agent_thread_start_limited_public_snapshot_ready", surface.OverallPosture);
+        Assert.Equal("limited_public_snapshot_start", surface.ProductClosurePhase);
+        Assert.Equal("N/A:public_snapshot_private_closure_docs_not_packaged", surface.PhaseDocumentPath);
+        Assert.Equal(Path.GetFullPath(publicRuntime.RootPath), surface.RuntimeDocumentRoot);
+        Assert.Equal("attach_handshake_runtime_root", surface.RuntimeDocumentRootMode);
+        Assert.Equal("target_project_agent_start", surface.StartupEntrySource);
+        Assert.Equal("existing_carves_project", surface.TargetProjectClassification);
+        Assert.Equal("runtime_binding_matches_runtime_document_root", surface.TargetRuntimeBindingStatus);
+        Assert.Equal(".carves/carves gateway status", surface.NextGovernedCommand);
+        Assert.Equal("limited_public_snapshot_visibility", surface.NextCommandSource);
+        Assert.False(surface.AutoRunAllowed);
+        Assert.False(surface.PilotStartBundleReady);
+        Assert.False(surface.FollowUpGateReady);
+        Assert.False(surface.GovernedAgentHandoffReady);
+        Assert.Empty(surface.Errors);
+        Assert.Empty(surface.Gaps);
+        Assert.Contains(surface.AvailableActions, action => action.ActionId == "target_gateway_status" && action.Kind == "read_only");
+        Assert.Contains(surface.ForbiddenAutoActions, action => action == "carves task run <task-id>");
+        Assert.Contains("limited public snapshot", surface.Summary, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("Do not start worker execution", surface.RecommendedNextAction, StringComparison.Ordinal);
+        Assert.Contains(surface.NonClaims, claim => claim.Contains("startup binding and visibility only", StringComparison.Ordinal));
+        Assert.Contains(surface.NonClaims, claim => claim.Contains("does not evaluate private product-closure", StringComparison.Ordinal));
+    }
+
+
+    [Fact]
     public void AgentThreadStart_BlocksWhenTargetRuntimeBindingNeedsOperatorRebind()
     {
         using var runtime = new TemporaryWorkspace();

@@ -270,7 +270,8 @@ Read CARVES_START.md first. Then run .carves/carves agent start --json from this
         bool wantsJson)
     {
         var bootstrap = new RuntimeTargetAgentBootstrapPackService(targetRepoPath).Build(writeRequested: true);
-        var isReady = bootstrap.IsValid
+        var limitedPublicSnapshotReady = IsLimitedPublicSnapshotBootstrapReady(runtimeAuthorityRoot, bootstrap);
+        var isReady = (bootstrap.IsValid || limitedPublicSnapshotReady)
                       && string.Equals(runtimeAfter, "initialized", StringComparison.Ordinal)
                       && bootstrap.ProjectLocalLauncherExists
                       && bootstrap.AgentStartMarkdownExists
@@ -302,7 +303,10 @@ Read CARVES_START.md first. Then run .carves/carves agent start --json from this
             gaps.Add("visible_agent_start_missing");
         }
 
-        gaps.AddRange(bootstrap.Errors.Select(error => $"bootstrap:{error}"));
+        if (!limitedPublicSnapshotReady)
+        {
+            gaps.AddRange(bootstrap.Errors.Select(error => $"bootstrap:{error}"));
+        }
 
         var success = BuildUpReadiness(
             targetPath,
@@ -744,5 +748,39 @@ Read CARVES_START.md first. Then run .carves/carves agent start --json from this
         var fullPath = Path.GetFullPath(path);
         return File.Exists(Path.Combine(fullPath, "CARVES.Runtime.sln"))
                && File.Exists(Path.Combine(fullPath, "src", "CARVES.Runtime.Cli", "carves.csproj"));
+    }
+
+    private static bool IsLimitedPublicSnapshotBootstrapReady(
+        string runtimeAuthorityRoot,
+        RuntimeTargetAgentBootstrapPackSurface bootstrap)
+    {
+        return IsPublicSourceSnapshotRoot(runtimeAuthorityRoot)
+               && bootstrap.Errors.Count > 0
+               && bootstrap.Errors.All(IsLimitedPublicSnapshotBootstrapGap);
+    }
+
+    private static bool IsLimitedPublicSnapshotBootstrapGap(string error)
+    {
+        return error.Contains("Product closure Phase ", StringComparison.Ordinal)
+               && error.Contains(" is missing.", StringComparison.Ordinal);
+    }
+
+    private static bool IsPublicSourceSnapshotRoot(string root)
+    {
+        if (!File.Exists(Path.Combine(root, "START_CARVES.md"))
+            || !File.Exists(Path.Combine(root, "carves")))
+        {
+            return false;
+        }
+
+        var readmePath = Path.Combine(root, "README.md");
+        if (!File.Exists(readmePath))
+        {
+            return false;
+        }
+
+        var readme = File.ReadAllText(readmePath);
+        return readme.Contains("public source snapshot", StringComparison.OrdinalIgnoreCase)
+               || readme.Contains("public snapshot", StringComparison.OrdinalIgnoreCase);
     }
 }

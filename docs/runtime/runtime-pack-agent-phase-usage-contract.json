@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "card_id": "CARD-926",
+  "task_id": "T-CARD-926-001",
+  "updated_at": "2026-04-17T13:55:00+08:00",
+  "read_model_kind": "pack_agent_phase_usage_contract",
+  "authority_posture": "repo_local_usage_contract",
+  "contract_posture": "pointer_first_phase_specific_no_orchestration",
+  "identity_model_ref": "docs/runtime/runtime-pack-identity-review-posture.json",
+  "budget_readback_ref": "docs/runtime/runtime-context-pack-budget-readback.json",
+  "default_context_gate_ref": "docs/runtime/runtime-pack-default-context-gate.json",
+  "pack_layers": [
+    "identity_header",
+    "review_posture",
+    "budget_readback",
+    "summary",
+    "source_excerpt",
+    "full_expansion"
+  ],
+  "required_phase_ids": [
+    "planning",
+    "implementation",
+    "review",
+    "cleanup",
+    "audit"
+  ],
+  "universal_rules": [
+    "read_identity_header_before_payload",
+    "read_review_posture_before_trusting_payload",
+    "read_budget_readback_before_expanding_context_pack_payload",
+    "full_expansion_never_default",
+    "expansion_requires_task_relevant_reason",
+    "expansion_preserves_expansion_refs",
+    "phase_rules_do_not_override_task_acceptance_or_repo_governance"
+  ],
+  "pack_decision_usage": [
+    {
+      "decision": "eligible_candidate",
+      "phase_contract_required": true,
+      "first_action": "read_identity_review_and_budget_before_summary_or_excerpts",
+      "full_expansion_default": false,
+      "expansion_requires_task_relevant_reason": true
+    },
+    {
+      "decision": "pointer_only",
+      "phase_contract_required": true,
+      "first_action": "read_pointer_and_identity_then_expand_only_for_current_task",
+      "full_expansion_default": false,
+      "expansion_requires_task_relevant_reason": true
+    },
+    {
+      "decision": "manual_review_required",
+      "phase_contract_required": true,
+      "first_action": "read_identity_only_then_wait_for_human_scope_or_explicit_review_task",
+      "full_expansion_default": false,
+      "expansion_requires_task_relevant_reason": true
+    },
+    {
+      "decision": "blocked",
+      "phase_contract_required": false,
+      "first_action": "do_not_expand_for_default_context",
+      "full_expansion_default": false,
+      "expansion_requires_task_relevant_reason": true
+    }
+  ],
+  "phase_rules": [
+    {
+      "phase_id": "planning",
+      "plain_meaning": "Decide scope and next safe action without loading broad pack payload.",
+      "first_read_layers": [
+        "identity_header",
+        "review_posture",
+        "budget_readback"
+      ],
+      "allowed_next_layers": [
+        "summary"
+      ],
+      "full_expansion_default": false,
+      "expansion_requires_task_relevant_reason": true,
+      "required_expansion_reason_kinds": [
+        "acceptance_dependency_unclear",
+        "scope_boundary_conflict",
+        "candidate_gate_mismatch"
+      ],
+      "preserve_expansion_refs": true,
+      "must_not": [
+        "do_not_read_all_pack_material_for_brainstorming",
+        "do_not_replace_card_acceptance_with_pack_summary"
+      ]
+    },
+    {
+      "phase_id": "implementation",
+      "plain_meaning": "Use pack material only when it points to files, constraints, or evidence needed for the current change.",
+      "first_read_layers": [
+        "identity_header",
+        "review_posture",
+        "budget_readback",
+        "summary"
+      ],
+      "allowed_next_layers": [
+        "source_excerpt"
+      ],
+      "full_expansion_default": false,
+      "expansion_requires_task_relevant_reason": true,
+      "required_expansion_reason_kinds": [
+        "target_file_scope_requires_source_excerpt",
+        "acceptance_evidence_requires_source_excerpt",
+        "budget_readback_names_omitted_required_material"
+      ],
+      "preserve_expansion_refs": true,
+      "must_not": [
+        "do_not_expand_unrelated_pack_families",
+        "do_not_use_pack_summary_as_source_truth"
+      ]
+    },
+    {
+      "phase_id": "review",
+      "plain_meaning": "Check changed behavior against acceptance and evidence without treating pack prose as proof.",
+      "first_read_layers": [
+        "identity_header",
+        "review_posture",
+        "budget_readback",
+        "source_excerpt"
+      ],
+      "allowed_next_layers": [
+        "summary"
+      ],
+      "full_expansion_default": false,
+      "expansion_requires_task_relevant_reason": true,
+      "required_expansion_reason_kinds": [
+        "review_evidence_gap",
+        "changed_file_reference_missing",
+        "non_claim_conflict"
+      ],
+      "preserve_expansion_refs": true,
+      "must_not": [
+        "do_not_accept_fluent_pack_text_as_validation",
+        "do_not_expand_full_pack_when_changed_files_are_enough"
+      ]
+    },
+    {
+      "phase_id": "cleanup",
+      "plain_meaning": "Remove or simplify only with identity and ownership clear; avoid broad history reads.",
+      "first_read_layers": [
+        "identity_header",
+        "review_posture"
+      ],
+      "allowed_next_layers": [
+        "budget_readback",
+        "summary"
+      ],
+      "full_expansion_default": false,
+      "expansion_requires_task_relevant_reason": true,
+      "required_expansion_reason_kinds": [
+        "ownership_boundary_unclear",
+        "stale_pointer_cleanup_requires_source",
+        "non_claim_cleanup_risk"
+      ],
+      "preserve_expansion_refs": true,
+      "must_not": [
+        "do_not_delete_truth_because_pack_projection_omits_it",
+        "do_not_cleanup_by_reading_all_archives"
+      ]
+    },
+    {
+      "phase_id": "audit",
+      "plain_meaning": "Sample evidence and blockers through pointers before deciding whether deeper proof material is needed.",
+      "first_read_layers": [
+        "identity_header",
+        "review_posture",
+        "budget_readback",
+        "summary"
+      ],
+      "allowed_next_layers": [
+        "source_excerpt"
+      ],
+      "full_expansion_default": false,
+      "expansion_requires_task_relevant_reason": true,
+      "required_expansion_reason_kinds": [
+        "sampled_evidence_mismatch",
+        "completion_gate_requires_deeper_evidence",
+        "manual_review_scope_requires_full_material"
+      ],
+      "preserve_expansion_refs": true,
+      "must_not": [
+        "do_not_make_full_pack_audit_default",
+        "do_not_turn_audit_sampling_into_second_registry"
+      ]
+    }
+  ],
+  "startup_read_path": {
+    "mandatory_startup_reads_changed": false,
+    "agents_initialization_reads_changed": false,
+    "default_pack_reads_added": false,
+    "runtime_inspect_api_surface_added": false,
+    "automatic_orchestration_added": false,
+    "multi_pack_scheduling_added": false
+  },
+  "closed_lines": [
+    "not_startup_read_path",
+    "not_agents_initialization_change",
+    "not_runtime_inspect_or_api_surface",
+    "not_agent_orchestration",
+    "not_multi_pack_runtime_scheduling",
+    "not_registry",
+    "not_rollout",
+    "not_automatic_activation",
+    "not_task_acceptance_override"
+  ],
+  "non_claims": [
+    "does_not_load_pack_material_by_default",
+    "does_not_override_card_acceptance",
+    "does_not_override_repo_governance",
+    "does_not_create_runtime_scheduler",
+    "does_not_replace_identity_budget_or_default_context_gate"
+  ]
+}

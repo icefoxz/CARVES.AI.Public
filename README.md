@@ -2,17 +2,51 @@
 
 CARVES.AI is a local AI-coding control plane for agent startup, visible gateway status, and bounded local workflow checks.
 
-This repository is a clean public source snapshot. It does not include the private development repository history, live `.ai` task truth, runtime host state, Codex state, local artifacts, or archive/checkpoint history.
+This repository is a clean public source snapshot. It does not include the private development repository history, live task/runtime truth, runtime host state, Codex state, local artifacts, or archive/checkpoint history.
 
 ## Status
 
 Current public snapshot:
 
 ```text
-0.6.1-beta source snapshot
+0.6.2-beta source snapshot
 ```
 
 This is still beta software. It is suitable for local source inspection, local build, and bounded local startup experiments. It is not a hosted service, not a signed release, and not API/SDK worker execution authority.
+
+## Public Product Map
+
+The public source snapshot contains these local workflow tools:
+
+- CARVES.Guard: local diff and decision checks. Start with [docs/guard/README.md](docs/guard/README.md), [Chinese beginner guide](docs/guard/wiki/guard-beginner-guide.zh-CN.md), [English beginner guide](docs/guard/wiki/guard-beginner-guide.en.md), and [GitHub Actions guide](docs/guard/wiki/github-actions.zh-CN.md).
+- Handoff: continuity packets for carrying bounded next-session context.
+- Audit: local evidence discovery and summary surfaces.
+- Shield: local evidence evaluation over Audit output.
+- Matrix: a local AI coding workflow governance self-check that chains Guard, Handoff, Audit, and Shield into a summary-only proof bundle. See the Matrix beginner quickstart in [docs/matrix/quickstart.en.md](docs/matrix/quickstart.en.md) and [docs/matrix/quickstart.zh-CN.md](docs/matrix/quickstart.zh-CN.md).
+
+Quick command examples:
+
+```bash
+dotnet run --project ./src/CARVES.Runtime.Cli/carves.csproj --configuration Release --no-build -- test demo --json
+carves test demo
+carves test agent
+carves-guard init
+carves-audit evidence --json --output .carves/shield-evidence.json
+carves-shield evaluate .carves/shield-evidence.json
+carves-matrix trial plan --workspace ./carves-trials/latest
+carves-matrix proof --lane native-minimal --artifact-root artifacts/matrix/native --configuration Release --json
+carves-matrix verify artifacts/matrix/native --json
+```
+
+For the Matrix Agent Trial beginner path, start with the source-checkout `carves test demo` path. The parallel Windows package entry is documented in [docs/matrix/agent-trial-node-windows-playable-quickstart.md](docs/matrix/agent-trial-node-windows-playable-quickstart.md).
+
+The Linux-native Matrix first run does not require PowerShell. The full release proof remains available through:
+
+```bash
+pwsh ./scripts/matrix/matrix-proof-lane.ps1
+```
+
+CI examples live in [.github/workflows/matrix-proof.yml](.github/workflows/matrix-proof.yml). Current limits are documented in [docs/matrix/known-limitations.md](docs/matrix/known-limitations.md). Matrix is not a model safety benchmark, does not rate model safety, and does not automatically roll back arbitrary writes.
 
 ## Disclaimer
 
@@ -65,7 +99,7 @@ Then it should open the target project and follow the generated `CARVES_START.md
 ## What This Public Snapshot Excludes
 
 - Private git history from the development repository.
-- Live `.ai/tasks`, `.ai/runtime`, `.ai/memory`, `.ai/artifacts`, and similar control-plane truth.
+- Live task, runtime, memory, artifact, and similar control-plane truth.
 - `.carves-platform` host/runtime state.
 - Codex local state.
 - Build outputs, logs, trials, local packages, and generated release archives.

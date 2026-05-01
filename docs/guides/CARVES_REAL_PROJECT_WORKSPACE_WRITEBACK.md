@@ -9,7 +9,7 @@ Use it after Phase 7 has issued a task-bound workspace and the worker has change
 The current pilot target is:
 
 ```text
-D:\Projects\CARVES.AI\CARVES.AgentCoach
+<target-project>
 ```
 
 ## Precondition
@@ -23,7 +23,7 @@ T-CARD-001-001
 The managed workspace is:
 
 ```text
-D:\Projects\CARVES.AI\.carves-worktrees\CARVES.AgentCoach\T-CARD-001-001
+<managed-worktree>
 ```
 
 The allowed writable paths are:

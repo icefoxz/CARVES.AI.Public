@@ -789,6 +789,11 @@ internal sealed class RepoSandbox : IDisposable
         Func<string, bool>? shouldSkipRelativeDirectory = null,
         string? relativePath = null)
     {
+        if (!Directory.Exists(source))
+        {
+            return;
+        }
+
         Directory.CreateDirectory(destination);
         foreach (var directory in Directory.EnumerateDirectories(source))
         {

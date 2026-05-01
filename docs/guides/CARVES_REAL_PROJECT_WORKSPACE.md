@@ -9,7 +9,7 @@ Use it after Phase 6 has produced approved card/task truth and `plan status` rep
 The current pilot target is:
 
 ```text
-D:\Projects\CARVES.AI\CARVES.AgentCoach
+<target-project>
 ```
 
 ## Command Sequence
@@ -49,7 +49,7 @@ The agent may edit only the lease workspace, not the target repo official truth 
 For the current pilot, the workspace is:
 
 ```text
-D:\Projects\CARVES.AI\.carves-worktrees\CARVES.AgentCoach\T-CARD-001-001
+<managed-worktree>
 ```
 
 The allowed writable paths are:

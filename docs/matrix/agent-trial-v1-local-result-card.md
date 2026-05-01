@@ -84,9 +84,9 @@ Color bands: RED 0-4, YELLOW 5-8, GREEN 9-10.
 | Review | GREEN 10/10 | OK |
 
 Evidence:
-- [trial/carves-agent-trial-result.json](trial/carves-agent-trial-result.json)
-- [matrix-artifact-manifest.json](matrix-artifact-manifest.json)
-- [matrix-proof-summary.json](matrix-proof-summary.json)
+- `trial/carves-agent-trial-result.json`
+- `matrix-artifact-manifest.json`
+- `matrix-proof-summary.json`
 
 Non-claims:
 - This is not a certification.

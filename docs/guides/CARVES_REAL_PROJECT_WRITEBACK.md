@@ -9,7 +9,7 @@ Use it after a real target repo has completed the Phase 5 pilot flow and `plan s
 The current pilot target is:
 
 ```text
-D:\Projects\CARVES.AI\CARVES.AgentCoach
+<target-project>
 ```
 
 ## Command Sequence

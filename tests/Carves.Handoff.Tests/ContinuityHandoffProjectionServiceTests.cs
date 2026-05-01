@@ -94,11 +94,13 @@ public sealed class ContinuityHandoffProjectionServiceTests
 
     private static string ValidPacket(string resumeStatus, string confidence)
     {
+        var createdAtUtc = DateTimeOffset.UtcNow.ToString("O");
+
         return $$"""
         {
           "schema_version": "carves-continuity-handoff.v1",
           "handoff_id": "HND-NEXT-001",
-          "created_at_utc": "2026-04-14T00:00:00Z",
+          "created_at_utc": "{{createdAtUtc}}",
           "producer": {
             "agent": "test"
           },

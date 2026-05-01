@@ -1,0 +1,82 @@
+{
+  "schema_version": "memory-failure-mode-policy.v1",
+  "policy_version": "memory-gate.v1",
+  "modes": [
+    "strict",
+    "normal",
+    "search",
+    "release"
+  ],
+  "failure_policies": [
+    {
+      "failure_code": "canonical_fact_without_evidence",
+      "strict": "block",
+      "normal": "block",
+      "search": "exclude",
+      "release": "blocker"
+    },
+    {
+      "failure_code": "invalidated_fact_retrieved",
+      "strict": "block",
+      "normal": "block",
+      "search": "exclude",
+      "release": "blocker"
+    },
+    {
+      "failure_code": "ledger_projection_mismatch",
+      "strict": "block",
+      "normal": "degraded",
+      "search": "exclude_disputed",
+      "release": "blocker_if_unresolved"
+    },
+    {
+      "failure_code": "active_view_build_failed",
+      "strict": "block",
+      "normal": "degraded",
+      "search": "fallback_lexical_only",
+      "release": "blocker_for_writeback"
+    },
+    {
+      "failure_code": "stale_codegraph_high_risk_task",
+      "strict": "block",
+      "normal": "block",
+      "search": "warn",
+      "release": "blocker"
+    },
+    {
+      "failure_code": "stale_codegraph_low_risk_task",
+      "strict": "degraded",
+      "normal": "degraded",
+      "search": "warn",
+      "release": "non_blocking"
+    },
+    {
+      "failure_code": "orphan_claim_used_as_canonical",
+      "strict": "block",
+      "normal": "block",
+      "search": "exclude",
+      "release": "blocker"
+    },
+    {
+      "failure_code": "handoff_claim_promoted_directly",
+      "strict": "block",
+      "normal": "block",
+      "search": "candidate_only",
+      "release": "blocker"
+    },
+    {
+      "failure_code": "worker_self_claim_promoted_directly",
+      "strict": "block",
+      "normal": "block",
+      "search": "candidate_only",
+      "release": "blocker"
+    },
+    {
+      "failure_code": "conflicting_canonical_facts",
+      "strict": "block",
+      "normal": "block",
+      "search": "surface_conflict",
+      "release": "blocker"
+    }
+  ]
+}

@@ -55,7 +55,7 @@ The GitHub Actions workflow now separates the Linux-native public minimum, the L
 | `carves-handoff` | `CARVES.Handoff.Cli` | `0.1.0-alpha.1` | local package proof; NuGet.org push remains operator-gated |
 | `carves-audit` | `CARVES.Audit.Cli` | `0.1.0-alpha.1` | local package proof; NuGet.org push remains operator-gated |
 | `carves-shield` | `CARVES.Shield.Cli` | `0.1.0-alpha.1` | local package proof; NuGet.org push remains operator-gated |
-| `carves-matrix` | `CARVES.Matrix.Cli` | `0.1.0-alpha.1` | local package proof; NuGet.org push remains operator-gated |
+| `carves-matrix` | `CARVES.Matrix.Cli` | `0.2.0-alpha.1` | local package proof; NuGet.org push remains operator-gated |
 
 ## Proof Lanes
 

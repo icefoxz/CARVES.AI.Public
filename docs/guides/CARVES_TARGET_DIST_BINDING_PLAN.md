@@ -35,13 +35,13 @@ External target repos can be attached to the live Runtime source tree during dog
 For stable external use, target repos should be attached to a frozen local dist such as:
 
 ```text
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta
+<runtime-dist>
 ```
 
 For WSL-local work, prefer the matching WSL filesystem path and wrapper:
 
 ```text
-<dist-root>/carves
+<runtime-dist>/carves
 ```
 
 The WSL dist wrapper uses `runtime-cli/carves.dll` when present, so external-project commands avoid repeated source-tree `dotnet run --project` startup.

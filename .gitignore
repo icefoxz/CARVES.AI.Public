@@ -20,6 +20,10 @@ Desktop.ini
 **/obj/
 TestResults/
 artifacts/
+!docs/matrix/starter-packs/official-agent-dev-safety-v1-local-mvp/artifacts/
+!docs/matrix/starter-packs/official-agent-dev-safety-v1-local-mvp/artifacts/**
+!tests/fixtures/agent-trial-v1/task-001-pack/artifacts/
+!tests/fixtures/agent-trial-v1/task-001-pack/artifacts/**
 *.nupkg
 *.snupkg
 

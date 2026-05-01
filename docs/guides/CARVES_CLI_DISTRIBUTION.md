@@ -159,8 +159,8 @@ This fallback preserves source-tree dogfood usability. It does not replace signe
 For stable external-project alpha work, prefer a frozen local dist root under the WSL filesystem when the target project is also being worked from WSL:
 
 ```bash
-<dist-root>/carves pilot invocation --json
-<dist-root>/carves host ensure --json
+<runtime-dist>/carves pilot invocation --json
+<runtime-dist>/carves host ensure --json
 ```
 
 The local release dist contains `runtime-cli/carves.dll`. The Unix `carves` wrapper executes that published CLI directly, avoiding repeated `dotnet run --project` source-tree cold startup. If the published CLI is missing, the release wrapper fails clearly; it does not fall back to source execution.
@@ -188,13 +188,13 @@ dotnet pack .\src\CARVES.Runtime.Cli\carves.csproj -c Release -o $packageRoot
 Install it globally from the local package source:
 
 ```powershell
-dotnet tool install --global CARVES.Runtime.Cli --add-source $packageRoot --version 0.6.1-beta
+dotnet tool install --global CARVES.Runtime.Cli --add-source $packageRoot --version 0.6.2-beta
 ```
 
 If it is already installed:
 
 ```powershell
-dotnet tool update --global CARVES.Runtime.Cli --add-source $packageRoot --version 0.6.1-beta
+dotnet tool update --global CARVES.Runtime.Cli --add-source $packageRoot --version 0.6.2-beta
 ```
 
 After install:
@@ -245,7 +245,7 @@ For isolated validation without modifying global tools:
 
 ```powershell
 $toolRoot = Join-Path $env:TEMP "carves-runtime-cli-tool"
-dotnet tool install CARVES.Runtime.Cli --tool-path $toolRoot --add-source $packageRoot --version 0.6.1-beta
+dotnet tool install CARVES.Runtime.Cli --tool-path $toolRoot --add-source $packageRoot --version 0.6.2-beta
 & (Join-Path $toolRoot "carves.exe") help
 ```
 
@@ -509,13 +509,13 @@ External target repos should not point at an actively edited Runtime source chec
 Create a frozen local distribution folder instead:
 
 ```powershell
-.\scripts\pack-runtime-dist.ps1 -Version 0.6.1-beta
+.\scripts\pack-runtime-dist.ps1 -Version 0.6.2-beta
 ```
 
 Default output:
 
 ```text
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta
+<runtime-dist>
 ```
 
 Then attach or repair target repos so their `.ai/runtime.json` runtime root points at the dist folder.

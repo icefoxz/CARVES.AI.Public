@@ -77,8 +77,21 @@ if (-not $SkipBuild) {
         -WorkingDirectory $RuntimeRoot
 }
 
-$applicationFilter = "GuardPolicyEvaluatorTests|GuardDiffAdapterTests|GuardDecisionReadServiceTests|GuardRunDecisionServiceTests|AlphaGuardTrustBasisCoverageAuditTests|AlphaGuardReleaseCheckpointTests"
-$integrationFilter = "GuardCheckCliTests|CliDistributionClosureTests"
+$readmePath = Join-Path $RuntimeRoot "README.md"
+$isPublicSourceSnapshot = (Test-Path -LiteralPath $readmePath -PathType Leaf) -and
+    ((Get-Content -Raw -LiteralPath $readmePath).Contains("public source snapshot", [System.StringComparison]::OrdinalIgnoreCase))
+
+$privateRuntimeApplicationFilter = "GuardPolicyEvaluatorTests|GuardDiffAdapterTests|GuardDecisionReadServiceTests|GuardRunDecisionServiceTests|AlphaGuardTrustBasisCoverageAuditTests|AlphaGuardReleaseCheckpointTests"
+$privateRuntimeIntegrationFilter = "GuardCheckCliTests|CliDistributionClosureTests"
+
+if ($isPublicSourceSnapshot) {
+    $applicationFilter = "GuardPolicyEvaluatorTests|GuardDiffAdapterTests|GuardDecisionReadServiceTests|GuardRunDecisionServiceTests"
+    $integrationFilter = "GuardCheckCliTests|GuardExtractionShellTests"
+}
+else {
+    $applicationFilter = $privateRuntimeApplicationFilter
+    $integrationFilter = $privateRuntimeIntegrationFilter
+}
 
 $applicationTests = Invoke-Checked `
     -FileName "dotnet" `

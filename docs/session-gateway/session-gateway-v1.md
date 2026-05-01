@@ -41,27 +41,27 @@ Session Gateway v1 only needs to support three user-visible paths:
 
 This frozen v1 docset is:
 
-- [session-gateway-v1-post-closure-execution-plan.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/session-gateway-v1-post-closure-execution-plan.md)
-- [session-api.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/session-api.md)
-- [event-model.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/event-model.md)
-- [intent-routing.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/intent-routing.md)
-- [gateway-boundary.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/gateway-boundary.md)
-- [gate-policy.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/gate-policy.md)
-- [release-surface.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/release-surface.md)
-- [dogfood-validation.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/dogfood-validation.md)
-- [operator-proof-contract.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/operator-proof-contract.md)
-- [governance-assist.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/governance-assist.md)
-- [studio-retirement-routing.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/studio-retirement-routing.md)
-- [capability-forge-retirement-routing.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/capability-forge-retirement-routing.md)
-- [repeatability-readiness.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/repeatability-readiness.md)
-- [ALPHA_SETUP.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/ALPHA_SETUP.md)
-- [ALPHA_QUICKSTART.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/ALPHA_QUICKSTART.md)
-- [KNOWN_LIMITATIONS.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/KNOWN_LIMITATIONS.md)
-- [BUG_REPORT_BUNDLE.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/BUG_REPORT_BUNDLE.md)
-- [runtime-central-interaction-point-and-official-truth-ingress.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/runtime/runtime-central-interaction-point-and-official-truth-ingress.md)
-- [runtime-agent-governed-gateway-ingress-contract.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/runtime/runtime-agent-governed-gateway-ingress-contract.md)
-- [runtime-agent-gateway-task-context-handoff-into-host-contract.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/runtime/runtime-agent-gateway-task-context-handoff-into-host-contract.md)
-- [runtime-agent-governed-thin-frontend-bridge-boundary-contract.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/runtime/runtime-agent-governed-thin-frontend-bridge-boundary-contract.md)
+- `session-gateway-v1-post-closure-execution-plan.md`
+- `session-api.md`
+- `event-model.md`
+- `intent-routing.md`
+- `gateway-boundary.md`
+- `gate-policy.md`
+- [release-surface.md](/docs/session-gateway/release-surface.md)
+- [dogfood-validation.md](/docs/session-gateway/dogfood-validation.md)
+- [operator-proof-contract.md](/docs/session-gateway/operator-proof-contract.md)
+- `governance-assist.md`
+- `studio-retirement-routing.md`
+- `capability-forge-retirement-routing.md`
+- [repeatability-readiness.md](/docs/session-gateway/repeatability-readiness.md)
+- [ALPHA_SETUP.md](/docs/session-gateway/ALPHA_SETUP.md)
+- [ALPHA_QUICKSTART.md](/docs/session-gateway/ALPHA_QUICKSTART.md)
+- [KNOWN_LIMITATIONS.md](/docs/session-gateway/KNOWN_LIMITATIONS.md)
+- [BUG_REPORT_BUNDLE.md](/docs/session-gateway/BUG_REPORT_BUNDLE.md)
+- `runtime-central-interaction-point-and-official-truth-ingress.md`
+- `runtime-agent-governed-gateway-ingress-contract.md`
+- `runtime-agent-gateway-task-context-handoff-into-host-contract.md`
+- `runtime-agent-governed-thin-frontend-bridge-boundary-contract.md`
 
 ## Non-Goals
 

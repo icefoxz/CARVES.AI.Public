@@ -213,6 +213,8 @@ public static partial class MatrixCliRunner
             set -u
             cd "$(dirname "$0")" || exit 1
 
+            echo "CARVES Agent Trial local result"
+
             if [ -x "./tools/carves/carves" ]; then
               CARVES="./tools/carves/carves"
             elif command -v carves >/dev/null 2>&1; then
@@ -222,6 +224,10 @@ public static partial class MatrixCliRunner
               echo "Missing scorer: no package-local scorer was found at tools/carves/carves, and carves was not found on PATH." >&2
               echo "Download a full playable package or intentionally install carves on PATH as a developer fallback." >&2
               exit 1
+            fi
+
+            if [ ! -f "results/local/matrix-agent-trial-result-card.md" ]; then
+              echo "No previous local result card was found."
             fi
 
             "$CARVES" test result "$@"
@@ -347,6 +353,8 @@ public static partial class MatrixCliRunner
               goto run_carves
             )
 
+            if not exist "results\local\matrix-agent-trial-result-card.md" echo No previous local result card was found.
+
             echo CARVES scorer/service was not found.
             echo Missing scorer: no package-local scorer was found at tools\carves\carves.exe, and carves was not found on PATH.
             echo This is not a complete Windows playable package. Download a full playable package or regenerate it with a scorer bundle.
@@ -393,6 +401,8 @@ public static partial class MatrixCliRunner
             @echo off
             setlocal
             cd /d "%~dp0"
+
+            echo CARVES Agent Trial local result
 
             echo ;%PATHEXT%; | findstr /I /C:";.EXE;" >nul
             if errorlevel 1 set "PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC"

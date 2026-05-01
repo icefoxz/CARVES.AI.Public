@@ -180,7 +180,7 @@ Windows SCORE.cmd path smoke passed.
 Covered path shape:
 
 ```text
-C:\Users\icefo\AppData\Local\Temp\CARVES Phase4 path smoke with spaces and non-ASCII text
+<windows-temp>\CARVES Phase4 path smoke with spaces and non-ASCII text
 ```
 
 The local path smoke summary stayed in the temporary Windows work root and is

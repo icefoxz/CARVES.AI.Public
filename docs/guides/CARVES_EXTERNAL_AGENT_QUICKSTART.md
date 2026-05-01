@@ -1,6 +1,6 @@
 # CARVES External Agent Quickstart
 
-This is the short entry protocol for an external agent working inside a target repo that is attached to CARVES Runtime `0.6.1-beta`.
+This is the short entry protocol for an external agent working inside a target repo that is attached to CARVES Runtime `0.6.2-beta`.
 
 For operators, the product-level first command is now:
 
@@ -67,12 +67,12 @@ lifecycle truth writeback.
 
 Use the Runtime wrapper path confirmed by `carves pilot invocation --json` only for diagnostics or advanced distribution checks. For stable alpha work, prefer the frozen local dist wrapper.
 
-Current `0.6.1-beta` Runtime posture opens the bounded startup, visible gateway, and Host-mediated external Codex App / Codex CLI worker lane. BYOK/provider SDK or API-backed worker execution is not opened by this candidate. Even when provider backends appear in reference or qualification surfaces, external agents must wait for Host worker policy, packet, evidence, result ingestion, and review approval instead of treating provider configuration as execution authority.
+Current `0.6.2-beta` Runtime posture opens the bounded startup, visible gateway, and Host-mediated external Codex App / Codex CLI worker lane. BYOK/provider SDK or API-backed worker execution is not opened by this candidate. Even when provider backends appear in reference or qualification surfaces, external agents must wait for Host worker policy, packet, evidence, result ingestion, and review approval instead of treating provider configuration as execution authority.
 
 When the target project is being worked from WSL, keep the Runtime dist and the target project on the WSL filesystem and use the Unix dist wrapper directly:
 
 ```bash
-<dist-root>/carves up /path/to/target-project
+<runtime-dist>/carves up /path/to/target-project
 cd /path/to/target-project
 .carves/carves agent start --json
 ```
@@ -114,7 +114,7 @@ If `thread_start_ready=false` or `startup_boundary_ready=false`, do not plan or 
 
 Do not classify the target as new or old yourself, and do not repair Runtime binding by hand. If `target_runtime_binding_status` is missing, mismatched, or requires rebind, stop and show CARVES output to the operator.
 
-The current external-agent lane still exposes the legacy `next_governed_command` projection. The bounded hardening target for discussion-first intake and the minimum stateful-action gate is frozen in [runtime-conversation-first-minimum-stateful-action-gate-contract.md](../runtime/runtime-conversation-first-minimum-stateful-action-gate-contract.md). That contract defines the follow-on boundary; it does not claim that every legacy surface is already migrated.
+The current external-agent lane still exposes the legacy `next_governed_command` projection. The bounded hardening target for discussion-first intake and the minimum stateful-action gate is tracked as `runtime-conversation-first-minimum-stateful-action-gate-contract.md`. That contract defines the follow-on boundary; it does not claim that every legacy surface is already migrated.
 
 ## Before Each Step
 

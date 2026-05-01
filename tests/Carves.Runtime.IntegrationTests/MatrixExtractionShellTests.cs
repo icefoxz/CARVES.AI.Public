@@ -45,7 +45,7 @@ public sealed class MatrixExtractionShellTests
         Assert.Contains("ComputeFileSha256(manifestPath)", coreSources, StringComparison.Ordinal);
         Assert.Contains("VerifyManifest(manifestPath)", coreSources, StringComparison.Ordinal);
         Assert.Contains("verifyResult.IsVerified && verifyResult.TrustChainHardening.GatesSatisfied ? 0 : 1", coreSources, StringComparison.Ordinal);
-        Assert.Contains("BuildVerifyResult(artifactRoot)", coreSources, StringComparison.Ordinal);
+        Assert.Contains("BuildVerifyResult(artifactRoot, requireTrial: false)", coreSources, StringComparison.Ordinal);
         Assert.Contains("verifyResult.TrustChainHardening", coreSources, StringComparison.Ordinal);
         Assert.Contains("trust_chain_hardening = trustChainHardening", coreSources, StringComparison.Ordinal);
         Assert.Contains("BuildVerifyTrustChainHardening", coreSources, StringComparison.Ordinal);
@@ -221,7 +221,7 @@ public sealed class MatrixExtractionShellTests
         var verifyPath = ReadMatrixCoreSource(repoRoot, "MatrixVerifyCommand.cs");
         var usage = ReadMatrixCoreSource(repoRoot, "MatrixCliUsage.cs");
 
-        Assert.Contains("BuildVerifyResult(options.ArtifactRoot!)", verifyPath, StringComparison.Ordinal);
+        Assert.Contains("BuildVerifyResult(options.ArtifactRoot!, options.RequireTrial)", verifyPath, StringComparison.Ordinal);
         Assert.Contains("MatrixArtifactManifestWriter.VerifyManifest", verifyPath, StringComparison.Ordinal);
         Assert.Contains("VerifyRequiredArtifacts", verifyPath, StringComparison.Ordinal);
         Assert.Contains("VerifyShieldEvaluation", verifyPath, StringComparison.Ordinal);
@@ -900,6 +900,7 @@ public sealed class MatrixExtractionShellTests
             {
                 ValidGate("manifest_integrity", "Manifest hashes, sizes, privacy flags, and artifact file presence verified."),
                 ValidGate("required_artifacts", "All required artifact entries are present with expected path, schema, and producer metadata."),
+                ValidGate("trial_artifacts", "Agent Trial artifacts are not present; non-trial Matrix compatibility mode applies."),
                 ValidGate("shield_score", "Shield evaluation status, certification posture, Standard label, and Lite score fields are verified."),
                 ValidGate("summary_consistency", "Matrix proof summary references the current manifest hash, posture, and issue count."),
             },

@@ -44,11 +44,11 @@ At minimum, the packet should answer:
 
 The current bounded packet also ties together:
 
-- [internal-beta-gate.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/internal-beta-gate.md)
-- [runtime-trusted-bootstrap-truth-schema.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/runtime/runtime-trusted-bootstrap-truth-schema.md)
-- [runtime-onboarding-acceleration-contract.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/runtime/runtime-onboarding-acceleration-contract.md)
-- [ALPHA_SETUP.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/ALPHA_SETUP.md)
-- [ALPHA_QUICKSTART.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/ALPHA_QUICKSTART.md)
+- `internal-beta-gate.md`
+- `runtime-trusted-bootstrap-truth-schema.md`
+- `runtime-onboarding-acceleration-contract.md`
+- [ALPHA_SETUP.md](/docs/session-gateway/ALPHA_SETUP.md)
+- [ALPHA_QUICKSTART.md](/docs/session-gateway/ALPHA_QUICKSTART.md)
 
 ## Entry Commands
 

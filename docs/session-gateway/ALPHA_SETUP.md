@@ -65,14 +65,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\carves-host.ps1 in
 
 For bounded internal beta admission, also read:
 
-- [internal-beta-gate.md](./internal-beta-gate.md)
-- [internal-beta-exit-contract.md](./internal-beta-exit-contract.md)
-- [../runtime/runtime-first-run-operator-packet.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/runtime/runtime-first-run-operator-packet.md)
+- `internal-beta-gate.md`
+- `internal-beta-exit-contract.md`
+- [../runtime/runtime-first-run-operator-packet.md](/docs/runtime/runtime-first-run-operator-packet.md)
 
 For the first real internal proof attempt, use the governed runbook and packet:
 
-- [internal-operator-proof-runbook.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/internal-operator-proof-runbook.md)
-- [INTERNAL_OPERATOR_PROOF_PACKET_TEMPLATE.md](/D:/Projects/CARVES.AI/CARVES.Runtime/docs/session-gateway/INTERNAL_OPERATOR_PROOF_PACKET_TEMPLATE.md)
+- `internal-operator-proof-runbook.md`
+- `INTERNAL_OPERATOR_PROOF_PACKET_TEMPLATE.md`
 
 Expected bounded posture:
 

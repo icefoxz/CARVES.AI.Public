@@ -10,7 +10,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>carves</ToolCommandName>
     <PackageId>CARVES.Runtime.Cli</PackageId>
-    <Version>0.6.1-beta</Version>
+    <Version>0.6.2-beta</Version>
     <Authors>CARVES.AI</Authors>
     <Description>CARVES Guard and companion CLI tools for AI code-change boundary checks, audit readback, and local safety reporting.</Description>
     <PackageTags>carves;guard;ai-safety;code-review;cli;dotnet-tool</PackageTags>

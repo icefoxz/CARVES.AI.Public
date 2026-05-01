@@ -28,6 +28,12 @@ public sealed class RuntimeAgentThreadStartService
 
     public RuntimeAgentThreadStartSurface Build()
     {
+        var startupReadback = BuildStartupReadback();
+        if (ShouldUseLimitedPublicSnapshotStart(startupReadback))
+        {
+            return BuildLimitedPublicSnapshotStart(startupReadback);
+        }
+
         var errors = new List<string>();
         ValidateRuntimeDocument(RuntimeProductClosureMetadata.CurrentDocumentPath, RuntimeProductClosureMetadata.CurrentDocumentLabel, errors);
 
@@ -40,7 +46,6 @@ public sealed class RuntimeAgentThreadStartService
         errors.AddRange(pilotStatus.Errors.Select(static error => $"runtime-product-closure-pilot-status:{error}"));
         errors.AddRange(handoff.Errors.Select(static error => $"runtime-governed-agent-handoff-proof:{error}"));
 
-        var startupReadback = BuildStartupReadback();
         var handoffReady = string.Equals(handoff.OverallPosture, "bounded_governed_agent_handoff_proof_ready", StringComparison.Ordinal);
         var runtimeReadbacksReady = errors.Count == 0
                                     && pilotStart.IsValid
@@ -119,6 +124,122 @@ public sealed class RuntimeAgentThreadStartService
             Errors = errors,
             NonClaims = BuildNonClaims(),
         };
+    }
+
+    private bool ShouldUseLimitedPublicSnapshotStart(RuntimeAgentStartupReadback startupReadback)
+    {
+        return startupReadback.StartupBoundaryReady
+               && !string.Equals(startupReadback.TargetProjectClassification, "runtime_operating_repo", StringComparison.Ordinal)
+               && IsPublicSourceSnapshotRoot(documentRoot.DocumentRoot)
+               && !File.Exists(RuntimeDocumentPath(RuntimeProductClosureMetadata.CurrentDocumentPath));
+    }
+
+    private RuntimeAgentThreadStartSurface BuildLimitedPublicSnapshotStart(RuntimeAgentStartupReadback startupReadback)
+    {
+        return new RuntimeAgentThreadStartSurface
+        {
+            ProductClosurePhase = "limited_public_snapshot_start",
+            PhaseDocumentPath = "N/A:public_snapshot_private_closure_docs_not_packaged",
+            RuntimeDocumentRoot = documentRoot.DocumentRoot,
+            RuntimeDocumentRootMode = documentRoot.Mode,
+            RepoRoot = repoRoot,
+            StartupEntrySource = startupReadback.StartupEntrySource,
+            TargetProjectClassification = startupReadback.TargetProjectClassification,
+            TargetClassificationOwner = startupReadback.TargetClassificationOwner,
+            TargetClassificationSource = startupReadback.TargetClassificationSource,
+            AgentTargetClassificationAllowed = false,
+            TargetStartupMode = startupReadback.TargetStartupMode,
+            ExistingProjectHandling = startupReadback.ExistingProjectHandling,
+            StartupBoundaryReady = startupReadback.StartupBoundaryReady,
+            StartupBoundaryPosture = startupReadback.StartupBoundaryPosture,
+            StartupBoundaryGaps = startupReadback.StartupBoundaryGaps,
+            TargetBoundRuntimeRoot = startupReadback.TargetBoundRuntimeRoot,
+            TargetRuntimeBindingStatus = startupReadback.TargetRuntimeBindingStatus,
+            TargetRuntimeBindingSource = startupReadback.TargetRuntimeBindingSource,
+            AgentRuntimeRebindAllowed = false,
+            RuntimeBindingRule = "If target Runtime binding is missing, mismatched, or requires rebind, stop and show CARVES output to the operator. Do not edit .ai/runtime.json or .ai/runtime/attach-handshake.json by hand.",
+            WorkerExecutionBoundary = "null_worker_current_version_no_api_sdk_worker_execution",
+            OverallPosture = "agent_thread_start_limited_public_snapshot_ready",
+            ThreadStartReady = true,
+            NextGovernedCommand = ".carves/carves gateway status",
+            NextCommandSource = "limited_public_snapshot_visibility",
+            DiscussionFirstSurface = false,
+            AutoRunAllowed = false,
+            RecommendedActionId = null,
+            AvailableActions = BuildLimitedPublicSnapshotActions(),
+            ForbiddenAutoActions = RuntimeDiscussionFirstSurfacePolicy.BuildForbiddenAutoActions(),
+            PilotStartPosture = "not_evaluated_limited_public_snapshot",
+            PilotStartBundleReady = false,
+            PilotStatusPosture = "not_evaluated_limited_public_snapshot",
+            CurrentStageId = "limited_public_snapshot_start",
+            CurrentStageOrder = 0,
+            CurrentStageStatus = "ready",
+            PilotStatusNextCommand = ".carves/carves gateway status",
+            FollowUpGatePosture = "not_evaluated_limited_public_snapshot",
+            FollowUpGateReady = false,
+            AcceptedPlanningItemCount = 0,
+            ReadyForPlanInitCount = 0,
+            FollowUpGateNextCommand = string.Empty,
+            HandoffPosture = "not_evaluated_limited_public_snapshot",
+            GovernedAgentHandoffReady = false,
+            WorkingModeRecommendationPosture = "not_evaluated_limited_public_snapshot",
+            ProtectedTruthRootPosture = "protected_truth_root_policy_not_evaluated_limited_public_snapshot",
+            AdapterContractPosture = "adapter_contract_not_evaluated_limited_public_snapshot",
+            MinimalAgentRules = BuildMinimalAgentRules(),
+            StopAndReportTriggers = BuildLimitedPublicSnapshotStopAndReportTriggers(),
+            TroubleshootingReadbacks = BuildTroubleshootingReadbacks(),
+            Gaps = [],
+            Summary = "Agent thread start is ready in limited public snapshot mode. Runtime startup and target binding are valid, but private product-closure/pilot proof surfaces are intentionally not evaluated.",
+            RecommendedNextAction = "Use `.carves/carves gateway status` or `.carves/carves status --watch --iterations 1 --interval-ms 0` for visible readiness. Do not start worker execution, planning, review approval, writeback, commit, merge, or release from this limited readback.",
+            IsValid = true,
+            Errors = [],
+            NonClaims = BuildLimitedPublicSnapshotNonClaims(),
+        };
+    }
+
+    private static RuntimeInteractionActionSurface[] BuildLimitedPublicSnapshotActions()
+    {
+        return
+        [
+            new()
+            {
+                ActionId = "target_gateway_status",
+                Label = "Target gateway status",
+                Kind = "read_only",
+                Command = ".carves/carves gateway status",
+                Summary = "Read the target-bound CARVES gateway and Host status without planning, editing, or lifecycle writeback.",
+            },
+            new()
+            {
+                ActionId = "target_status_once",
+                Label = "Target status once",
+                Kind = "read_only",
+                Command = ".carves/carves status --watch --iterations 1 --interval-ms 0",
+                Summary = "Read one target-local status heartbeat without starting worker automation.",
+            },
+        ];
+    }
+
+    private static string[] BuildLimitedPublicSnapshotStopAndReportTriggers()
+    {
+        return
+        [
+            "a target-local visibility command fails or returns blocked posture",
+            "the operator asks for worker execution, planning, review approval, truth writeback, commit, merge, or release",
+            "the agent wants to modify protected truth roots or runtime binding files directly",
+            "the agent cannot keep work to read-only visibility and ordinary discussion",
+        ];
+    }
+
+    private static string[] BuildLimitedPublicSnapshotNonClaims()
+    {
+        return
+        [
+            "This limited public snapshot readback confirms startup binding and visibility only.",
+            "This readback does not evaluate private product-closure, pilot proof, governed handoff, working-mode, or planning-gate surfaces.",
+            "This readback does not grant worker execution authority, lifecycle truth, review approval, writeback, commit, merge, release, certification, hosted verification, or OS sandboxing.",
+            "Public snapshot missing product-closure documents must not be repaired by copying private Runtime truth into the target project.",
+        ];
     }
 
     private static string ResolveNextCommand(
@@ -315,11 +436,35 @@ public sealed class RuntimeAgentThreadStartService
 
     private void ValidateRuntimeDocument(string repoRelativePath, string label, List<string> errors)
     {
-        var fullPath = Path.Combine(documentRoot.DocumentRoot, repoRelativePath.Replace('/', Path.DirectorySeparatorChar));
+        var fullPath = RuntimeDocumentPath(repoRelativePath);
         if (!File.Exists(fullPath))
         {
             errors.Add($"{label} '{repoRelativePath}' is missing.");
         }
+    }
+
+    private string RuntimeDocumentPath(string repoRelativePath)
+    {
+        return Path.Combine(documentRoot.DocumentRoot, repoRelativePath.Replace('/', Path.DirectorySeparatorChar));
+    }
+
+    private static bool IsPublicSourceSnapshotRoot(string root)
+    {
+        if (!File.Exists(Path.Combine(root, "START_CARVES.md"))
+            || !File.Exists(Path.Combine(root, "carves")))
+        {
+            return false;
+        }
+
+        var readmePath = Path.Combine(root, "README.md");
+        if (!File.Exists(readmePath))
+        {
+            return false;
+        }
+
+        var readme = File.ReadAllText(readmePath);
+        return readme.Contains("public source snapshot", StringComparison.OrdinalIgnoreCase)
+               || readme.Contains("public snapshot", StringComparison.OrdinalIgnoreCase);
     }
 
     private RuntimeAgentStartupReadback BuildStartupReadback()

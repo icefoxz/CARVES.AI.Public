@@ -38,7 +38,7 @@ dotnet run --project .\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- hos
 From the target repo directory:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- attach
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- attach
 ```
 
 Checkpoint files:
@@ -49,15 +49,15 @@ Checkpoint files:
 Health check:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- status --summary
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- status --summary
 ```
 
 Bounded Stage 6 readback:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect runtime-first-run-operator-packet
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect runtime-agent-delivery-readiness
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect runtime-agent-validation-bundle
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect runtime-first-run-operator-packet
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect runtime-agent-delivery-readiness
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect runtime-agent-validation-bundle
 ```
 
 ## 3. Create and approve the first initialization card
@@ -81,14 +81,14 @@ Prepare a payload:
 Create and approve:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- create-card-draft C:\temp\card-create.json
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- approve-card CARD-900 "pilot approved"
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- create-card-draft <temp-dir>\card-create.json
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- approve-card CARD-900 "pilot approved"
 ```
 
 Checkpoint:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect-card CARD-900
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect-card CARD-900
 ```
 
 ## 4. Create and approve the first taskgraph draft
@@ -118,14 +118,14 @@ Prepare a taskgraph payload:
 Create and approve:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- create-taskgraph-draft C:\temp\taskgraph-draft.json
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- approve-taskgraph-draft TG-CARD-900-001 "pilot taskgraph approved"
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- create-taskgraph-draft <temp-dir>\taskgraph-draft.json
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- approve-taskgraph-draft TG-CARD-900-001 "pilot taskgraph approved"
 ```
 
 Checkpoint:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- task inspect T-CARD-900-001 --runs
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- task inspect T-CARD-900-001 --runs
 ```
 
 ## 5. Create the first execution run
@@ -133,8 +133,8 @@ dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Hos
 Use a bounded dry-run first:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- task run T-CARD-900-001 --dry-run
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- task inspect T-CARD-900-001 --runs
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- task run T-CARD-900-001 --dry-run
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- task inspect T-CARD-900-001 --runs
 ```
 
 Checkpoint truth:
@@ -147,15 +147,15 @@ Checkpoint truth:
 Write `.ai/execution/T-CARD-900-001/result.json`, then ingest:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- task ingest-result T-CARD-900-001
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- task ingest-result T-CARD-900-001
 ```
 
 Checkpoint surfaces:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect replan T-CARD-900-001
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect execution-memory T-CARD-900-001
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect attach-proof T-CARD-900-001
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect replan T-CARD-900-001
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect execution-memory T-CARD-900-001
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- inspect attach-proof T-CARD-900-001
 ```
 
 ## 7. Record pilot evidence
@@ -163,8 +163,8 @@ dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Hos
 Prepare a feedback payload and record it:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- pilot record-evidence C:\temp\pilot-evidence.json
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- pilot list-evidence
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- pilot record-evidence <temp-dir>\pilot-evidence.json
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- pilot list-evidence
 ```
 
 Checkpoint files:
@@ -177,16 +177,16 @@ Checkpoint files:
 Use the existing runtime repair surfaces:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- repair
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- rebuild
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- reset --derived
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- repair
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- rebuild
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- reset --derived
 ```
 
 Then verify:
 
 ```powershell
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- verify runtime
-dotnet run --project D:\Projects\CARVES.AI\CARVES.Runtime\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- status --summary
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- verify runtime
+dotnet run --project <carves-root>\src\CARVES.Runtime.Host\Carves.Runtime.Host.csproj -- status --summary
 ```
 
 ## 9. Clean shutdown

@@ -1,0 +1,59 @@
+{
+  "schema_version": "command-failure-mode-matrix.v1",
+  "policy_version": "memory-gate.v1",
+  "commands": [
+    {
+      "command": "carves memory verify --strict",
+      "default_mode": "strict",
+      "flags": [
+        "--json"
+      ],
+      "critical_failure_behavior": "exit_nonzero",
+      "exit_code": 1,
+      "json_error_shape": "memory_verify_result.v1",
+      "telemetry_event": "memory.drift.blocked"
+    },
+    {
+      "command": "carves memory search",
+      "default_mode": "search",
+      "flags": [
+        "--json"
+      ],
+      "critical_failure_behavior": "exclude_unsafe_results_with_reason",
+      "exit_code": 0,
+      "json_error_shape": "memory_search_result.v1",
+      "telemetry_event": "memory.search.filtered"
+    },
+    {
+      "command": "carves context show",
+      "default_mode": "normal",
+      "flags": [
+        "--json"
+      ],
+      "critical_failure_behavior": "degraded_or_block_if_task_writeback_sensitive",
+      "exit_code": 0,
+      "json_error_shape": "context_show_result.v1",
+      "telemetry_event": "context.source.excluded"
+    },
+    {
+      "command": "carves context estimate",
+      "default_mode": "normal",
+      "flags": [
+        "--json"
+      ],
+      "critical_failure_behavior": "degraded_with_warning",
+      "exit_code": 0,
+      "json_error_shape": "context_estimate_result.v1",
+      "telemetry_event": "context.source.excluded"
+    },
+    {
+      "command": "writeback preflight",
+      "default_mode": "strict",
+      "flags": [],
+      "critical_failure_behavior": "block",
+      "exit_code": 1,
+      "json_error_shape": "writeback_preflight_result.v1",
+      "telemetry_event": "memory.write.blocked"
+    }
+  ]
+}

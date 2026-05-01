@@ -11,9 +11,9 @@ This keeps target repos stable while Runtime development continues.
 Recommended layout:
 
 ```text
-D:\Projects\CARVES.AI\CARVES.Runtime
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta
-D:\Projects\CARVES.AI\CARVES.AgentCoach
+<carves-root>
+<runtime-dist>
+<target-project>
 ```
 
 The source repo owns development. The dist folder is a generated artifact. Target repos should attach to the dist folder.
@@ -25,13 +25,13 @@ Version policy lives in `docs/release/runtime-versioning-policy.md`. A Runtime d
 From the Runtime source repo:
 
 ```powershell
-.\scripts\pack-runtime-dist.ps1 -Version 0.6.1-beta
+.\scripts\pack-runtime-dist.ps1 -Version 0.6.2-beta
 ```
 
 If the version folder already exists and you intentionally want to replace it:
 
 ```powershell
-.\scripts\pack-runtime-dist.ps1 -Version 0.6.1-beta -Force
+.\scripts\pack-runtime-dist.ps1 -Version 0.6.2-beta -Force
 ```
 
 The script requires a clean Runtime source repo by default. Use `-AllowDirty` only for explicit diagnostic builds.
@@ -69,9 +69,9 @@ The generated folder excludes:
 - `.ai/artifacts/` worker, provider, review, and safety artifacts
 - `.ai/execution/` execution envelopes
 - `.ai/failures/` failure history
-- `.ai/memory/` development-time memory
+- `.ai/memory/execution/` development-time execution memory
 
-Do not package development card history by default. Files under `.ai/tasks/`, `.ai/runtime/`, `.ai/artifacts/`, `.ai/execution/`, `.ai/failures/`, and `.ai/memory/` are source-repo governance history, not external distribution payload. This also prevents very long generated names such as `MEM-T-CARD-...json` from making Windows extraction fail with `Path too long`.
+Do not package development card history by default. Files under `.ai/tasks/`, `.ai/runtime/`, `.ai/artifacts/`, `.ai/execution/`, `.ai/failures/`, and `.ai/memory/execution/` are source-repo governance history, not external distribution payload. This also prevents very long generated names such as `MEM-T-CARD-...json` from making Windows extraction fail with `Path too long`.
 
 The packaging script fails the release dist if any generated relative path is longer than the configured Windows extraction budget or if the output audit finds forbidden paths. Use `-DistKind dev` only when intentionally producing a development/source package.
 
@@ -80,26 +80,26 @@ The packaging script fails the release dist if any generated relative path is lo
 A target repo should point its `.ai/runtime.json` and `.ai/runtime/attach-handshake.json` runtime root to the generated folder:
 
 ```json
-"runtime_root": "D:\\Projects\\CARVES.AI\\.dist\\CARVES.Runtime-0.6.1-beta"
+"runtime_root": "D:\\Projects\\CARVES.AI\\.dist\\CARVES.Runtime-0.6.2-beta"
 ```
 
 Then run from the target repo:
 
 ```powershell
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 init . --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot readiness --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot invocation --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot activation --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot dist-smoke --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot dist-binding --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot target-proof --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot residue --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot ignore-plan --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot ignore-record --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot follow-up-record --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot follow-up-intake --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot follow-up-gate --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot status --json
+<runtime-dist>\carves.ps1 init . --json
+<runtime-dist>\carves.ps1 pilot readiness --json
+<runtime-dist>\carves.ps1 pilot invocation --json
+<runtime-dist>\carves.ps1 pilot activation --json
+<runtime-dist>\carves.ps1 pilot dist-smoke --json
+<runtime-dist>\carves.ps1 pilot dist-binding --json
+<runtime-dist>\carves.ps1 pilot target-proof --json
+<runtime-dist>\carves.ps1 pilot residue --json
+<runtime-dist>\carves.ps1 pilot ignore-plan --json
+<runtime-dist>\carves.ps1 pilot ignore-record --json
+<runtime-dist>\carves.ps1 pilot follow-up-record --json
+<runtime-dist>\carves.ps1 pilot follow-up-intake --json
+<runtime-dist>\carves.ps1 pilot follow-up-gate --json
+<runtime-dist>\carves.ps1 pilot status --json
 ```
 
 The expected readback is:
@@ -116,7 +116,7 @@ The dist wrapper injects its own Runtime root into the CLI process. `init . --js
 Before claiming the dist is current, verify the freshness smoke:
 
 ```powershell
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot dist-smoke --json
+<runtime-dist>\carves.ps1 pilot dist-smoke --json
 ```
 
 The expected freshness readback is:
@@ -129,11 +129,11 @@ The expected freshness readback is:
 Then verify the distribution handoff:
 
 ```powershell
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot dist-smoke --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot readiness --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot dist-binding --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot dist --json
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot target-proof --json
+<runtime-dist>\carves.ps1 pilot dist-smoke --json
+<runtime-dist>\carves.ps1 pilot readiness --json
+<runtime-dist>\carves.ps1 pilot dist-binding --json
+<runtime-dist>\carves.ps1 pilot dist --json
+<runtime-dist>\carves.ps1 pilot target-proof --json
 ```
 
 The expected binding-plan readback is:
@@ -154,7 +154,7 @@ The expected dist handoff readback is:
 Then verify the external target readback proof:
 
 ```powershell
-D:\Projects\CARVES.AI\.dist\CARVES.Runtime-0.6.1-beta\carves.ps1 pilot target-proof --json
+<runtime-dist>\carves.ps1 pilot target-proof --json
 ```
 
 The expected target proof readback is:

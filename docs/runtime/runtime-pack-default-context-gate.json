@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "card_id": "CARD-925",
+  "task_id": "T-CARD-925-001",
+  "updated_at": "2026-04-17T13:20:00+08:00",
+  "read_model_kind": "pack_default_context_gate",
+  "authority_posture": "repo_local_candidate_gate",
+  "identity_model_ref": "docs/runtime/runtime-pack-identity-review-posture.json",
+  "budget_readback_ref": "docs/runtime/runtime-context-pack-budget-readback.json",
+  "gate_posture": "candidate_only_no_activation",
+  "decision_values": [
+    "eligible_candidate",
+    "pointer_only",
+    "blocked",
+    "manual_review_required"
+  ],
+  "allowed_default_candidate_families": [
+    "context_pack"
+  ],
+  "required_candidate_inputs": [
+    "pack_id",
+    "pack_family",
+    "schema_version",
+    "lifecycle_state",
+    "review_posture",
+    "review_evidence_refs",
+    "default_context_posture",
+    "budget_readback",
+    "expansion_refs",
+    "non_claims"
+  ],
+  "eligibility_rules": [
+    {
+      "rule_id": "active_lifecycle_required",
+      "required_value": "active",
+      "blocked_values": [
+        "draft",
+        "deprecated",
+        "archived"
+      ]
+    },
+    {
+      "rule_id": "reviewed_with_evidence_required",
+      "required_value": "reviewed",
+      "blocked_values": [
+        "unreviewed",
+        "stale",
+        "needs_review"
+      ]
+    },
+    {
+      "rule_id": "allowed_family_required",
+      "allowed_values": [
+        "context_pack"
+      ]
+    },
+    {
+      "rule_id": "explicit_candidate_posture_required",
+      "required_value": "eligible_candidate",
+      "other_postures": [
+        "pointer_only",
+        "blocked",
+        "manual_review_required"
+      ]
+    },
+    {
+      "rule_id": "budget_readback_required",
+      "required_budget_posture": "readback_available",
+      "over_budget_rule": "estimated_included_tokens_must_be_less_than_or_equal_to_budget_limit_estimated_tokens"
+    },
+    {
+      "rule_id": "pointers_and_non_claims_required",
+      "required_fields": [
+        "expansion_refs",
+        "non_claims"
+      ]
+    }
+  ],
+  "budget_rules": {
+    "required_for_decision": [
+      "eligible_candidate"
+    ],
+    "accepted_budget_postures": [
+      "readback_available"
+    ],
+    "forbidden_budget_postures": [
+      "missing_readback",
+      "over_budget",
+      "unknown"
+    ],
+    "budget_success_does_not_grant_eligibility": true
+  },
+  "startup_read_path": {
+    "mandatory_startup_reads_changed": false,
+    "agents_initialization_reads_changed": false,
+    "default_pack_reads_added": false,
+    "runtime_inspect_api_surface_added": false,
+    "automatic_activation_added": false
+  },
+  "closed_lines": [
+    "not_automatic_activation",
+    "not_default_startup_context",
+    "not_a_runtime_inspect_or_api_surface",
+    "not_a_pack_registry",
+    "not_rollout_assignment",
+    "not_multi_pack_orchestration",
+    "not_phase_specific_selection",
+    "not_tokenizer_exact_accounting"
+  ],
+  "candidate_decisions": [
+    {
+      "pack_id": "runtime.context_pack",
+      "pack_family": "context_pack",
+      "identity_ref": "docs/runtime/runtime-pack-identity-review-posture.json#runtime.context_pack",
+      "budget_readback_ref": "docs/runtime/runtime-context-pack-budget-readback.json#runtime.context_pack",
+      "budget_posture": "readback_available",
+      "source_default_context_posture": "pointer_only",
+      "decision": "pointer_only",
+      "gate_reasons": [
+        "source_posture_pointer_only",
+        "budget_readback_available_but_not_candidate_claim",
+        "no_default_startup_read"
+      ],
+      "expansion_refs": [
+        ".ai/memory/architecture/07_CONTEXT_PACK_POLICY.md",
+        "docs/runtime/context-pack-builder.md",
+        "docs/runtime/runtime-context-pack-budget-readback.json"
+      ],
+      "non_claims": [
+        "does_not_enter_broad_startup_context",
+        "does_not_activate_pack",
+        "does_not_replace_task_truth"
+      ]
+    },
+    {
+      "pack_id": "runtime.runtime_pack",
+      "pack_family": "runtime_pack",
+      "identity_ref": "docs/runtime/runtime-pack-identity-review-posture.json#runtime.runtime_pack",
+      "budget_readback_ref": "",
+      "budget_posture": "not_required_for_blocked_decision",
+      "source_default_context_posture": "blocked",
+      "decision": "blocked",
+      "gate_reasons": [
+        "family_not_allowed_for_default_context",
+        "source_posture_blocked",
+        "runtime_pack_lifecycle_is_not_ai_startup_context"
+      ],
+      "expansion_refs": [
+        "docs/runtime/pack-artifact-and-provenance-schema.md"
+      ],
+      "non_claims": [
+        "does_not_open_registry",
+        "does_not_auto_activate",
+        "does_not_become_default_ai_context"
+      ]
+    },
+    {
+      "pack_id": "runtime.release_pack",
+      "pack_family": "release_pack",
+      "identity_ref": "docs/runtime/runtime-pack-identity-review-posture.json#runtime.release_pack",
+      "budget_readback_ref": "",
+      "budget_posture": "not_required_for_blocked_decision",
+      "source_default_context_posture": "blocked",
+      "decision": "blocked",
+      "gate_reasons": [
+        "family_not_allowed_for_default_context",
+        "source_posture_blocked",
+        "release_artifact_is_not_ai_startup_context"
+      ],
+      "expansion_refs": [
+        "docs/runtime/pack-artifact-and-provenance-schema.md"
+      ],
+      "non_claims": [
+        "does_not_publish_package",
+        "does_not_open_remote_registry",
+        "does_not_auto_rollout"
+      ]
+    },
+    {
+      "pack_id": "runtime.external_resource_pack",
+      "pack_family": "external_resource_pack",
+      "identity_ref": "docs/runtime/runtime-pack-identity-review-posture.json#runtime.external_resource_pack",
+      "budget_readback_ref": "",
+      "budget_posture": "not_required_for_blocked_decision",
+      "source_default_context_posture": "blocked",
+      "decision": "blocked",
+      "gate_reasons": [
+        "family_not_allowed_for_default_context",
+        "source_posture_blocked",
+        "external_resource_guidance_is_explicit_lookup_material"
+      ],
+      "expansion_refs": [
+        "docs/runtime/runtime-pack-identity-context-cost-clarification.md"
+      ],
+      "non_claims": [
+        "does_not_make_target_repo_runtime_truth_owner",
+        "does_not_copy_runtime_truth",
+        "does_not_enter_runtime_startup_context"
+      ]
+    },
+    {
+      "pack_id": "runtime.proof_bundle",
+      "pack_family": "proof_bundle",
+      "identity_ref": "docs/runtime/runtime-pack-identity-review-posture.json#runtime.proof_bundle",
+      "budget_readback_ref": "",
+      "budget_posture": "manual_review_scope_required",
+      "source_default_context_posture": "manual_review_required",
+      "decision": "manual_review_required",
+      "gate_reasons": [
+        "source_posture_manual_review_required",
+        "proof_material_requires_human_scope_selection",
+        "not_default_startup_context"
+      ],
+      "expansion_refs": [
+        "docs/runtime/runtime-packaging-proof-federation-maturity.md",
+        "docs/runtime/runtime-controlled-governance-proof-integration.md"
+      ],
+      "non_claims": [
+        "does_not_replace_proof_truth",
+        "does_not_become_second_proof_ledger",
+        "does_not_enter_startup_context"
+      ]
+    },
+    {
+      "pack_id": "runtime.state_package",
+      "pack_family": "runtime_state_package",
+      "identity_ref": "docs/runtime/runtime-pack-identity-review-posture.json#runtime.state_package",
+      "budget_readback_ref": "",
+      "budget_posture": "not_required_for_blocked_decision",
+      "source_default_context_posture": "blocked",
+      "decision": "blocked",
+      "gate_reasons": [
+        "family_not_allowed_for_default_context",
+        "source_posture_blocked",
+        "state_exchange_package_is_not_ai_startup_context"
+      ],
+      "expansion_refs": [
+        ".ai/STATE.md"
+      ],
+      "non_claims": [
+        "does_not_embed_full_history",
+        "does_not_replace_state_truth",
+        "does_not_enter_default_ai_context"
+      ]
+    },
+    {
+      "pack_id": "runtime.policy_package",
+      "pack_family": "policy_package",
+      "identity_ref": "docs/runtime/runtime-pack-identity-review-posture.json#runtime.policy_package",
+      "budget_readback_ref": "",
+      "budget_posture": "not_required_for_blocked_decision",
+      "source_default_context_posture": "blocked",
+      "decision": "blocked",
+      "gate_reasons": [
+        "family_not_allowed_for_default_context",
+        "source_posture_blocked",
+        "policy_package_is_explicit_local_operation_material"
+      ],
+      "expansion_refs": [
+        "docs/runtime/pack-artifact-and-provenance-schema.md"
+      ],
+      "non_claims": [
+        "does_not_open_remote_policy_bundle",
+        "does_not_auto_apply_policy",
+        "does_not_enter_startup_context"
+      ]
+    },
+    {
+      "pack_id": "matrix.trial_starter_pack",
+      "pack_family": "trial_starter_pack",
+      "identity_ref": "docs/runtime/runtime-pack-identity-review-posture.json#matrix.trial_starter_pack",
+      "budget_readback_ref": "",
+      "budget_posture": "not_required_for_blocked_decision",
+      "source_default_context_posture": "blocked",
+      "decision": "blocked",
+      "gate_reasons": [
+        "family_not_allowed_for_default_context",
+        "source_posture_blocked",
+        "trial_fixture_is_not_runtime_startup_context"
+      ],
+      "expansion_refs": [
+        "tests/fixtures/agent-trial-v1/task-001-pack/README.md",
+        "docs/matrix/"
+      ],
+      "non_claims": [
+        "does_not_certify_model",
+        "does_not_publish_benchmark",
+        "does_not_become_runtime_pack_lifecycle_truth"
+      ]
+    },
+    {
+      "pack_id": "matrix.instruction_pack",
+      "pack_family": "instruction_pack",
+      "identity_ref": "docs/runtime/runtime-pack-identity-review-posture.json#matrix.instruction_pack",
+      "budget_readback_ref": "",
+      "budget_posture": "not_required_for_blocked_decision",
+      "source_default_context_posture": "blocked",
+      "decision": "blocked",
+      "gate_reasons": [
+        "family_not_allowed_for_default_context",
+        "source_posture_blocked",
+        "instruction_identity_bundle_is_not_runtime_startup_context"
+      ],
+      "expansion_refs": [
+        "tests/fixtures/agent-trial-v1/task-001-pack/README.md"
+      ],
+      "non_claims": [
+        "does_not_override_task_acceptance",
+        "does_not_enter_runtime_startup_context",
+        "does_not_define_runtime_pack_schema"
+      ]
+    }
+  ],
+  "non_claims": [
+    "does_not_activate_any_pack",
+    "does_not_load_any_pack_by_default",
+    "does_not_add_startup_reads",
+    "does_not_create_inspect_or_api_surface",
+    "does_not_replace_identity_or_budget_readbacks"
+  ]
+}
