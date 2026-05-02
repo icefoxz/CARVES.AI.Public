@@ -104,7 +104,7 @@ public sealed class MatrixCrossPlatformVerifyPilotTests
         Assert.Contains("./scripts/matrix/matrix-proof-lane.ps1", workflow, StringComparison.Ordinal);
         Assert.Contains("./scripts/matrix/matrix-cross-platform-verify-pilot.ps1", workflow, StringComparison.Ordinal);
         Assert.Contains("artifacts/matrix-pilot-verify/${{ matrix.os }}", workflow, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-pilot-verify-${{ matrix.os }}", workflow, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-pilot-verify-${{ matrix.os }}", workflow, StringComparison.Ordinal);
 
         foreach (var text in new[] { doc, readme, limitations, script })
         {

@@ -1,6 +1,6 @@
-# CARVES Matrix GitHub Actions Proof
+# CARVES Runtime Integration GitHub Actions Proof
 
-The matrix proof workflow is:
+The public workflow is:
 
 - `.github/workflows/matrix-proof.yml`
 
@@ -37,8 +37,8 @@ artifacts/matrix-native-verify/ubuntu-latest/matrix-proof-summary.json
 
 The uploaded artifact names are:
 
-- `carves-matrix-native-proof-ubuntu-latest`
-- `carves-matrix-native-verify-ubuntu-latest`
+- `carves-runtime-integration-native-proof-ubuntu-latest`
+- `carves-runtime-integration-native-verify-ubuntu-latest`
 
 ## Linux-Native Full-Release Shadow
 
@@ -67,8 +67,8 @@ artifacts/matrix-native-full-release-shadow-verify/ubuntu-latest/matrix-proof-su
 
 The uploaded artifact names are:
 
-- `carves-matrix-native-full-release-shadow-ubuntu-latest`
-- `carves-matrix-native-full-release-shadow-verify-ubuntu-latest`
+- `carves-runtime-integration-native-full-release-shadow-ubuntu-latest`
+- `carves-runtime-integration-native-full-release-shadow-verify-ubuntu-latest`
 
 Windows native full-release shadow is explicitly deferred. The reason is narrow: Windows packaged local tool install, command shim behavior, executable path resolution, and native full-release atomic promotion need their own parity evidence card before that shadow lane should be added. Windows remains covered by the existing PowerShell full-release lane and the cross-platform Matrix verify pilot.
 

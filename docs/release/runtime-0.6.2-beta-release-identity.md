@@ -8,13 +8,13 @@ Runtime CLI package version: `0.6.2-beta`
 
 Date: 2026-05-02
 
-Status: public source snapshot beta candidate for local build, local startup, GitHub Actions proof, and operator-controlled GitHub pre-release publication.
+Status: public source snapshot beta candidate for local build, local startup, GitHub Actions integration proof, and operator-controlled GitHub pre-release publication.
 
 ## Positioning
 
 CARVES Runtime `0.6.2-beta` stays on the `0.6` startup and visible gateway line.
 
-This candidate does not open API/SDK worker execution, hosted verification, signing, NuGet.org publication, public leaderboard, certification, or autonomous worker authority. It stabilizes the public source snapshot and CI proof posture after packaging, Matrix, SCORE.cmd, Guard, Shield, and public docs checks were aligned.
+This candidate does not open API/SDK worker execution, hosted verification, signing, NuGet.org publication, public leaderboard, certification, or autonomous worker authority. It stabilizes the public source snapshot and CI proof posture after packaging, Runtime integration proof, SCORE.cmd, Guard, Shield, and public docs checks were aligned.
 
 ## Why This Candidate Is 0.6.2-beta
 
@@ -23,7 +23,7 @@ This candidate does not open API/SDK worker execution, hosted verification, sign
 `0.6.2-beta` is a same-line patch because it fixes public source snapshot release readiness for that line:
 
 - Public GitHub Actions `ci` passes on Ubuntu and Windows.
-- Public `CARVES Matrix Proof` passes across Linux and Windows lanes.
+- Public `CARVES Runtime Integration Proof` passes across Linux and Windows lanes.
 - Guard Beta proof lane detects public source snapshots and avoids private alpha/beta document readiness checks.
 - Windows `SCORE.cmd` smoke passes with package-local scorer behavior.
 - Public docs index and release draft now point at the current Runtime snapshot.
@@ -95,7 +95,7 @@ Required hosted evidence before publication:
 
 ```text
 ci success on the release commit
-CARVES Matrix Proof success on the release commit
+CARVES Runtime Integration Proof success on the release commit
 ```
 
 Version/BOM source of truth:

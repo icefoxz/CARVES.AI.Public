@@ -23,7 +23,7 @@ Plain meaning:
 ```text
 This is a patch on the 0.6 startup and visible gateway line.
 The prerelease channel is still beta.
-The patch fixes public source snapshot CI, Matrix proof, SCORE.cmd smoke, Guard proof lane scope, and release draft alignment.
+The patch fixes public source snapshot CI, Runtime integration proof, SCORE.cmd smoke, Guard proof lane scope, and release draft alignment.
 This is still not a stable release, NuGet.org publication, signed package, hosted verification, certification claim, or worker execution authority.
 ```
 
@@ -38,12 +38,12 @@ The externally meaningful capability line remains the `0.6` line:
 - agent-readable startup files;
 - existing-project handling;
 - visible gateway/status feedback;
-- local Guard / Handoff / Audit / Shield / Matrix self-check behavior.
+- local Guard / Handoff / Audit / Shield / Matrix self-check behavior exposed through the Runtime-first CLI.
 
 The change is public snapshot release readiness:
 
 - Public `ci` is green on Ubuntu and Windows.
-- Public `CARVES Matrix Proof` is green on Ubuntu and Windows.
+- Public `CARVES Runtime Integration Proof` is green on Ubuntu and Windows.
 - Public Guard Beta proof lane no longer depends on private alpha/beta docs.
 - Windows playable `SCORE.cmd` smoke passes against package-local scorer behavior.
 - Release draft and docs index now point at the Runtime `0.6.2-beta` snapshot instead of the older Matrix RC draft.
@@ -65,7 +65,7 @@ Under [runtime-versioning-policy.md](runtime-versioning-policy.md), `patch` is f
 | Git tag candidate | `carves-runtime-v0.6.2-beta` | Operator candidate only until tag creation is explicitly performed. |
 | Release checkpoint / BOM | `docs/release/runtime-0.6.2-beta-version-bom.md` | This file. |
 | Runtime release identity | `docs/release/runtime-0.6.2-beta-release-identity.md` | Current candidate identity. |
-| GitHub Actions evidence | `ci` and `CARVES Matrix Proof` on the release commit | Must be confirmed from GitHub Actions. |
+| GitHub Actions evidence | `ci` and `CARVES Runtime Integration Proof` on the release commit | Must be confirmed from GitHub Actions. |
 
 ## Package Version Plan
 

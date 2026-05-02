@@ -29,25 +29,25 @@ This is a beta public source snapshot. It is suitable for local source inspectio
 - Local `carves` CLI source and release dist wrapper path.
 - Guard, Handoff, Audit, Shield, and Matrix local governance capability source.
 - Public README, safe agent entry, docs index, release notes, and known limitations.
-- GitHub Actions CI and Matrix proof workflows.
-- Local package/readiness proof script output when attached as release assets.
+- GitHub Actions CI and Runtime integration proof workflow.
+- Publish readiness manifest output for maintainer evidence.
 
 ## What Is Checked
 
 - `ci` on Ubuntu and Windows.
-- `CARVES Matrix Proof` on Ubuntu and Windows.
+- `CARVES Runtime Integration Proof` on Ubuntu and Windows.
 - Guard Beta proof lane scoped for the public source snapshot.
 - Shield GitHub Actions proof lane.
 - Public snapshot tests.
-- Matrix native proof, full-release shadow proof, proof verification, external pilot verification, and Windows `SCORE.cmd` smoke.
+- Runtime integration proof verification, external pilot verification, and Windows `SCORE.cmd` smoke.
 
 ## What Is Verified
 
-- `matrix-artifact-manifest.json` required entries, hashes, sizes, producers, paths, schemas, and summary-only privacy flags.
-- `matrix-proof-summary.json` consistency with manifest hash, verification posture, proof mode, proof capabilities, privacy posture, public non-claims, and native proof readback fields.
-- `matrix-verify` readback on GitHub Actions and local verification paths.
+- Internal integration proof bundle files such as `matrix-artifact-manifest.json` have required entries, hashes, sizes, producers, paths, schemas, and summary-only privacy flags.
+- Internal integration proof summaries such as `matrix-proof-summary.json` are consistent with manifest hash, verification posture, proof mode, proof capabilities, privacy posture, public non-claims, and native proof readback fields.
+- `matrix-verify` readback remains maintainer evidence on GitHub Actions and local verification paths.
 - Shield evaluation readback shape with `shield-evidence.v0`, local self-check output, and `certification=false`.
-- Public release assets can include local package proof metadata from `github-publish-readiness-manifest.json`; those assets do not imply NuGet.org publication or signing.
+- Public release assets include the Runtime zip, checksums, and `github-publish-readiness-manifest.json`; package metadata inside the manifest does not imply NuGet.org publication or signing.
 
 ## Local First Run
 
@@ -79,9 +79,8 @@ Recommended release assets after operator approval:
 - `CARVES.Runtime-0.6.2-beta.zip`
 - `github-publish-readiness-manifest.json`
 - `checksums.txt`
-- local `.nupkg` package files from the readiness manifest
 
-The `.nupkg` files are GitHub release assets only unless separately pushed to NuGet.org by an operator. They are not signed unless a signing record is explicitly attached.
+Do not attach individual `.nupkg` files to the public GitHub release by default. Package files are maintainer evidence unless separately approved for a package-manager distribution surface. They are not published to NuGet.org and are not signed unless a signing record is explicitly attached.
 
 ## What Is Not Claimed
 
@@ -99,12 +98,12 @@ Before creating the GitHub release:
 1. Confirm source commit SHA.
 2. Review `docs/release/matrix-operator-release-gate.md`.
 3. Confirm tag name: `carves-runtime-v0.6.2-beta`.
-4. Confirm `ci` and `CARVES Matrix Proof` are green for the release commit.
+4. Confirm `ci` and `CARVES Runtime Integration Proof` are green for the release commit.
 5. Run `git diff --check`.
 6. Run `pwsh ./scripts/release/github-publish-readiness.ps1 -ArtifactRoot artifacts/release/github-publish-readiness`.
 7. Run `pwsh ./scripts/pack-runtime-dist.ps1 -Version 0.6.2-beta -Force`.
 8. Run `pwsh ./scripts/assert-runtime-release-dist.ps1 -DistRoot .dist/CARVES.Runtime-0.6.2-beta`.
-9. Confirm package versions, sizes, and SHA-256 values.
+9. Confirm public release asset SHA-256 values.
 10. Decide whether packages are signed or explicitly accepted as unsigned.
 11. Decide whether NuGet.org publication happens now or remains deferred.
 12. Confirm SECURITY.md reporting instructions.

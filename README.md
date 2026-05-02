@@ -52,27 +52,26 @@ The documentation index starts at [docs/INDEX.md](docs/INDEX.md).
 Capability command examples:
 
 ```bash
-carves test demo --json
-carves test agent
-carves-guard init
-carves-audit evidence --json --output .carves/shield-evidence.json
-carves-shield evaluate .carves/shield-evidence.json
-carves-matrix trial plan --workspace ./carves-trials/latest
-carves-matrix proof --lane native-minimal --artifact-root artifacts/matrix/native --configuration Release --json
-carves-matrix verify artifacts/matrix/native --json
+./carves test demo --json
+./carves test agent
+./carves guard init
+./carves audit evidence --json --output .carves/shield-evidence.json
+./carves shield evaluate .carves/shield-evidence.json
+./carves matrix proof --lane native-minimal --artifact-root artifacts/matrix/native --configuration Release --json
+./carves matrix verify artifacts/matrix/native --json
 ```
 
 `carves test demo` is a local smoke/trial path for the Runtime CLI. It is not the first Runtime entry. The parallel Windows package entry is documented in [docs/matrix/agent-trial-node-windows-playable-quickstart.md](docs/matrix/agent-trial-node-windows-playable-quickstart.md).
 
-The Linux-native Matrix first run does not require PowerShell. The full release proof remains available through:
+The Linux-native Runtime integration proof does not require PowerShell. The full release proof remains a maintainer path available through:
 
 ```bash
 pwsh ./scripts/matrix/matrix-proof-lane.ps1
 ```
 
-CI examples live in [.github/workflows/matrix-proof.yml](.github/workflows/matrix-proof.yml). Current limits are documented in [docs/matrix/known-limitations.md](docs/matrix/known-limitations.md). Matrix is not a model safety benchmark, does not rate model safety, and does not automatically roll back arbitrary writes.
+CI examples live in [.github/workflows/matrix-proof.yml](.github/workflows/matrix-proof.yml). Current limits are documented in [docs/matrix/known-limitations.md](docs/matrix/known-limitations.md). The integration proof is not a model safety benchmark, does not rate model safety, and does not automatically roll back arbitrary writes.
 
-Matrix proof artifacts are summary-only local evidence. Start with the [Matrix beginner quickstart](docs/matrix/quickstart.en.md) before using the full release path.
+Runtime integration proof artifacts are summary-only local evidence. Matrix remains an internal capability name for those proof lanes, not the primary public product download.
 
 ## Disclaimer
 

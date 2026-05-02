@@ -106,15 +106,15 @@ public sealed partial class MatrixReleaseReadinessTests
         Assert.Contains("actions/checkout@v4", workflow, StringComparison.Ordinal);
         Assert.Contains("actions/setup-dotnet@v4", workflow, StringComparison.Ordinal);
         Assert.Contains("./scripts/matrix/matrix-proof-lane.ps1", workflow, StringComparison.Ordinal);
-        Assert.Contains("Verify matrix proof bundle", workflow, StringComparison.Ordinal);
+        Assert.Contains("Verify Runtime integration proof bundle", workflow, StringComparison.Ordinal);
         Assert.Contains("verify `", workflow, StringComparison.Ordinal);
         Assert.Contains("artifacts/matrix-verify/${{ matrix.os }}", workflow, StringComparison.Ordinal);
         Assert.Contains("matrix-verify.json", workflow, StringComparison.Ordinal);
         Assert.Contains("matrix-artifact-manifest.json", workflow, StringComparison.Ordinal);
         Assert.Contains("matrix-proof-summary.json", workflow, StringComparison.Ordinal);
         Assert.Contains("actions/upload-artifact@v4", workflow, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-proof", workflow, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-verify-${{ matrix.os }}", workflow, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-proof", workflow, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-verify-${{ matrix.os }}", workflow, StringComparison.Ordinal);
         Assert.DoesNotContain("secrets.", workflow, StringComparison.OrdinalIgnoreCase);
 
         Assert.Contains("carves-matrix verify artifacts/matrix/<os> --json", proofDoc, StringComparison.Ordinal);
@@ -183,10 +183,10 @@ public sealed partial class MatrixReleaseReadinessTests
         Assert.Contains("Audit", readme, StringComparison.Ordinal);
         Assert.Contains("Shield", readme, StringComparison.Ordinal);
         Assert.Contains("pwsh ./scripts/matrix/matrix-proof-lane.ps1", readme, StringComparison.Ordinal);
-        Assert.Contains("carves-guard init", readme, StringComparison.Ordinal);
-        Assert.Contains("carves-audit evidence --json --output .carves/shield-evidence.json", readme, StringComparison.Ordinal);
-        Assert.Contains("carves-shield evaluate .carves/shield-evidence.json", readme, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix proof", readme, StringComparison.Ordinal);
+        Assert.Contains("carves guard init", readme, StringComparison.Ordinal);
+        Assert.Contains("carves audit evidence --json --output .carves/shield-evidence.json", readme, StringComparison.Ordinal);
+        Assert.Contains("carves shield evaluate .carves/shield-evidence.json", readme, StringComparison.Ordinal);
+        Assert.Contains("carves matrix proof", readme, StringComparison.Ordinal);
         Assert.Contains(".github/workflows/matrix-proof.yml", readme, StringComparison.Ordinal);
         Assert.Contains("docs/matrix/known-limitations.md", readme, StringComparison.Ordinal);
         Assert.Contains("local AI coding workflow governance self-check", readme, StringComparison.OrdinalIgnoreCase);
@@ -440,10 +440,13 @@ public sealed partial class MatrixReleaseReadinessTests
             Assert.DoesNotContain("TaskGraph", doc, StringComparison.Ordinal);
         }
 
+        Assert.Contains("carves matrix proof", readme, StringComparison.Ordinal);
+        Assert.Contains("carves matrix verify", readme, StringComparison.Ordinal);
+        Assert.Contains("carves-matrix proof", limitations, StringComparison.Ordinal);
+        Assert.Contains("carves-matrix verify", limitations, StringComparison.Ordinal);
+
         foreach (var doc in new[] { readme, limitations })
         {
-            Assert.Contains("carves-matrix proof", doc, StringComparison.Ordinal);
-            Assert.Contains("carves-matrix verify", doc, StringComparison.Ordinal);
             Assert.Contains("PowerShell", doc, StringComparison.Ordinal);
             Assert.Contains("full release", doc, StringComparison.OrdinalIgnoreCase);
             Assert.Contains("summary-only", doc, StringComparison.OrdinalIgnoreCase);
@@ -452,7 +455,7 @@ public sealed partial class MatrixReleaseReadinessTests
         AssertBefore(readme, "proof --lane native-minimal --artifact-root artifacts/matrix/native", "pwsh ./scripts/matrix/matrix-proof-lane.ps1");
         Assert.Contains("not a requirement for the Linux-native Matrix first run", limitations, StringComparison.Ordinal);
         Assert.Contains("Beginner quickstart", File.ReadAllText(Path.Combine(repoRoot, "docs", "matrix", "README.md")), StringComparison.Ordinal);
-        Assert.Contains("Matrix beginner quickstart", readme, StringComparison.Ordinal);
+        Assert.Contains("Matrix remains an internal capability name", readme, StringComparison.Ordinal);
     }
 
     [Fact]

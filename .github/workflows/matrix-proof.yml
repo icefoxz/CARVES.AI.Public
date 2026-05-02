@@ -1,4 +1,4 @@
-name: CARVES Matrix Proof
+name: CARVES Runtime Integration Proof
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   matrix-native-proof-linux:
-    name: Matrix native proof (ubuntu-latest)
+    name: Runtime native integration proof (ubuntu-latest)
     runs-on: ubuntu-latest
 
     steps:
@@ -25,13 +25,13 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      - name: Build Matrix CLI
+      - name: Build integration proof CLI
         shell: bash
         run: |
           set -euo pipefail
           dotnet build ./src/CARVES.Matrix.Cli/Carves.Matrix.Cli.csproj --configuration Release
 
-      - name: Run Linux native Matrix proof
+      - name: Run Linux native Runtime integration proof
         shell: bash
         run: |
           set -euo pipefail
@@ -50,7 +50,7 @@ jobs:
             --json \
             | tee "$artifact_root/matrix-native-proof.json"
 
-      - name: Verify Linux native Matrix proof bundle
+      - name: Verify Linux native Runtime integration proof bundle
         shell: bash
         run: |
           set -euo pipefail
@@ -71,22 +71,22 @@ jobs:
           cp "$proof_root/matrix-artifact-manifest.json" "$verify_root/"
           cp "$proof_root/matrix-proof-summary.json" "$verify_root/"
 
-      - name: Upload Linux native Matrix proof artifacts
+      - name: Upload Linux native Runtime integration proof artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: carves-matrix-native-proof-ubuntu-latest
+          name: carves-runtime-integration-native-proof-ubuntu-latest
           path: artifacts/matrix-native/ubuntu-latest/
           if-no-files-found: error
 
-      - name: Upload Linux native Matrix verify artifacts
+      - name: Upload Linux native Runtime integration verify artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: carves-matrix-native-verify-ubuntu-latest
+          name: carves-runtime-integration-native-verify-ubuntu-latest
           path: artifacts/matrix-native-verify/ubuntu-latest/
           if-no-files-found: error
 
   matrix-native-full-release-shadow-linux:
-    name: Matrix native full-release shadow (ubuntu-latest)
+    name: Runtime native full-release shadow (ubuntu-latest)
     runs-on: ubuntu-latest
     continue-on-error: true
 
@@ -99,13 +99,13 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      - name: Build Matrix CLI
+      - name: Build integration proof CLI
         shell: bash
         run: |
           set -euo pipefail
           dotnet build ./src/CARVES.Matrix.Cli/Carves.Matrix.Cli.csproj --configuration Release
 
-      - name: Run Linux native Matrix full-release shadow proof
+      - name: Run Linux native Runtime full-release shadow proof
         shell: bash
         run: |
           set -euo pipefail
@@ -128,7 +128,7 @@ jobs:
 
           cp "$proof_output_root/matrix-native-full-release-proof.json" "$artifact_root/"
 
-      - name: Verify Linux native Matrix full-release shadow bundle
+      - name: Verify Linux native Runtime full-release shadow bundle
         shell: bash
         run: |
           set -euo pipefail
@@ -149,22 +149,22 @@ jobs:
           cp "$proof_root/matrix-artifact-manifest.json" "$verify_root/"
           cp "$proof_root/matrix-proof-summary.json" "$verify_root/"
 
-      - name: Upload Linux native Matrix full-release shadow artifacts
+      - name: Upload Linux native Runtime full-release shadow artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: carves-matrix-native-full-release-shadow-ubuntu-latest
+          name: carves-runtime-integration-native-full-release-shadow-ubuntu-latest
           path: artifacts/matrix-native-full-release-shadow/ubuntu-latest/
           if-no-files-found: error
 
-      - name: Upload Linux native Matrix full-release shadow verify artifacts
+      - name: Upload Linux native Runtime full-release shadow verify artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: carves-matrix-native-full-release-shadow-verify-ubuntu-latest
+          name: carves-runtime-integration-native-full-release-shadow-verify-ubuntu-latest
           path: artifacts/matrix-native-full-release-shadow-verify/ubuntu-latest/
           if-no-files-found: error
 
   matrix-proof:
-    name: Matrix proof (${{ matrix.os }})
+    name: Runtime integration proof (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -182,14 +182,14 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      - name: Run matrix proof lane
+      - name: Run Runtime integration proof lane
         shell: pwsh
         run: |
           ./scripts/matrix/matrix-proof-lane.ps1 `
             -ArtifactRoot "artifacts/matrix/${{ matrix.os }}" `
             -Configuration Release
 
-      - name: Verify matrix proof bundle
+      - name: Verify Runtime integration proof bundle
         shell: pwsh
         run: |
           $proofRoot = "artifacts/matrix/${{ matrix.os }}"
@@ -210,7 +210,7 @@ jobs:
           Copy-Item -LiteralPath (Join-Path $proofRoot "matrix-proof-summary.json") -Destination $verifyRoot
 
           if ($verifyExitCode -ne 0) {
-            Write-Error "Matrix proof bundle verification failed with exit code $verifyExitCode."
+            Write-Error "Runtime integration proof bundle verification failed with exit code $verifyExitCode."
             exit $verifyExitCode
           }
 
@@ -221,24 +221,24 @@ jobs:
             -ArtifactRoot "artifacts/matrix-pilot-verify/${{ matrix.os }}" `
             -Configuration Release
 
-      - name: Upload summary-only matrix artifacts
+      - name: Upload summary-only Runtime integration artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: carves-matrix-proof-${{ matrix.os }}
+          name: carves-runtime-integration-proof-${{ matrix.os }}
           path: artifacts/matrix/${{ matrix.os }}/
           if-no-files-found: error
 
-      - name: Upload matrix verification artifacts
+      - name: Upload Runtime integration verification artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: carves-matrix-verify-${{ matrix.os }}
+          name: carves-runtime-integration-verify-${{ matrix.os }}
           path: artifacts/matrix-verify/${{ matrix.os }}/
           if-no-files-found: error
 
       - name: Upload pilot verify artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: carves-matrix-pilot-verify-${{ matrix.os }}
+          name: carves-runtime-integration-pilot-verify-${{ matrix.os }}
           path: artifacts/matrix-pilot-verify/${{ matrix.os }}/
           if-no-files-found: error
 

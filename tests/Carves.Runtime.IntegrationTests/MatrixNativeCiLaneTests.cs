@@ -10,7 +10,7 @@ public sealed class MatrixNativeCiLaneTests
         var nativeJob = SliceSource(workflow, "  matrix-native-proof-linux:", "  matrix-native-full-release-shadow-linux:");
         var shadowJob = SliceSource(workflow, "  matrix-native-full-release-shadow-linux:", "  matrix-proof:");
         var fullJobStart = workflow.IndexOf("  matrix-proof:", StringComparison.Ordinal);
-        Assert.True(fullJobStart >= 0, "Missing full Matrix proof job.");
+        Assert.True(fullJobStart >= 0, "Missing full Runtime integration proof job.");
         var fullJob = workflow[fullJobStart..];
 
         Assert.Contains("runs-on: ubuntu-latest", nativeJob, StringComparison.Ordinal);
@@ -30,8 +30,8 @@ public sealed class MatrixNativeCiLaneTests
         Assert.Contains("matrix-verify.json", nativeJob, StringComparison.Ordinal);
         Assert.Contains("cp \"$proof_root/matrix-artifact-manifest.json\"", nativeJob, StringComparison.Ordinal);
         Assert.Contains("cp \"$proof_root/matrix-proof-summary.json\"", nativeJob, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-native-proof-ubuntu-latest", nativeJob, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-native-verify-ubuntu-latest", nativeJob, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-native-proof-ubuntu-latest", nativeJob, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-native-verify-ubuntu-latest", nativeJob, StringComparison.Ordinal);
 
         Assert.DoesNotContain("pwsh", nativeJob, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain(".ps1", nativeJob, StringComparison.OrdinalIgnoreCase);
@@ -60,8 +60,8 @@ public sealed class MatrixNativeCiLaneTests
         Assert.Contains("matrix-verify.json", shadowJob, StringComparison.Ordinal);
         Assert.Contains("cp \"$proof_root/matrix-artifact-manifest.json\"", shadowJob, StringComparison.Ordinal);
         Assert.Contains("cp \"$proof_root/matrix-proof-summary.json\"", shadowJob, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-native-full-release-shadow-ubuntu-latest", shadowJob, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-native-full-release-shadow-verify-ubuntu-latest", shadowJob, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-native-full-release-shadow-ubuntu-latest", shadowJob, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-native-full-release-shadow-verify-ubuntu-latest", shadowJob, StringComparison.Ordinal);
         Assert.DoesNotContain("pwsh", shadowJob, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain(".ps1", shadowJob, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("matrix-proof-lane.ps1", shadowJob, StringComparison.Ordinal);
@@ -74,7 +74,7 @@ public sealed class MatrixNativeCiLaneTests
         Assert.Contains("./scripts/matrix/matrix-proof-lane.ps1", fullJob, StringComparison.Ordinal);
         Assert.Contains("./scripts/matrix/matrix-cross-platform-verify-pilot.ps1", fullJob, StringComparison.Ordinal);
         Assert.Contains("artifacts/matrix/${{ matrix.os }}", fullJob, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-proof-${{ matrix.os }}", fullJob, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-proof-${{ matrix.os }}", fullJob, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -105,12 +105,12 @@ public sealed class MatrixNativeCiLaneTests
         Assert.Contains("does not invoke `scripts/matrix/*.ps1`", proofDoc, StringComparison.Ordinal);
         Assert.Contains("artifacts/matrix-native/ubuntu-latest/matrix-native-proof.json", proofDoc, StringComparison.Ordinal);
         Assert.Contains("artifacts/matrix-native-verify/ubuntu-latest/matrix-verify.json", proofDoc, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-native-proof-ubuntu-latest", proofDoc, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-native-verify-ubuntu-latest", proofDoc, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-native-proof-ubuntu-latest", proofDoc, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-native-verify-ubuntu-latest", proofDoc, StringComparison.Ordinal);
         Assert.Contains("artifacts/matrix-native-full-release-shadow/ubuntu-latest/matrix-native-full-release-proof.json", proofDoc, StringComparison.Ordinal);
         Assert.Contains("artifacts/matrix-native-full-release-shadow-verify/ubuntu-latest/matrix-verify.json", proofDoc, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-native-full-release-shadow-ubuntu-latest", proofDoc, StringComparison.Ordinal);
-        Assert.Contains("carves-matrix-native-full-release-shadow-verify-ubuntu-latest", proofDoc, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-native-full-release-shadow-ubuntu-latest", proofDoc, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-integration-native-full-release-shadow-verify-ubuntu-latest", proofDoc, StringComparison.Ordinal);
         Assert.Contains("Windows native full-release shadow is explicitly deferred", proofDoc, StringComparison.Ordinal);
 
         Assert.Contains("full PowerShell release proof", releaseNotes, StringComparison.Ordinal);
