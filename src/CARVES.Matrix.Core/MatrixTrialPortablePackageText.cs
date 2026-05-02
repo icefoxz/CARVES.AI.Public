@@ -339,6 +339,7 @@ public static partial class MatrixCliRunner
               set "CARVES=tools\carves\carves.exe"
               goto verify_runtime_dependencies
             )
+            if exist "tools\carves\" goto missing_scorer
 
             where carves.exe >nul 2>nul
             if not errorlevel 1 (
@@ -346,6 +347,7 @@ public static partial class MatrixCliRunner
               goto verify_runtime_dependencies
             )
 
+            :missing_scorer
             if not exist "results\local\matrix-agent-trial-result-card.md" echo No previous local result card was found.
 
             echo CARVES scorer/service was not found.
