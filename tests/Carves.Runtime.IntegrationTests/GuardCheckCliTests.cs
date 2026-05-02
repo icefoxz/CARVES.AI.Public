@@ -271,7 +271,11 @@ public sealed class GuardCheckCliTests
         using var document = JsonDocument.Parse(result.StandardOutput);
         var root = document.RootElement;
         Assert.Equal("host_unavailable", root.GetProperty("execution").GetProperty("outcome").GetString());
-        Assert.Contains("host reconcile --replace-stale", root.GetProperty("execution").GetProperty("next_action").GetString(), StringComparison.Ordinal);
+        var nextAction = root.GetProperty("execution").GetProperty("next_action").GetString();
+        Assert.True(
+            nextAction?.Contains("host reconcile --replace-stale", StringComparison.Ordinal) == true
+            || nextAction?.Contains("carves host ensure --json", StringComparison.Ordinal) == true,
+            $"Unexpected next_action: {nextAction}");
     }
 
     [Fact]

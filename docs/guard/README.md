@@ -34,7 +34,7 @@ carves guard report
 carves guard explain <run-id>
 ```
 
-## Standalone `run` Boundary
+## Standalone `run` boundary
 
 `carves-guard run <task-id>` is a Runtime-host command. Standalone Guard can initialize policy, check a git diff, audit local decisions, report, and explain recorded runs. For first-run standalone checks, use `carves-guard check`.
 

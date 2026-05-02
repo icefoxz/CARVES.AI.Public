@@ -172,12 +172,6 @@ public static partial class MatrixCliRunner
               exit 1
             fi
 
-            if ! command -v node >/dev/null 2>&1; then
-              echo "Missing dependency: Node.js is required for the official starter-pack task command." >&2
-              echo "Install Node.js or put node on PATH, then run this scorer again from the package root." >&2
-              exit 1
-            fi
-
             if [ -x "./tools/carves/carves" ]; then
               CARVES="./tools/carves/carves"
             elif command -v carves >/dev/null 2>&1; then
@@ -187,6 +181,12 @@ public static partial class MatrixCliRunner
               echo "Missing scorer: no package-local scorer was found at tools/carves/carves, and carves was not found on PATH." >&2
               echo "This is not a complete playable package. Download a full playable package or regenerate it with a scorer bundle." >&2
               echo "Developer fallback: intentionally install carves on PATH, then run this scorer again." >&2
+              exit 1
+            fi
+
+            if ! command -v node >/dev/null 2>&1; then
+              echo "Missing dependency: Node.js is required for the official starter-pack task command." >&2
+              echo "Install Node.js or put node on PATH, then run this scorer again from the package root." >&2
               exit 1
             fi
 
@@ -335,22 +335,15 @@ public static partial class MatrixCliRunner
               goto failed
             )
 
-            where node.exe >nul 2>nul
-            if errorlevel 1 (
-              echo Missing dependency: Node.js is required for the official starter-pack task command.
-              echo Install Node.js or put node.exe on PATH, then run this scorer again from the package root.
-              goto failed
-            )
-
             if exist "tools\carves\carves.exe" (
               set "CARVES=tools\carves\carves.exe"
-              goto run_carves
+              goto verify_runtime_dependencies
             )
 
             where carves.exe >nul 2>nul
             if not errorlevel 1 (
               set "CARVES=carves.exe"
-              goto run_carves
+              goto verify_runtime_dependencies
             )
 
             if not exist "results\local\matrix-agent-trial-result-card.md" echo No previous local result card was found.
@@ -360,6 +353,14 @@ public static partial class MatrixCliRunner
             echo This is not a complete Windows playable package. Download a full playable package or regenerate it with a scorer bundle.
             echo Developer fallback: intentionally install carves on PATH, then run this scorer again.
             goto failed
+
+            :verify_runtime_dependencies
+            where node.exe >nul 2>nul
+            if errorlevel 1 (
+              echo Missing dependency: Node.js is required for the official starter-pack task command.
+              echo Install Node.js or put node.exe on PATH, then run this scorer again from the package root.
+              goto failed
+            )
 
             :already_scored
             echo Package already scored. Showing the previous local result.

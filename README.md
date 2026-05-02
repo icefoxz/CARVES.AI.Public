@@ -2,7 +2,7 @@
 
 Language: [Chinese](README.zh-CN.md)
 
-CARVES Runtime is a local AI Agent governance runtime for starting, binding, inspecting, and checking agent work in a project.
+CARVES Runtime is a local AI Agent governance runtime for starting, binding, inspecting, and checking agent work in a project. It is a local AI coding workflow governance self-check for Guard, Handoff, Audit, Shield, and Matrix behavior.
 
 This repository is a clean public source snapshot. It does not include the private development repository history, live task/runtime truth, runtime host state, Codex state, local artifacts, or archive/checkpoint history.
 
@@ -54,7 +54,7 @@ The documentation index starts at [docs/INDEX.md](docs/INDEX.md).
 Capability command examples:
 
 ```bash
-carves test demo
+carves test demo --json
 carves test agent
 carves-guard init
 carves-audit evidence --json --output .carves/shield-evidence.json
@@ -73,6 +73,8 @@ pwsh ./scripts/matrix/matrix-proof-lane.ps1
 ```
 
 CI examples live in [.github/workflows/matrix-proof.yml](.github/workflows/matrix-proof.yml). Current limits are documented in [docs/matrix/known-limitations.md](docs/matrix/known-limitations.md). Matrix is not a model safety benchmark, does not rate model safety, and does not automatically roll back arbitrary writes.
+
+Matrix proof artifacts are summary-only local evidence. Start with the [Matrix beginner quickstart](docs/matrix/quickstart.en.md) before using the full release path.
 
 ## Disclaimer
 
@@ -135,7 +137,7 @@ Then it should open the target project and follow the generated `CARVES_START.md
 
 - The dashboard is not a polished product surface.
 - Provider-backed API/SDK worker execution is not opened by this snapshot.
-- Runtime CARD, TaskGraph, and Host truth internals are maintainer concepts, not a requirement for the first public run.
+- Internal Runtime planning and Host truth details are maintainer concepts, not a requirement for the first public run.
 - Local build success is not a signing or hosted-verification claim.
 - Release tags, GitHub Releases, NuGet.org publication, and package signing remain separate operator-owned steps.
 

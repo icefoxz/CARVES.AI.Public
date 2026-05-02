@@ -19,9 +19,9 @@ Use these Runtime entrypoints first:
 
 The first public path is source build, CLI/gateway readback, then `carves up <target-project>`. New users should not need Runtime CARD, TaskGraph, or Host truth internals before that path.
 
-## Runtime Capability Docs
+## Public Matrix Entry And Runtime Capability Docs
 
-Use these capability docs after the Runtime entry is clear:
+Use these public product entrypoints after the Runtime entry is clear:
 
 - `guard/README.md`
 - `handoff/README.md`
@@ -30,6 +30,7 @@ Use these capability docs after the Runtime entry is clear:
 - `matrix/README.md`
 - `matrix/public-boundary.md`
 - `matrix/quickstart.en.md`
+- `matrix/quickstart.zh-CN.md`
 - `release/matrix-release-notes.md`
 - `matrix/known-limitations.md`
 - `matrix/github-actions-proof.md`
