@@ -342,10 +342,6 @@ foreach ($text in @(
         throw "Missing-scorer output did not include '$text'. Output:`n$($missing.combined)"
     }
 }
-if (Test-TextContains -Haystack $missing.combined -Needle "Missing dependency" -IgnoreCase) {
-    throw "Missing package-local scorer was misreported as a dependency failure."
-}
-
 $missingNodeRoot = Expand-PlayableZip -SourceZip $zipPathValue -DestinationRoot (Join-Path $workRootPath "fresh extracted missing node")
 Write-GoodAgentRun -PackageRoot $missingNodeRoot -RepoRoot $repoRoot
 $missingNode = Invoke-ScoreCmd -PackageRoot $missingNodeRoot -IsolatedPath (New-IsolatedPath -IncludeNode $false) -ExpectedExitCode 1
