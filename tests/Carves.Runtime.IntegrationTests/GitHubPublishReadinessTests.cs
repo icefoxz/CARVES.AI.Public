@@ -64,7 +64,7 @@ public sealed class GitHubPublishReadinessTests
             Assert.DoesNotContain("certified secure", doc, StringComparison.OrdinalIgnoreCase);
         }
 
-        Assert.Contains("matrix-v0.1.0-rc.1", draft, StringComparison.Ordinal);
+        Assert.Contains("carves-runtime-v0.6.2-beta", draft, StringComparison.Ordinal);
         Assert.Contains("Asset Checklist", draft, StringComparison.Ordinal);
         Assert.Contains("Non-Performed Actions", draft, StringComparison.Ordinal);
         Assert.Contains("carves-github-publish-readiness.v1", checkpoint, StringComparison.Ordinal);

@@ -14,8 +14,8 @@ CARVES Runtime 是这个快照的公开入口。Guard / Handoff / Audit / Shield
 - `../START_CARVES.zh-CN.md`
 - `runtime/runtime-project-recenter-carves-g0-visible-gateway-contract.md`
 - `release/runtime-versioning-policy.md`
-- `release/runtime-0.6.1-beta-release-identity.md`
-- `release/runtime-0.6.1-beta-version-bom.md`
+- `release/runtime-0.6.2-beta-release-identity.md`
+- `release/runtime-0.6.2-beta-version-bom.md`
 
 第一条公开路径是源码构建、CLI/gateway readback，然后运行 `carves up <target-project>`。新用户在这之前不需要理解 Runtime CARD、TaskGraph 或 Host truth internals。
 
@@ -38,9 +38,9 @@ Runtime 入口清楚后，再看这些能力文档：
 
 这些页面描述本地 Runtime 能力行为。它们不应该把 Guard / Handoff / Audit / Shield / Matrix 表达成并列入口，也应该避免要求公开用户先理解 Runtime CARD/TaskGraph 概念，才能运行本地 self-check path。
 
-## Release Evidence
+## Internal Checkpoints And Operator Review
 
-这些页面是给 maintainer 使用的 release evidence，不是新手入口。
+这些页面是给 maintainer 使用的 release evidence，不是新手入口。它们保留 CARD traceability、operator review、release gate 和 non-claim 边界，但不把 Runtime CARD/TaskGraph 概念变成第一条公开路径。
 
 - `release/matrix-github-release-candidate-checkpoint.md`
 - `release/trust-chain-hardening-release-checkpoint.md`

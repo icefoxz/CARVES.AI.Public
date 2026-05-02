@@ -3,8 +3,8 @@ param(
     [string] $RuntimeRoot = "",
     [string] $ArtifactRoot = "",
     [string] $Configuration = "Release",
-    [string] $ReleaseId = "carves-matrix-0.1.0-rc.1",
-    [string] $TagCandidate = "matrix-v0.1.0-rc.1",
+    [string] $ReleaseId = "carves-runtime-0.6.2-beta",
+    [string] $TagCandidate = "carves-runtime-v0.6.2-beta",
     [switch] $AllowDirty
 )
 

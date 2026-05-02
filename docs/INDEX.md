@@ -14,8 +14,8 @@ Use these Runtime entrypoints first:
 - `../START_CARVES.md`
 - `runtime/runtime-project-recenter-carves-g0-visible-gateway-contract.md`
 - `release/runtime-versioning-policy.md`
-- `release/runtime-0.6.1-beta-release-identity.md`
-- `release/runtime-0.6.1-beta-version-bom.md`
+- `release/runtime-0.6.2-beta-release-identity.md`
+- `release/runtime-0.6.2-beta-version-bom.md`
 
 The first public path is source build, CLI/gateway readback, then `carves up <target-project>`. New users should not need Runtime CARD, TaskGraph, or Host truth internals before that path.
 
