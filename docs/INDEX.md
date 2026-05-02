@@ -39,9 +39,9 @@ Use these public product entrypoints after the Runtime entry is clear:
 
 These pages describe local Runtime capability behavior. They should not present Guard / Handoff / Audit / Shield / Matrix as separate first entries, and they should avoid requiring Runtime CARD/TaskGraph concepts before a public user can run the local self-check path.
 
-## Release Evidence
+## Internal Checkpoints And Operator Review
 
-These pages are release evidence for maintainers. They are not the beginner entrypoint.
+These pages are release evidence for maintainers. They are not the beginner entrypoint. They keep CARD traceability, operator review, release gate, and non-claim boundaries visible without making Runtime CARD/TaskGraph concepts part of the first public path.
 
 - `release/matrix-github-release-candidate-checkpoint.md`
 - `release/trust-chain-hardening-release-checkpoint.md`
