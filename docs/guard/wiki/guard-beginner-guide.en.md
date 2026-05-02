@@ -1,5 +1,7 @@
 # CARVES.Guard Beginner Guide
 
+Language: [Chinese](guard-beginner-guide.zh-CN.md)
+
 This guide assumes you are using CARVES.Guard for the first time.
 
 Remember one sentence:

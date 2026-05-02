@@ -4,13 +4,13 @@ Release candidate date: 2026-04-14
 
 ## Summary
 
-The CARVES public matrix is now organized around five local tools:
+The CARVES public matrix is now organized around the Runtime capability chain:
 
 - Guard: patch admission gate for AI-generated code changes.
 - Handoff: continuation packet for the next human or agent.
 - Audit: local evidence discovery layer.
 - Shield: local G/H/A, Lite self-check, and badge layer over `shield-evidence.v0`.
-- Matrix: local composition proof shell for the four peer products.
+- Matrix: local composition proof shell for the Runtime capability chain.
 
 The release candidate proves the full Guard -> Handoff -> Audit -> Shield workflow in a temporary external git repository.
 

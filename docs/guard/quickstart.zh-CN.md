@@ -1,5 +1,7 @@
 # CARVES.Guard 五分钟上手
 
+语言：[英文](quickstart.en.md)
+
 CARVES.Guard 是给 AI 代码修改准备的 patch 准入门。它会在变更进入正常 review 或 merge 路径之前检查 git diff。
 
 ## 为什么需要它

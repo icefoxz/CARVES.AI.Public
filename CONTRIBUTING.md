@@ -1,5 +1,7 @@
 # Contributing
 
+Language: [Chinese](CONTRIBUTING.zh-CN.md)
+
 CARVES is currently published as a small matrix of local-first command line tools:
 
 - Guard checks patch boundaries.

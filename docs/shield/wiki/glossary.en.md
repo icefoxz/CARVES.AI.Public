@@ -1,5 +1,7 @@
 # Glossary: What Every Keyword Means
 
+Language: [Chinese](glossary.zh-CN.md)
+
 ## Shield
 
 CARVES Shield is a self-check label for AI code governance. It reads summary evidence and produces Standard G/H/A results, a Lite score, and a local badge.

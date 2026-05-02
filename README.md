@@ -1,6 +1,8 @@
-# CARVES.AI Public
+# CARVES Runtime
 
-CARVES.AI is a local AI-coding control plane for agent startup, visible gateway status, and bounded local workflow checks.
+Language: [Chinese](README.zh-CN.md)
+
+CARVES Runtime is a local AI Agent governance runtime for starting, binding, inspecting, and checking agent work in a project.
 
 This repository is a clean public source snapshot. It does not include the private development repository history, live task/runtime truth, runtime host state, Codex state, local artifacts, or archive/checkpoint history.
 
@@ -12,22 +14,46 @@ Current public snapshot:
 0.6.2-beta source snapshot
 ```
 
-This is still beta software. It is suitable for local source inspection, local build, and bounded local startup experiments. It is not a hosted service, not a signed release, and not API/SDK worker execution authority.
+This is still beta software. It is suitable for local source inspection, local build, and bounded local startup experiments. It is not a hosted service, not a signed release, not a complete autonomous agent platform, and not API/SDK worker execution authority.
 
-## Public Product Map
+## Runtime First Run
 
-The public source snapshot contains these local workflow tools:
-
-- CARVES.Guard: local diff and decision checks. Start with [docs/guard/README.md](docs/guard/README.md), [Chinese beginner guide](docs/guard/wiki/guard-beginner-guide.zh-CN.md), [English beginner guide](docs/guard/wiki/guard-beginner-guide.en.md), and [GitHub Actions guide](docs/guard/wiki/github-actions.zh-CN.md).
-- Handoff: continuity packets for carrying bounded next-session context.
-- Audit: local evidence discovery and summary surfaces.
-- Shield: local evidence evaluation over Audit output.
-- Matrix: a local AI coding workflow governance self-check that chains Guard, Handoff, Audit, and Shield into a summary-only proof bundle. See the Matrix beginner quickstart in [docs/matrix/quickstart.en.md](docs/matrix/quickstart.en.md) and [docs/matrix/quickstart.zh-CN.md](docs/matrix/quickstart.zh-CN.md).
-
-Quick command examples:
+Build the Runtime CLI from source:
 
 ```bash
-dotnet run --project ./src/CARVES.Runtime.Cli/carves.csproj --configuration Release --no-build -- test demo --json
+dotnet build CARVES.Runtime.sln --configuration Release
+```
+
+Check the local CLI and visible gateway surface:
+
+```bash
+./carves help
+./carves gateway status
+```
+
+Bind CARVES Runtime to a target project:
+
+```bash
+./carves up <target-project>
+```
+
+The safe agent entry is [START_CARVES.md](START_CARVES.md). Give your coding agent the absolute path to that file, then follow the generated `CARVES_START.md` / `.carves/carves agent start --json` instructions in the target project.
+
+## Runtime Governance Capabilities
+
+This source snapshot includes these Runtime governance capabilities:
+
+- Guard: Runtime patch boundary checks for local diffs. Start with [docs/guard/README.md](docs/guard/README.md), [beginner guide](docs/guard/wiki/guard-beginner-guide.en.md), and [GitHub Actions guide](docs/guard/wiki/github-actions.en.md).
+- Handoff: Runtime session continuity packets for carrying bounded next-session context.
+- Audit: Runtime evidence readback over local Guard decisions and Handoff packets.
+- Shield: Runtime local governance self-check over summary evidence.
+- Matrix: Runtime proof and trial lanes that check Guard, Handoff, Audit, and Shield can work together without changing the Runtime-first position.
+
+The documentation index starts at [docs/INDEX.md](docs/INDEX.md).
+
+Capability command examples:
+
+```bash
 carves test demo
 carves test agent
 carves-guard init
@@ -38,7 +64,7 @@ carves-matrix proof --lane native-minimal --artifact-root artifacts/matrix/nativ
 carves-matrix verify artifacts/matrix/native --json
 ```
 
-For the Matrix Agent Trial beginner path, start with the source-checkout `carves test demo` path. The parallel Windows package entry is documented in [docs/matrix/agent-trial-node-windows-playable-quickstart.md](docs/matrix/agent-trial-node-windows-playable-quickstart.md).
+`carves test demo` is a local smoke/trial path for the Runtime CLI. It is not the first Runtime entry. The parallel Windows package entry is documented in [docs/matrix/agent-trial-node-windows-playable-quickstart.md](docs/matrix/agent-trial-node-windows-playable-quickstart.md).
 
 The Linux-native Matrix first run does not require PowerShell. The full release proof remains available through:
 
@@ -109,6 +135,7 @@ Then it should open the target project and follow the generated `CARVES_START.md
 
 - The dashboard is not a polished product surface.
 - Provider-backed API/SDK worker execution is not opened by this snapshot.
+- Runtime CARD, TaskGraph, and Host truth internals are maintainer concepts, not a requirement for the first public run.
 - Local build success is not a signing or hosted-verification claim.
 - Release tags, GitHub Releases, NuGet.org publication, and package signing remain separate operator-owned steps.
 

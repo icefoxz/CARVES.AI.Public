@@ -1,5 +1,7 @@
 # 流程图：本地、自检、CI 怎么走
 
+语言：[英文](workflow.en.md)
+
 Shield v0 的核心原则是 local-first。证据先在本地或 CI 里生成，评估也在本地完成。
 
 ## 本地 self-check

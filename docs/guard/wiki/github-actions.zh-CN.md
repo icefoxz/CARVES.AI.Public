@@ -1,5 +1,7 @@
 # 在 GitHub Actions 中使用 CARVES.Guard
 
+语言：[英文](github-actions.en.md)
+
 这页说明如何把 CARVES.Guard 接到 pull request 检查里。
 
 ## 先理解一个关键点

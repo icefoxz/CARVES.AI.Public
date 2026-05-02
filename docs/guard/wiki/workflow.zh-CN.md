@@ -1,5 +1,7 @@
 # CARVES.Guard 流程图
 
+语言：[英文](workflow.en.md)
+
 这页用流程图说明 CARVES.Guard 应该放在什么位置，以及 `allow`、`review`、`block` 后应该怎么做。
 
 ## 本地开发流程

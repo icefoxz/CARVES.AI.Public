@@ -1,28 +1,42 @@
 # CARVES Public Docs Index
 
-This index separates public product entrypoints from internal operator review checkpoints. The public docs should let a new reader start with local tools and current limits without needing private operating history.
+Language: [Chinese](INDEX.zh-CN.md)
 
-Guard / Handoff / Audit / Shield / Matrix are the public product entrypoints for this snapshot.
+This index separates the Runtime-first public path from internal operator review checkpoints. The public docs should let a new reader start with the local Runtime CLI and current limits without needing private operating history.
 
-## Public Matrix Entry
+CARVES Runtime is the public entrypoint for this snapshot. Guard / Handoff / Audit / Shield / Matrix are Runtime governance capabilities, not separate first entries.
 
-Use these public product entrypoints first:
+## Runtime Entry
 
-- `matrix/README.md`
-- `matrix/public-boundary.md`
-- `matrix/quickstart.en.md`
-- `matrix/quickstart.zh-CN.md`
-- `release/matrix-release-notes.md`
-- `matrix/known-limitations.md`
-- `matrix/github-actions-proof.md`
-- `matrix/packaged-install-matrix.md`
+Use these Runtime entrypoints first:
+
+- `../README.md`
+- `../START_CARVES.md`
+- `runtime/runtime-project-recenter-carves-g0-visible-gateway-contract.md`
+- `release/runtime-versioning-policy.md`
+- `release/runtime-0.6.1-beta-release-identity.md`
+- `release/runtime-0.6.1-beta-version-bom.md`
+
+The first public path is source build, CLI/gateway readback, then `carves up <target-project>`. New users should not need Runtime CARD, TaskGraph, or Host truth internals before that path.
+
+## Runtime Capability Docs
+
+Use these capability docs after the Runtime entry is clear:
+
 - `guard/README.md`
 - `handoff/README.md`
 - `audit/README.md`
 - `shield/README.md`
+- `matrix/README.md`
+- `matrix/public-boundary.md`
+- `matrix/quickstart.en.md`
+- `release/matrix-release-notes.md`
+- `matrix/known-limitations.md`
+- `matrix/github-actions-proof.md`
+- `matrix/packaged-install-matrix.md`
 - `guides/public-surface-size-advisory.md`
 
-These pages describe local Guard / Handoff / Audit / Shield / Matrix behavior. They should avoid requiring Runtime CARD/TaskGraph concepts before a public user can run the local self-check path.
+These pages describe local Runtime capability behavior. They should not present Guard / Handoff / Audit / Shield / Matrix as separate first entries, and they should avoid requiring Runtime CARD/TaskGraph concepts before a public user can run the local self-check path.
 
 ## Internal Checkpoints And Operator Review
 

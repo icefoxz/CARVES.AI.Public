@@ -1,5 +1,7 @@
 # Evidence Starter: Prepare shield-evidence.v0
 
+Language: [Chinese](evidence-starter.zh-CN.md)
+
 Shield reads `shield-evidence.v0` summary evidence.
 
 Recommended path:

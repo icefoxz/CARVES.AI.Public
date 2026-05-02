@@ -1,5 +1,7 @@
 # Security Policy
 
+Language: [Chinese](SECURITY.zh-CN.md)
+
 CARVES Guard, Handoff, Audit, and Shield are local-first tools. The public matrix proof does not require source upload, raw diff upload, prompt upload, model response upload, secrets, credentials, hosted verification, or a public leaderboard.
 
 ## Supported Versions

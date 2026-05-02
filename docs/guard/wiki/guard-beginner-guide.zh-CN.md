@@ -1,5 +1,7 @@
 # CARVES.Guard 新手教程
 
+语言：[英文](guard-beginner-guide.en.md)
+
 这份教程假设你第一次使用 CARVES.Guard。
 
 你只需要记住一句话：

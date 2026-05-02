@@ -1,5 +1,7 @@
 # CARVES.Guard Five-Minute Quickstart
 
+Language: [Chinese](quickstart.zh-CN.md)
+
 CARVES.Guard is a patch admission gate for AI-assisted code changes. It checks the git diff before the change enters your normal review or merge path.
 
 ## Why You Need It

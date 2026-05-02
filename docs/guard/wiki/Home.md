@@ -1,14 +1,6 @@
 # CARVES.Guard Wiki Home
 
-## 中文
-
-1. [新手教程](guard-beginner-guide.zh-CN.md)
-2. [术语表](glossary.zh-CN.md)
-3. [流程图](workflow.zh-CN.md)
-4. [Policy 模板](guard-policy-starter.zh-CN.md)
-5. [GitHub Actions 接入](github-actions.zh-CN.md)
-
-## English
+Language: [Chinese](Home.zh-CN.md)
 
 1. [Beginner guide](guard-beginner-guide.en.md)
 2. [Glossary](glossary.en.md)

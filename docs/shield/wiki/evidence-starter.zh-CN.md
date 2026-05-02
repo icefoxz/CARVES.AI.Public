@@ -1,5 +1,7 @@
 # 证据模板：如何准备 shield-evidence.v0
 
+语言：[英文](evidence-starter.en.md)
+
 Shield 读取的是 `shield-evidence.v0` 摘要证据。
 
 推荐路径：

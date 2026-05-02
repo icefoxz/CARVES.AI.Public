@@ -1,5 +1,7 @@
 # 术语表：每个关键字是什么意思
 
+语言：[英文](glossary.en.md)
+
 ## Shield
 
 CARVES Shield 是 AI 代码治理的自检标签。它读取摘要证据，输出 Standard G/H/A 结果、Lite 分数和本地 badge。

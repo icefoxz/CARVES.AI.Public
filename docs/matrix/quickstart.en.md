@@ -1,5 +1,7 @@
 # CARVES Matrix Beginner Quickstart
 
+Language: [Chinese](quickstart.zh-CN.md)
+
 CARVES Matrix runs the local Guard -> Handoff -> Audit -> Shield local consistency proof chain and writes a summary-only proof bundle that you can verify later.
 
 Use this guide when you want to run the native first-run local workflow self-check, inspect the summary-only proof bundle, read the Shield badge, and understand the current limits.

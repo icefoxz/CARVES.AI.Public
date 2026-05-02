@@ -1,5 +1,7 @@
 # Badge 解读与发布
 
+语言：[英文](badge.en.md)
+
 Shield badge 是本地生成的 SVG。它适合放在 README、PR artifact 或发布说明里，让读者快速看到当前 self-check 姿态。
 
 ## 生成命令

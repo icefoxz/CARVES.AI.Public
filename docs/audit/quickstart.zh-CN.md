@@ -1,5 +1,7 @@
 # CARVES Audit 快速开始
 
+语言：[英文](quickstart.en.md)
+
 CARVES Audit 是只读的证据发现工具。
 
 它适合回答这些问题：

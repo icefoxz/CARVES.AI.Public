@@ -1,6 +1,8 @@
 # CARVES Audit
 
-CARVES Audit is a read-only evidence discovery tool.
+Language: [Chinese](README.zh-CN.md)
+
+CARVES Audit is a CARVES Runtime capability for read-only evidence discovery and readback.
 
 It reads Guard decisions and Handoff packets, then produces summaries, timelines, explanations, and safe `shield-evidence.v0` summary evidence.
 
@@ -12,8 +14,7 @@ Audit evidence is conservative. It reports observed records, but it does not inv
 
 ## Start Here
 
-- [Quickstart EN](quickstart.en.md)
-- [快速开始 zh-CN](quickstart.zh-CN.md)
+- [Quickstart](quickstart.en.md)
 
 ## Default Inputs
 

@@ -1,15 +1,6 @@
 # CARVES Shield Wiki
 
-中文入口：
-
-- [新手教程：从零跑第一次 Shield 自检](shield-beginner-guide.zh-CN.md)
-- [术语表：每个关键字是什么意思](glossary.zh-CN.md)
-- [流程图：本地、自检、CI 怎么走](workflow.zh-CN.md)
-- [证据模板：如何准备 shield-evidence.v0](evidence-starter.zh-CN.md)
-- [GitHub Actions 接入](github-actions.zh-CN.md)
-- [Badge 解读与发布](badge.zh-CN.md)
-
-English entry:
+Language: [Chinese](README.zh-CN.md)
 
 - [Beginner guide: run your first Shield self-check](shield-beginner-guide.en.md)
 - [Glossary: what every keyword means](glossary.en.md)
@@ -18,7 +9,7 @@ English entry:
 - [GitHub Actions integration](github-actions.en.md)
 - [Badge guide](badge.en.md)
 
-Stable commands:
+## Stable Commands
 
 ```powershell
 carves shield evaluate <evidence-path> --json --output combined

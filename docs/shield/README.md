@@ -1,6 +1,8 @@
 # CARVES Shield
 
-CARVES Shield is a local-first AI governance self-check for repositories.
+Language: [Chinese](README.zh-CN.md)
+
+CARVES Shield is a CARVES Runtime capability for local-first AI governance self-checks in repositories.
 
 It helps a project answer one practical question:
 
@@ -12,26 +14,13 @@ Shield v0 is intentionally simple:
 
 - `carves-shield evaluate` reads `shield-evidence.v0` summary evidence.
 - `carves-shield badge` renders a local static SVG badge.
-- the combined `carves` tool still exposes the compatibility wrapper `carves shield ...`.
+- the Runtime `carves` tool still exposes the compatibility wrapper `carves shield ...`.
 - The GitHub Actions proof lane writes local artifacts for pull request inspection.
 - Guard CI evidence from Audit is heuristic workflow-text evidence, not proof that a hosted CI service ran.
 - No source code, raw diffs, prompts, model responses, secrets, credentials, or private file payloads are uploaded by default.
 - v0 output is a self-check. It is not a model safety benchmark, hosted verification, public ranking, certification, source review, semantic correctness proof, or operating-system sandboxing.
-- It is not hosted verification, public certification, public ranking, model safety benchmarking, semantic source proof, or operating-system sandboxing.
 
 ## Start Here
-
-中文：
-
-- [Shield Wiki 首页](wiki/README.md)
-- [新手教程：从零跑第一次 Shield 自检](wiki/shield-beginner-guide.zh-CN.md)
-- [术语表：每个关键字是什么意思](wiki/glossary.zh-CN.md)
-- [流程图：本地、自检、CI 怎么走](wiki/workflow.zh-CN.md)
-- [证据模板：如何准备 shield-evidence.v0](wiki/evidence-starter.zh-CN.md)
-- [GitHub Actions 接入](wiki/github-actions.zh-CN.md)
-- [Badge 解读与发布](wiki/badge.zh-CN.md)
-
-English:
 
 - [Shield Wiki Home](wiki/README.md)
 - [Beginner guide: run your first Shield self-check](wiki/shield-beginner-guide.en.md)

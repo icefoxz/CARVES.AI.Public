@@ -1,5 +1,7 @@
 # Disclaimer
 
+Language: [Chinese](DISCLAIMER.zh-CN.md)
+
 CARVES.AI is provided as-is.
 
 You are responsible for reviewing, approving, and validating any action taken with or through CARVES.AI, including code changes, file operations, automation, agent behavior, build output, package output, release decisions, and operational decisions.

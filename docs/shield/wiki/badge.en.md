@@ -1,5 +1,7 @@
 # Badge Guide
 
+Language: [Chinese](badge.zh-CN.md)
+
 The Shield badge is a locally generated SVG. It is useful in README files, PR artifacts, or release notes so readers can quickly see the current self-check posture.
 
 ## Generate A Badge

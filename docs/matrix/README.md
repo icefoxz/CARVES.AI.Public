@@ -1,8 +1,10 @@
 # CARVES Matrix
 
-CARVES Matrix is the local composition layer for the CARVES product set. It frames the toolchain as a local workflow self-check and local consistency proof for AI coding workflow governance, not as a model safety benchmark.
+Language: [Chinese](README.zh-CN.md)
 
-It records that the four peer products can work together in an external git repository:
+CARVES Matrix is a CARVES Runtime proof and trial lane. It frames the Runtime governance capabilities as a local workflow self-check and local consistency proof for AI coding workflow governance, not as a model safety benchmark.
+
+It records that these Runtime capabilities can work together in an external git repository:
 
 ```text
 Guard -> Handoff -> Audit -> Shield
@@ -52,7 +54,7 @@ The local score measures reviewability, traceability, explainability, report hon
 
 ## Runtime Compatibility
 
-The extracted products are the primary public units:
+The standalone capability CLIs remain available:
 
 - `carves-guard`
 - `carves-handoff`
@@ -60,7 +62,7 @@ The extracted products are the primary public units:
 - `carves-shield`
 - `carves-matrix`
 
-The Runtime `carves` tool remains a compatibility and reference host. Its product-facing commands delegate to the extracted product runners where possible:
+The Runtime `carves` tool remains the primary public entry and reference host. Its capability-facing commands delegate to the standalone runners where possible:
 
 - `carves guard ...`
 - `carves handoff ...`
@@ -68,12 +70,11 @@ The Runtime `carves` tool remains a compatibility and reference host. Its produc
 - `carves shield ...`
 - `carves matrix ...`
 
-Runtime internal governance commands stay separate from the public product story. Users do not need Runtime task/card governance concepts to run the Matrix local workflow self-check.
+Runtime internal governance commands stay separate from the public capability story. Users do not need Runtime task/card governance concepts to run the Matrix local workflow self-check.
 
 ## Start Here
 
 - [Beginner quickstart](quickstart.en.md)
-- [新手快速开始](quickstart.zh-CN.md)
 - [Agent Trial local quickstart](agent-trial-v1-local-quickstart.md)
 - [Agent Trial local user smoke](agent-trial-v1-local-user-smoke.md)
 - [Node Windows Playable Agent Trial quickstart](agent-trial-node-windows-playable-quickstart.md)
