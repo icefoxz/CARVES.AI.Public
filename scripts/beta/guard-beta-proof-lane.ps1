@@ -78,8 +78,12 @@ if (-not $SkipBuild) {
 }
 
 $readmePath = Join-Path $RuntimeRoot "README.md"
-$isPublicSourceSnapshot = (Test-Path -LiteralPath $readmePath -PathType Leaf) -and
+$publicExportPath = Join-Path $RuntimeRoot "PUBLIC_EXPORT.md"
+$isReadmePublicSourceSnapshot = (Test-Path -LiteralPath $readmePath -PathType Leaf) -and
     ((Get-Content -Raw -LiteralPath $readmePath).Contains("public source snapshot", [System.StringComparison]::OrdinalIgnoreCase))
+$isPublicExportSnapshot = (Test-Path -LiteralPath $publicExportPath -PathType Leaf) -and
+    ((Get-Content -Raw -LiteralPath $publicExportPath).Contains("public source snapshot", [System.StringComparison]::OrdinalIgnoreCase))
+$isPublicSourceSnapshot = $isReadmePublicSourceSnapshot -or $isPublicExportSnapshot
 
 $privateRuntimeApplicationFilter = "GuardPolicyEvaluatorTests|GuardDiffAdapterTests|GuardDecisionReadServiceTests|GuardRunDecisionServiceTests|AlphaGuardTrustBasisCoverageAuditTests|AlphaGuardReleaseCheckpointTests"
 $privateRuntimeIntegrationFilter = "GuardCheckCliTests|CliDistributionClosureTests"

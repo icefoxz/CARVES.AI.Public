@@ -320,14 +320,23 @@ public sealed class CliDistributionClosureTests
         var repoRoot = LocateSourceRepoRoot();
         var script = File.ReadAllText(Path.Combine(repoRoot, "scripts", "beta", "guard-beta-proof-lane.ps1"));
         var workflow = File.ReadAllText(Path.Combine(repoRoot, ".github", "workflows", "ci.yml"));
-        var doc = File.ReadAllText(Path.Combine(repoRoot, "docs", "beta", "guard-beta-ci-proof-lane.md"));
-        var alphaReadme = File.ReadAllText(Path.Combine(repoRoot, "docs", "alpha", "README.md"));
-        var releaseCheckpoint = File.ReadAllText(Path.Combine(repoRoot, "docs", "alpha", "release-checkpoint.md"));
-        var releaseNote = File.ReadAllText(Path.Combine(repoRoot, GuardReleaseInfo.ReleaseNotePath.Replace('/', Path.DirectorySeparatorChar)));
+        var docPath = Path.Combine(repoRoot, "docs", "beta", "guard-beta-ci-proof-lane.md");
+        var alphaReadmePath = Path.Combine(repoRoot, "docs", "alpha", "README.md");
+        var releaseCheckpointPath = Path.Combine(repoRoot, "docs", "alpha", "release-checkpoint.md");
+        var releaseNotePath = Path.Combine(repoRoot, GuardReleaseInfo.ReleaseNotePath.Replace('/', Path.DirectorySeparatorChar));
+        var privateProofDocsAvailable =
+            File.Exists(docPath) &&
+            File.Exists(alphaReadmePath) &&
+            File.Exists(releaseCheckpointPath) &&
+            File.Exists(releaseNotePath);
 
         Assert.Contains("beta-guard-proof-lane.v1", script, StringComparison.Ordinal);
+        Assert.Contains("PUBLIC_EXPORT.md", script, StringComparison.Ordinal);
+        Assert.Contains("$isPublicSourceSnapshot = $isReadmePublicSourceSnapshot -or $isPublicExportSnapshot", script, StringComparison.Ordinal);
         Assert.Contains("GuardPolicyEvaluatorTests|GuardDiffAdapterTests|GuardDecisionReadServiceTests|GuardRunDecisionServiceTests|AlphaGuardTrustBasisCoverageAuditTests|AlphaGuardReleaseCheckpointTests", script, StringComparison.Ordinal);
+        Assert.Contains("GuardPolicyEvaluatorTests|GuardDiffAdapterTests|GuardDecisionReadServiceTests|GuardRunDecisionServiceTests", script, StringComparison.Ordinal);
         Assert.Contains("GuardCheckCliTests|CliDistributionClosureTests", script, StringComparison.Ordinal);
+        Assert.Contains("GuardCheckCliTests|GuardExtractionShellTests", script, StringComparison.Ordinal);
         Assert.Contains("guard-packaged-install-smoke.ps1", script, StringComparison.Ordinal);
         Assert.Contains("guard-external-pilot-matrix.ps1", script, StringComparison.Ordinal);
         Assert.Contains("provider_secrets_required = $false", script, StringComparison.Ordinal);
@@ -337,16 +346,24 @@ public sealed class CliDistributionClosureTests
         Assert.Contains("Guard Beta proof lane", workflow, StringComparison.Ordinal);
         Assert.Contains("./scripts/beta/guard-beta-proof-lane.ps1 -Configuration Release -SkipBuild", workflow, StringComparison.Ordinal);
 
-        Assert.Contains("provider secrets required: `false`", doc, StringComparison.Ordinal);
-        Assert.Contains("remote package publication required: `false`", doc, StringComparison.Ordinal);
-        Assert.Contains("live worker tests included: `false`", doc, StringComparison.Ordinal);
-        Assert.Contains("packaged smoke: beta_guard_packaged_install_cross_platform", doc, StringComparison.Ordinal);
-        Assert.Contains("pilot matrix: beta_guard_external_pilot_matrix", doc, StringComparison.Ordinal);
+        if (privateProofDocsAvailable)
+        {
+            var doc = File.ReadAllText(docPath);
+            var alphaReadme = File.ReadAllText(alphaReadmePath);
+            var releaseCheckpoint = File.ReadAllText(releaseCheckpointPath);
+            var releaseNote = File.ReadAllText(releaseNotePath);
 
-        Assert.Contains("scripts/beta/guard-beta-proof-lane.ps1", alphaReadme, StringComparison.Ordinal);
-        Assert.Contains("docs/beta/guard-beta-ci-proof-lane.md", releaseCheckpoint, StringComparison.Ordinal);
-        Assert.Contains("scripts/beta/guard-beta-proof-lane.ps1", releaseNote, StringComparison.Ordinal);
-        Assert.Contains("requires no provider secrets, no remote package publication, and no live worker tests", releaseNote, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("provider secrets required: `false`", doc, StringComparison.Ordinal);
+            Assert.Contains("remote package publication required: `false`", doc, StringComparison.Ordinal);
+            Assert.Contains("live worker tests included: `false`", doc, StringComparison.Ordinal);
+            Assert.Contains("packaged smoke: beta_guard_packaged_install_cross_platform", doc, StringComparison.Ordinal);
+            Assert.Contains("pilot matrix: beta_guard_external_pilot_matrix", doc, StringComparison.Ordinal);
+
+            Assert.Contains("scripts/beta/guard-beta-proof-lane.ps1", alphaReadme, StringComparison.Ordinal);
+            Assert.Contains("docs/beta/guard-beta-ci-proof-lane.md", releaseCheckpoint, StringComparison.Ordinal);
+            Assert.Contains("scripts/beta/guard-beta-proof-lane.ps1", releaseNote, StringComparison.Ordinal);
+            Assert.Contains("requires no provider secrets, no remote package publication, and no live worker tests", releaseNote, StringComparison.OrdinalIgnoreCase);
+        }
     }
 
     private static string? ReadProperty(XDocument project, string propertyName)
