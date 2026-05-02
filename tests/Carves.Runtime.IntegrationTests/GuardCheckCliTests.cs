@@ -352,15 +352,27 @@ public sealed class GuardCheckCliTests
 
         public static LongRunningProcess Start()
         {
-            var process = Process.Start(new ProcessStartInfo
+            var startInfo = new ProcessStartInfo
             {
-                FileName = "/bin/sh",
-                ArgumentList = { "-c", "sleep 300" },
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
                 CreateNoWindow = true,
-            }) ?? throw new InvalidOperationException("Failed to start long-running process.");
+            };
+            if (OperatingSystem.IsWindows())
+            {
+                startInfo.FileName = "cmd.exe";
+                startInfo.ArgumentList.Add("/c");
+                startInfo.ArgumentList.Add("ping -n 300 127.0.0.1 > nul");
+            }
+            else
+            {
+                startInfo.FileName = "/bin/sh";
+                startInfo.ArgumentList.Add("-c");
+                startInfo.ArgumentList.Add("sleep 300");
+            }
+
+            var process = Process.Start(startInfo) ?? throw new InvalidOperationException("Failed to start long-running process.");
             return new LongRunningProcess(process);
         }
 

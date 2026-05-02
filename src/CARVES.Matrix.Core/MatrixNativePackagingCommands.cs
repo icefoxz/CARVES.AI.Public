@@ -23,7 +23,6 @@ public static partial class MatrixCliRunner
                 "--output",
                 packageRoot,
                 "/p:PackageVersion=" + version,
-                "--no-restore",
             ],
             runtimeRoot);
         var reasonCodes = BuildPackReasonCodes(result, packagePath);

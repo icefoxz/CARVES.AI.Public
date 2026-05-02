@@ -311,7 +311,7 @@ $repeat = Invoke-ScoreCmd -PackageRoot $successRoot -IsolatedPath $isolatedPath 
 foreach ($text in @(
     "Package already scored. Showing the previous local result.",
     "To test another agent in this same folder, run RESET.cmd first.",
-    "Score: 100/100 (scored)"
+    "Final score: GREEN 100/100 (scored)"
 )) {
     if (-not (Test-TextContains -Haystack $repeat.combined -Needle $text -IgnoreCase)) {
         throw "Repeat-score output did not include '$text'. Output:`n$($repeat.combined)"

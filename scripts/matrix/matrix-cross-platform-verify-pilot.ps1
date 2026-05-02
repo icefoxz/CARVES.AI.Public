@@ -219,6 +219,13 @@ function Write-ProofSummary {
                     reason_codes = @()
                 },
                 [ordered]@{
+                    gate_id = "trial_artifacts"
+                    satisfied = $true
+                    reason = "Agent Trial artifacts are not present; non-trial Matrix compatibility mode applies."
+                    issue_codes = @()
+                    reason_codes = @()
+                },
+                [ordered]@{
                     gate_id = "shield_score"
                     satisfied = $true
                     reason = "Shield evaluation status, certification posture, Standard label, and Lite score fields are verified."
