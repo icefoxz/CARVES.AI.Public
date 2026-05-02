@@ -1,6 +1,6 @@
 # 免责声明
 
-语言：[英文](DISCLAIMER.md)
+语言：[En](DISCLAIMER.md)
 
 CARVES.AI 按现状提供。
 

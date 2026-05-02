@@ -1,6 +1,6 @@
 # CARVES Matrix Beginner Quickstart
 
-Language: [Chinese](quickstart.zh-CN.md)
+Language: [中文](quickstart.zh-CN.md)
 
 CARVES Matrix runs the local Guard -> Handoff -> Audit -> Shield local consistency proof chain and writes a summary-only proof bundle that you can verify later.
 

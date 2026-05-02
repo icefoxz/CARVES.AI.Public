@@ -1,6 +1,6 @@
 # CARVES.Guard 文档
 
-语言：[英文](README.md)
+语言：[En](README.md)
 
 CARVES.Guard 是 CARVES Runtime 的本地 patch boundary check 能力。这里不解释其它尚未公开稳定的 CARVES 概念，只说明 Guard surface：它检查什么、为什么重要、怎么接入、怎么读结果、怎么接到 GitHub Actions。
 

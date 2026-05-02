@@ -1,6 +1,6 @@
 # CARVES.Guard Wiki Home
 
-Language: [Chinese](Home.zh-CN.md)
+Language: [中文](Home.zh-CN.md)
 
 1. [Beginner guide](guard-beginner-guide.en.md)
 2. [Glossary](glossary.en.md)

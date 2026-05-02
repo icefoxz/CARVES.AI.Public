@@ -1,6 +1,6 @@
 # Beginner Guide: Run Your First Shield Self-Check
 
-Language: [Chinese](shield-beginner-guide.zh-CN.md)
+Language: [中文](shield-beginner-guide.zh-CN.md)
 
 CARVES Shield checks whether a repository has evidence for AI code governance.
 

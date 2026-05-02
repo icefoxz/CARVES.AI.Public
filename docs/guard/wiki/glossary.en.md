@@ -1,6 +1,6 @@
 # CARVES.Guard Glossary
 
-Language: [Chinese](glossary.zh-CN.md)
+Language: [中文](glossary.zh-CN.md)
 
 This glossary explains the keywords used by CARVES.Guard docs and command output.
 

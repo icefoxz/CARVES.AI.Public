@@ -1,6 +1,6 @@
 # GitHub Actions 接入
 
-语言：[英文](github-actions.en.md)
+语言：[En](github-actions.en.md)
 
 Shield 可以作为 pull request CI proof 运行。它只读取 `shield-evidence.v0` 摘要证据，并上传本地生成的 JSON/SVG artifact。
 

@@ -1,6 +1,6 @@
 # CARVES.Guard Workflow Diagrams
 
-Language: [Chinese](workflow.zh-CN.md)
+Language: [中文](workflow.zh-CN.md)
 
 This page shows where CARVES.Guard belongs and what to do after `allow`, `review`, or `block`.
 

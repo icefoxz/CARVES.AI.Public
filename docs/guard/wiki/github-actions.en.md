@@ -1,6 +1,6 @@
 # Using CARVES.Guard In GitHub Actions
 
-Language: [Chinese](github-actions.zh-CN.md)
+Language: [中文](github-actions.zh-CN.md)
 
 This page explains how to wire CARVES.Guard into pull request checks.
 

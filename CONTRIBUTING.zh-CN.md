@@ -1,6 +1,6 @@
 # 贡献指南
 
-语言：[英文](CONTRIBUTING.md)
+语言：[En](CONTRIBUTING.md)
 
 CARVES 当前以一组 local-first 命令行工具发布：
 

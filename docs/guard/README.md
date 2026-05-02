@@ -1,6 +1,6 @@
 # CARVES.Guard Docs
 
-Language: [Chinese](README.zh-CN.md)
+Language: [中文](README.zh-CN.md)
 
 CARVES.Guard is a CARVES Runtime capability for local patch boundary checks. It explains only the Guard surface: what it checks, why it matters, how to adopt it, how to read decisions, and how to wire it into GitHub Actions.
 

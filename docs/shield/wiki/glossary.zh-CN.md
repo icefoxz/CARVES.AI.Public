@@ -1,6 +1,6 @@
 # 术语表：每个关键字是什么意思
 
-语言：[英文](glossary.en.md)
+语言：[En](glossary.en.md)
 
 ## Shield
 

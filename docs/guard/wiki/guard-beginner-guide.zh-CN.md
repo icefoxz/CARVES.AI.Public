@@ -1,6 +1,6 @@
 # CARVES.Guard 新手教程
 
-语言：[英文](guard-beginner-guide.en.md)
+语言：[En](guard-beginner-guide.en.md)
 
 这份教程假设你第一次使用 CARVES.Guard。
 

@@ -1,6 +1,6 @@
 # CARVES Shield Wiki
 
-Language: [Chinese](README.zh-CN.md)
+Language: [中文](README.zh-CN.md)
 
 - [Beginner guide: run your first Shield self-check](shield-beginner-guide.en.md)
 - [Glossary: what every keyword means](glossary.en.md)

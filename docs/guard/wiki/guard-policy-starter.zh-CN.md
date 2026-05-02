@@ -1,6 +1,6 @@
 # CARVES.Guard Policy 模板
 
-语言：[英文](guard-policy-starter.en.md)
+语言：[En](guard-policy-starter.en.md)
 
 把下面内容复制到你的项目：
 

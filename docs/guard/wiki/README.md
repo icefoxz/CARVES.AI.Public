@@ -1,6 +1,6 @@
 # CARVES.Guard Wiki
 
-Language: [Chinese](README.zh-CN.md)
+Language: [中文](README.zh-CN.md)
 
 - [Beginner guide: run your first Guard check](guard-beginner-guide.en.md)
 - [Glossary: what every keyword means](glossary.en.md)

@@ -1,6 +1,6 @@
 # CARVES Shield
 
-语言：[英文](README.md)
+语言：[En](README.md)
 
 CARVES Shield 是 CARVES Runtime 面向仓库的 local-first AI governance self-check 能力。
 

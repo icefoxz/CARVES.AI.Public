@@ -1,6 +1,6 @@
 # Glossary: What Every Keyword Means
 
-Language: [Chinese](glossary.zh-CN.md)
+Language: [中文](glossary.zh-CN.md)
 
 ## Shield
 

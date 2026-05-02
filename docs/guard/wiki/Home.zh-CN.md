@@ -1,6 +1,6 @@
 # CARVES.Guard Wiki 首页
 
-语言：[英文](Home.md)
+语言：[En](Home.md)
 
 ## 入口
 

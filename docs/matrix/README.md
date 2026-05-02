@@ -1,6 +1,6 @@
 # CARVES Matrix
 
-Language: [Chinese](README.zh-CN.md)
+Language: [中文](README.zh-CN.md)
 
 CARVES Matrix is a CARVES Runtime proof and trial lane. It frames the Runtime governance capabilities as a local workflow self-check and local consistency proof for AI coding workflow governance, not as a model safety benchmark.
 

@@ -1,6 +1,6 @@
 # CARVES Audit
 
-Language: [Chinese](README.zh-CN.md)
+Language: [中文](README.zh-CN.md)
 
 CARVES Audit is a CARVES Runtime capability for read-only evidence discovery and readback.
 

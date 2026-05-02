@@ -1,6 +1,6 @@
 # CARVES Audit Quickstart
 
-Language: [Chinese](quickstart.zh-CN.md)
+Language: [中文](quickstart.zh-CN.md)
 
 CARVES Audit helps you read AI governance history without changing your repository.
 

@@ -1,6 +1,6 @@
 # CARVES.Handoff 五分钟上手
 
-语言：[英文](quickstart.en.md)
+语言：[En](quickstart.en.md)
 
 CARVES.Handoff 用来创建和检查 AI 编程工作的 session continuity packet。这个 packet 会告诉下一个会话：当前目标是什么，哪些事实已经完成，证据在哪里，剩下什么不能忘，哪些坑不要重复。
 

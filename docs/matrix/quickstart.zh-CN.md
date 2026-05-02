@@ -1,6 +1,6 @@
 # CARVES Matrix 新手快速开始
 
-语言：[英文](quickstart.en.md)
+语言：[En](quickstart.en.md)
 
 CARVES Matrix 会运行本地 Guard -> Handoff -> Audit -> Shield local consistency proof 链路，并写出可以后续验证的 summary-only proof bundle。
 

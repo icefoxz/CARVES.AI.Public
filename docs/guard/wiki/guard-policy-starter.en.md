@@ -1,6 +1,6 @@
 # CARVES.Guard Policy Template
 
-Language: [Chinese](guard-policy-starter.zh-CN.md)
+Language: [中文](guard-policy-starter.zh-CN.md)
 
 Copy this file into your project:
 

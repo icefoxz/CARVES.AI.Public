@@ -1,6 +1,6 @@
 # CARVES Public Docs Index
 
-Language: [Chinese](INDEX.zh-CN.md)
+Language: [中文](INDEX.zh-CN.md)
 
 This index separates the Runtime-first public path from internal operator review checkpoints. The public docs should let a new reader start with the local Runtime CLI and current limits without needing private operating history.
 

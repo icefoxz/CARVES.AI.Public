@@ -1,6 +1,6 @@
 # CARVES Matrix
 
-语言：[英文](README.md)
+语言：[En](README.md)
 
 CARVES Matrix 是 CARVES Runtime 的 proof 和 trial lane。它把 Runtime 治理能力定位为 AI 编码工作流治理的本地 self-check 和本地一致性 proof，而不是模型安全 benchmark。
 

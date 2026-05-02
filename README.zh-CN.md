@@ -1,6 +1,6 @@
 # CARVES Runtime
 
-语言：[英文](README.md)
+语言：[En](README.md)
 
 CARVES Runtime 是一个本地 AI Agent 治理 Runtime，用来启动、绑定、查看和检查项目里的 AI Agent 工作。
 

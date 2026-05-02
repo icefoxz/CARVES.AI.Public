@@ -1,6 +1,6 @@
 # CARVES Shield
 
-Language: [Chinese](README.zh-CN.md)
+Language: [中文](README.zh-CN.md)
 
 CARVES Shield is a CARVES Runtime capability for local-first AI governance self-checks in repositories.
 

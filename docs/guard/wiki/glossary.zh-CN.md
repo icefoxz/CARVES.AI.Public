@@ -1,6 +1,6 @@
 # CARVES.Guard 术语表
 
-语言：[英文](glossary.en.md)
+语言：[En](glossary.en.md)
 
 这份术语表解释 CARVES.Guard 文档和命令输出里的关键字。新手遇到不懂的词，优先查这里。
 

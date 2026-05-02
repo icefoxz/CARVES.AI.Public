@@ -1,6 +1,6 @@
 # CARVES.Handoff Docs
 
-Language: [Chinese](README.zh-CN.md)
+Language: [中文](README.zh-CN.md)
 
 CARVES.Handoff is a CARVES Runtime capability for AI session continuity packets. It helps an outgoing session leave the current objective, completed facts, remaining work, must-not-repeat notes, and next guidance in an inspectable JSON packet.
 

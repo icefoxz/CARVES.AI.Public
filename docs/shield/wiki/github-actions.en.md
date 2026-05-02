@@ -1,6 +1,6 @@
 # GitHub Actions Integration
 
-Language: [Chinese](github-actions.zh-CN.md)
+Language: [中文](github-actions.zh-CN.md)
 
 Shield can run as pull request CI proof. It reads `shield-evidence.v0` summary evidence and uploads locally generated JSON/SVG artifacts.
 

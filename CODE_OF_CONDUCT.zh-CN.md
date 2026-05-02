@@ -1,6 +1,6 @@
 # 行为准则
 
-语言：[英文](CODE_OF_CONDUCT.md)
+语言：[En](CODE_OF_CONDUCT.md)
 
 本项目采用直接、issue-first 的协作方式。请具体、尊重他人，并以证据为基础讨论。
 

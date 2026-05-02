@@ -1,6 +1,6 @@
 # 新手教程：从零跑第一次 Shield 自检
 
-语言：[英文](shield-beginner-guide.en.md)
+语言：[En](shield-beginner-guide.en.md)
 
 CARVES Shield 用来检查一个仓库是否有 AI 代码治理证据。
 

@@ -1,6 +1,6 @@
 # Start CARVES With An Agent
 
-Language: [Chinese](START_CARVES.zh-CN.md)
+Language: [中文](START_CARVES.zh-CN.md)
 
 This file is the CARVES Runtime root entry for an AI coding agent.
 

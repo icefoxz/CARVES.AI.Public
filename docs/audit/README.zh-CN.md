@@ -1,6 +1,6 @@
 # CARVES Audit
 
-语言：[英文](README.md)
+语言：[En](README.md)
 
 CARVES Audit 是 CARVES Runtime 的只读证据发现和 readback 能力。
 

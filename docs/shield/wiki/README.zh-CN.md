@@ -1,6 +1,6 @@
 # CARVES Shield Wiki
 
-语言：[英文](README.md)
+语言：[En](README.md)
 
 入口：
 

@@ -1,6 +1,6 @@
 # CARVES 公开文档索引
 
-语言：[英文](INDEX.md)
+语言：[En](INDEX.md)
 
 这个索引用来区分 Runtime-first 公开路径和内部 operator review checkpoint。公开文档应该让新读者能从本地 Runtime CLI 和当前限制开始，而不需要先理解私有 operating history。
 

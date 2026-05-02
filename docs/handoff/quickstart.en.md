@@ -1,6 +1,6 @@
 # CARVES.Handoff Five-Minute Quickstart
 
-Language: [Chinese](quickstart.zh-CN.md)
+Language: [中文](quickstart.zh-CN.md)
 
 CARVES.Handoff creates and checks a session continuity packet for AI coding work. The packet tells the next session what the current goal is, what is already done, what evidence supports that claim, what remains, and what should not be repeated.
 

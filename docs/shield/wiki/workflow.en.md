@@ -1,6 +1,6 @@
 # Workflow Diagrams: Local, Self-Check, And CI
 
-Language: [Chinese](workflow.zh-CN.md)
+Language: [中文](workflow.zh-CN.md)
 
 Shield v0 is local-first. Evidence is prepared locally or in CI, and the current evaluator also runs locally.
 

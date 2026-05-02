@@ -1,6 +1,6 @@
 # 用 Agent 启动 CARVES
 
-语言：[英文](START_CARVES.md)
+语言：[En](START_CARVES.md)
 
 这个文件是 AI 编码 agent 使用的 CARVES Runtime 根入口。
 

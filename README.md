@@ -1,6 +1,6 @@
 # CARVES Runtime
 
-Language: [Chinese](README.zh-CN.md)
+Language: [中文](README.zh-CN.md)
 
 CARVES Runtime is a local AI Agent governance runtime for starting, binding, inspecting, and checking agent work in a project. It is a local AI coding workflow governance self-check for Guard, Handoff, Audit, Shield, and Matrix behavior.
 

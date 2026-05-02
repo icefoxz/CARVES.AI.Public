@@ -1,6 +1,6 @@
 # Code of Conduct
 
-Language: [Chinese](CODE_OF_CONDUCT.zh-CN.md)
+Language: [中文](CODE_OF_CONDUCT.zh-CN.md)
 
 This project uses a direct, issue-first collaboration style. Be specific, respectful, and evidence-driven.
 

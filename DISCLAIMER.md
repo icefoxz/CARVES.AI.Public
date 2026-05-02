@@ -1,6 +1,6 @@
 # Disclaimer
 
-Language: [Chinese](DISCLAIMER.zh-CN.md)
+Language: [中文](DISCLAIMER.zh-CN.md)
 
 CARVES.AI is provided as-is.
 

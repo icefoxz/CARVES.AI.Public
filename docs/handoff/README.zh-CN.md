@@ -1,6 +1,6 @@
 # CARVES.Handoff 文档
 
-语言：[英文](README.md)
+语言：[En](README.md)
 
 CARVES.Handoff 是 CARVES Runtime 的 AI session continuity packet 能力。它帮助上一个会话把“当前目标、已经完成的事实、剩余工作、禁止重复的坑、下一步建议”写成一个可检查的 JSON packet，让下一个会话不用从头摸索。
 

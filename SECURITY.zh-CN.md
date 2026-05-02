@@ -1,6 +1,6 @@
 # 安全策略
 
-语言：[英文](SECURITY.md)
+语言：[En](SECURITY.md)
 
 CARVES Guard、Handoff、Audit 和 Shield 是 local-first 工具。公开 matrix proof 不需要上传源码、raw diff、prompt、模型回复、secret、credential，不需要 hosted verification，也不需要 public leaderboard。
 
