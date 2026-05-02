@@ -197,9 +197,14 @@ public sealed class MatrixPortableScorerBundleContractTests
         var windowsLocal = source.IndexOf("tools\\carves\\carves.exe", StringComparison.Ordinal);
         var windowsPath = source.IndexOf("where carves", StringComparison.Ordinal);
         var windowsFailure = IndexAfter(source, "Missing scorer", windowsPath);
+        var windowsDependencyCheck = IndexAfter(source, ":verify_runtime_dependencies", windowsPath);
+        var windowsRunCarves = IndexAfter(source, "goto run_carves", windowsDependencyCheck);
+        var windowsAlreadyScored = IndexAfter(source, ":already_scored", windowsDependencyCheck);
         Assert.True(windowsLocal >= 0, "SCORE.cmd must look for tools/carves/carves.exe.");
         Assert.True(windowsPath > windowsLocal, "SCORE.cmd must check PATH only after package-local scorer.");
         Assert.True(windowsFailure > windowsPath, "SCORE.cmd must print a clear failure after lookup exhaustion.");
+        Assert.True(windowsRunCarves > windowsDependencyCheck, "SCORE.cmd must continue to scoring after dependency checks pass.");
+        Assert.True(windowsAlreadyScored > windowsRunCarves, "SCORE.cmd must not fall through into the already-scored readback path before scoring.");
 
         var posixLocal = source.IndexOf("./tools/carves/carves", StringComparison.Ordinal);
         var posixPath = source.IndexOf("command -v carves", StringComparison.Ordinal);

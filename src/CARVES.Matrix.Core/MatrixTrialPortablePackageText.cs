@@ -361,6 +361,7 @@ public static partial class MatrixCliRunner
               echo Install Node.js or put node.exe on PATH, then run this scorer again from the package root.
               goto failed
             )
+            goto run_carves
 
             :already_scored
             echo Package already scored. Showing the previous local result.
