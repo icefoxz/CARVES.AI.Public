@@ -2,7 +2,7 @@
 
 语言：[En](INDEX.md)
 
-这个索引用来区分 Runtime-first 公开路径和内部 operator review checkpoint。公开文档应该让新读者能从本地 Runtime CLI 和当前限制开始，而不需要先理解私有 operating history。
+这个索引把 Runtime-first 路径放在最前面，让新读者能先从本地 Runtime CLI 和当前限制开始。
 
 CARVES Runtime 是这个快照的公开入口。Guard / Handoff / Audit / Shield / Matrix 是 Runtime 治理能力，不是并列入口。
 
@@ -38,9 +38,9 @@ Runtime 入口清楚后，再看这些能力文档：
 
 这些页面描述本地 Runtime 能力行为。它们不应该把 Guard / Handoff / Audit / Shield / Matrix 表达成并列入口，也应该避免要求公开用户先理解 Runtime CARD/TaskGraph 概念，才能运行本地 self-check path。
 
-## 内部 Checkpoint 和 Operator Review
+## Release Evidence
 
-release checkpoint 页面是 operator review evidence，不是新手入口。它们在 maintainer 需要时保留 CARD traceability，但不应该作为新用户的第一路径。
+这些页面是给 maintainer 使用的 release evidence，不是新手入口。
 
 - `release/matrix-github-release-candidate-checkpoint.md`
 - `release/trust-chain-hardening-release-checkpoint.md`

@@ -2,7 +2,7 @@
 
 Language: [中文](INDEX.zh-CN.md)
 
-This index separates the Runtime-first public path from internal operator review checkpoints. The public docs should let a new reader start with the local Runtime CLI and current limits without needing private operating history.
+This index keeps the Runtime-first path at the top so a new reader can start with the local Runtime CLI and current limits.
 
 CARVES Runtime is the public entrypoint for this snapshot. Guard / Handoff / Audit / Shield / Matrix are Runtime governance capabilities, not separate first entries.
 
@@ -39,9 +39,9 @@ Use these public product entrypoints after the Runtime entry is clear:
 
 These pages describe local Runtime capability behavior. They should not present Guard / Handoff / Audit / Shield / Matrix as separate first entries, and they should avoid requiring Runtime CARD/TaskGraph concepts before a public user can run the local self-check path.
 
-## Internal Checkpoints And Operator Review
+## Release Evidence
 
-The release checkpoint pages are operator review evidence, not the beginner entrypoint. They retain CARD traceability where needed for maintainers, but they should not be the first path for new users.
+These pages are release evidence for maintainers. They are not the beginner entrypoint.
 
 - `release/matrix-github-release-candidate-checkpoint.md`
 - `release/trust-chain-hardening-release-checkpoint.md`

@@ -4,8 +4,6 @@
 
 CARVES Runtime 是一个本地 AI Agent 治理 Runtime，用来启动、绑定、查看和检查项目里的 AI Agent 工作。
 
-这个仓库是干净的公开源码快照。它不包含私有开发仓库历史、实时 task/runtime truth、Runtime Host 状态、Codex 状态、本地 artifact，或归档/checkpoint 历史。
-
 ## 状态
 
 当前公开快照：
@@ -121,15 +119,6 @@ START_CARVES.md
 ```
 
 然后打开目标项目，并按生成的 `CARVES_START.md` / `.carves/carves agent start --json` 指令继续。
-
-## 这个公开快照不包含
-
-- 私有开发仓库的 git 历史。
-- 实时 task、runtime、memory、artifact，以及类似控制面 truth。
-- `.carves-platform` Host/runtime 状态。
-- Codex 本地状态。
-- 构建输出、日志、trial、本地 package，以及生成的 release archive。
-- 内部 archive/checkpoint phase 历史。
 
 ## 当前边界
 

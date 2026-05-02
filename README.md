@@ -4,8 +4,6 @@ Language: [中文](README.zh-CN.md)
 
 CARVES Runtime is a local AI Agent governance runtime for starting, binding, inspecting, and checking agent work in a project. It is a local AI coding workflow governance self-check for Guard, Handoff, Audit, Shield, and Matrix behavior.
 
-This repository is a clean public source snapshot. It does not include the private development repository history, live task/runtime truth, runtime host state, Codex state, local artifacts, or archive/checkpoint history.
-
 ## Status
 
 Current public snapshot:
@@ -123,15 +121,6 @@ Give your coding agent the absolute path to this file and ask it to read it. The
 ```
 
 Then it should open the target project and follow the generated `CARVES_START.md` / `.carves/carves agent start --json` instructions.
-
-## What This Public Snapshot Excludes
-
-- Private git history from the development repository.
-- Live task, runtime, memory, artifact, and similar control-plane truth.
-- `.carves-platform` host/runtime state.
-- Codex local state.
-- Build outputs, logs, trials, local packages, and generated release archives.
-- Internal archive/checkpoint phase history.
 
 ## Current Boundaries
 
